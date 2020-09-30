@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.epicshaggy.biometric.capacitornativebiometric">
+
+    <application>
+        <activity
+            android:name="com.epicshaggy.biometric.AuthAcitivy"
+            android:label="@string/title_activity_auth_acitivy"
+            android:theme="@style/AppTheme.Transparent"></activity>
+    </application>
+
+</manifest>
