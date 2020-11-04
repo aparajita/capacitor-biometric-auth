@@ -1,59 +1,50 @@
 declare module '@capacitor/core' {
   interface PluginRegistry {
-    WSBiometricAuth: WSBiometricAuthPlugin
+    WSBiometricAuth: WSBiometricAuthPlugin;
   }
 }
 
-import { PluginResultError } from '@capacitor/core'
+import { PluginResultError } from '@capacitor/core';
 
 export enum BiometryType {
   /**
    * No biometry is available
    */
-  NONE,
+  none,
 
   /**
    * iOS Touch ID is available
    */
-  TOUCH_ID,
+  touchId,
 
   /**
    * iOS Face ID is available
    */
-  FACE_ID,
+  faceId,
 
   /**
    * Android fingerprint authentication is available
    */
-  FINGERPRINT,
+  fingerprint,
 
   /**
    * Android face authentication is available
    */
-  FACE_AUTHENTICATION,
+  faceAuthentication,
 
   /**
    * Android iris authentication is available
    */
-  IRIS_AUTHENTICATION
+  irisAuthentication,
 }
 
-export const biometryTypeNameMap = {
-  [BiometryType.NONE]: '',
-  [BiometryType.TOUCH_ID]: 'Touch ID',
-  [BiometryType.FACE_ID]: 'Face ID',
-  [BiometryType.FINGERPRINT]: 'Fingerprint Authentication',
-  [BiometryType.FACE_AUTHENTICATION]: 'Face Authentication',
-  [BiometryType.IRIS_AUTHENTICATION]: 'Iris Authentication'
-}
-
-export interface BiometricOptions {
+export interface VerifyOptions {
   /**
    * iOS only
    *
    * The reason for requesting authentication. Displays in the authentication dialog presented to the user. Default: "Access requires authentication"
    */
-  reason?: string
+  reason?: string;
 
   /**
    * iOS only
@@ -67,7 +58,7 @@ export interface BiometricOptions {
    * If undefined, the localized system default title is used. Pass an empty
    * string to hide the fallback button.
    */
-  fallbackTitle?: string
+  fallbackTitle?: string;
 
   /**
    * iOS only
@@ -79,28 +70,28 @@ export interface BiometricOptions {
    * and the user is prompted to try again. Either way, the user can stop
    * trying to authenticate by tapping the button.
    */
-  cancelTitle?: string
+  cancelTitle?: string;
 
   /**
    * Android only
    *
    * Title for the Android prompt. If not supplied, the system default is used.
    */
-  title?: string
+  title?: string;
 
   /**
    * Android only
    *
    * Subtitle for the Android prompt. If not supplied, the system default is used.
    */
-  subtitle?: string
+  subtitle?: string;
 
   /**
    * Android only
    *
    * Description for the Android prompt. If not supplied, the system default is used.
    */
-  description?: string
+  description?: string;
 }
 
 /**
@@ -122,20 +113,20 @@ export enum BiometryErrorType {
   userFallback = 'userFallback',
   biometryLockout = 'biometryLockout',
   biometryNotAvailable = 'biometryNotAvailable',
-  biometryNotEnrolled = 'biometryNotEnrolled'
+  biometryNotEnrolled = 'biometryNotEnrolled',
 }
 
-export interface BiometricResultError extends PluginResultError {
-  code: BiometryErrorType
+export interface ResultError extends PluginResultError {
+  code: BiometryErrorType;
 }
 
-export class BiometryError implements BiometricResultError {
-  message: string
-  code: BiometryErrorType
+export class BiometryError implements ResultError {
+  message: string;
+  code: BiometryErrorType;
 
   constructor(message: string, code: BiometryErrorType) {
-    this.message = message
-    this.code = code
+    this.message = message;
+    this.code = code;
   }
 }
 
@@ -149,75 +140,86 @@ export enum CredentialsErrorType {
   missingParameter = 'missingParameter',
   invalidData = 'invalidData',
   osError = 'osError',
-  unknownError = 'unknownError'
+  unknownError = 'unknownError',
 }
 
 export interface CredentialsResultError extends PluginResultError {
-  code: CredentialsErrorType
+  code: CredentialsErrorType;
 }
 
 export class CredentialsError implements CredentialsResultError {
-  message: string
-  code: CredentialsErrorType
+  message: string;
+  code: CredentialsErrorType;
 
   constructor(message: string, code: CredentialsErrorType) {
-    this.message = message
-    this.code = code
+    this.message = message;
+    this.code = code;
   }
 }
 
 export interface Credentials {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
 
-export interface CredentialsServer {
+export interface CredentialsDomain {
   /**
    * The domain name under which the credentials are stored.
+   * You will usually want to use a dotted domain name, e.g. 'myapp.mycompany.com'.
    */
-  server: string
+  domain: string;
 }
 
-export type GetCredentialsOptions = CredentialsServer
-export type SetCredentialsOptions = Credentials & CredentialsServer
-export type DeleteCredentialsOptions = CredentialsServer
+export type GetCredentialsOptions = CredentialsDomain;
+export type SetCredentialsOptions = Credentials & CredentialsDomain;
+export type DeleteCredentialsOptions = CredentialsDomain;
 
-export interface AvailableResult {
+export interface CheckBiometryResult {
   /**
    * True if the device has biometric authentication capability
-   * and the current user has enrolled.
+   * and the current user has enrolled in biometry.
    */
-  isAvailable: boolean
+  isAvailable: boolean;
 
   /**
    * The type of biometry available on the device.
    */
-  biometryType: BiometryType
+  biometryType: BiometryType;
 }
 
 export interface WSBiometricAuthPlugin {
   /**
-   * Check the device's availability and type of biometric authentication.
+   * Check to see what biometry type (if any) is available.
+   * For testing on the web, a BiometryType name (case-insensitive)
+   * may be specified as an environment variable. For example:
+   *
+   * WS_BIOMETRY_TYPE=touchid
    */
-  isAvailable(): Promise<AvailableResult>
+  checkBiometry(): Promise<CheckBiometryResult>;
 
   /**
-   * Prompt the user for biometric authorization.
+   * If you just want to know if biometry is available, this is simpler to use than checkBiometry().
+   */
+  biometryIsAvailable(): Promise<boolean>;
+
+  /**
+   * Prompt the user for biometric authorization. If authorization fails for any reason,
+   * the promise is rejected with a BiometryError.
    *
-   * @param {BiometricOptions} options
+   * @param {VerifyOptions} options
    * @returns {Promise<void>}
    * @rejects {BiometryError}
    */
-  verifyIdentity(options?: BiometricOptions): Promise<void>
+  verifyIdentity(options?: VerifyOptions): Promise<void>;
 
   /**
-   * Retrieve username/password for a given domain name from the secure system store.
+   * Retrieve the username/password for a given domain name from the secure system store.
    *
    * @param {GetCredentialsOptions} options
-   * @returns {Promise<void>}
+   * @returns {Promise<Credentials>}
    * @rejects {CredentialsResultError}
    */
-  getCredentials(options: GetCredentialsOptions): Promise<Credentials>
+  getCredentials(options: GetCredentialsOptions): Promise<Credentials>;
 
   /**
    * Store username/password under a given domain name in the secure system store.
@@ -226,7 +228,7 @@ export interface WSBiometricAuthPlugin {
    * @returns {Promise<void>}
    * @rejects {CredentialsResultError}
    */
-  setCredentials(options: SetCredentialsOptions): Promise<void>
+  setCredentials(options: SetCredentialsOptions): Promise<void>;
 
   /**
    * Delete username/password for a given domain name from the secure system store.
@@ -235,5 +237,5 @@ export interface WSBiometricAuthPlugin {
    * @returns {Promise<void>}
    * @rejects {CredentialsResultError}
    */
-  deleteCredentials(options: DeleteCredentialsOptions): Promise<void>
+  deleteCredentials(options: DeleteCredentialsOptions): Promise<void>;
 }

@@ -1,154 +1,203 @@
-import { registerWebPlugin, WebPlugin } from '@capacitor/core'
+import { registerWebPlugin, WebPlugin } from '@capacitor/core';
 import {
-  AvailableResult,
-  BiometricOptions,
+  CheckBiometryResult,
+  VerifyOptions,
   BiometryError,
   BiometryErrorType,
   BiometryType,
-  biometryTypeNameMap,
   Credentials,
   CredentialsError,
   CredentialsErrorType,
   DeleteCredentialsOptions,
   GetCredentialsOptions,
   SetCredentialsOptions,
-  WSBiometricAuthPlugin
-} from './definitions'
+  WSBiometricAuthPlugin,
+} from './definitions';
+import { Blowfish } from 'javascript-blowfish';
 
-const kRot13Input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-const kRot13Output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
-const rot13Index = (x: string) => kRot13Input.indexOf(x)
-const rot13Translate = (x: string) => (rot13Index(x) > -1 ? kRot13Output[rot13Index(x)] : x)
+const kBiometryTypeNameMap = {
+  [BiometryType.none]: '',
+  [BiometryType.touchId]: 'Touch ID',
+  [BiometryType.faceId]: 'Face ID',
+  [BiometryType.fingerprint]: 'Fingerprint Authentication',
+  [BiometryType.faceAuthentication]: 'Face Authentication',
+  [BiometryType.irisAuthentication]: 'Iris Authentication',
+};
 
-function rot13(str: string): string {
-  return str.split('').map(rot13Translate).join('')
-}
+const kStoragePrefix = 'ws-capacitor-biometric-auth__';
 
-function base36StringToBytes(s: string): Uint8Array {
-  return new Uint8Array(s.match(/.{2}/g).map(byte => parseInt(byte, 36)))
-}
-
-function bytesToBase36String(bytes: Uint8Array): string {
-  return bytes.reduce((str, byte) => str + byte.toString(36).padStart(2, '0'), '')
-}
-
-export class WSBiometricAuth extends WebPlugin implements WSBiometricAuthPlugin {
-  static kStoragePrefix = 'ws-capacitor-biometric-auth__'
-  encoder: TextEncoder
-  decoder: TextDecoder
+export class WSBiometricAuthWeb
+  extends WebPlugin
+  implements WSBiometricAuthPlugin {
+  private blowfish: Blowfish;
+  private readonly encryptionKey: string;
 
   constructor() {
     super({
       name: 'WSBiometricAuth',
-      platforms: ['web']
-    })
+      platforms: ['web'],
+    });
 
-    this.encoder = new TextEncoder()
-    this.decoder = new TextDecoder()
+    if (process.env.WS_BIOMETRIC_AUTH_PASSPHRASE) {
+      this.encryptionKey = process.env.WS_BIOMETRIC_AUTH_PASSPHRASE;
+    } else {
+      this.encryptionKey = 'Please specify this as an environment variable!';
+      console.warn(
+        '[ws-capacitor-biometric-auth] If you are interested in security, you should provide a passphrase as the environment variable WS_BIOMETRIC_AUTH_PASSPHRASE',
+      );
+    }
+
+    this.blowfish = new Blowfish(this.encryptionKey);
   }
 
-  isAvailable(): Promise<AvailableResult> {
-    let type = BiometryType.NONE
+  checkBiometry(): Promise<CheckBiometryResult> {
+    let type = BiometryType.none;
+    const envType = process.env.WS_BIOMETRY_TYPE;
 
-    if (process.env.WS_BIOMETRY_TYPE) {
-      const typeNum = Number(process.env.WS_BIOMETRY_TYPE)
-
-      if (typeNum in BiometryType) {
-        type = typeNum
-      }
+    if (envType && BiometryType.hasOwnProperty(envType)) {
+      // @ts-ignore  Ignore 'any' type warning here
+      type = BiometryType[envType] as BiometryType;
     }
 
     return Promise.resolve({
-      isAvailable: type !== BiometryType.NONE,
-      biometryType: type
-    })
+      isAvailable: type !== BiometryType.none,
+      biometryType: type,
+    });
   }
 
-  verifyIdentity(_options?: BiometricOptions): Promise<void> {
-    return this.isAvailable().then(({ isAvailable, biometryType }) => {
+  biometryIsAvailable(): Promise<boolean> {
+    return this.checkBiometry().then(result => result.isAvailable);
+  }
+
+  verifyIdentity(_options?: VerifyOptions): Promise<void> {
+    return this.checkBiometry().then(({ isAvailable, biometryType }) => {
       if (isAvailable) {
-        if (confirm(`Authenticate with ${biometryTypeNameMap[biometryType]}?`)) {
-          return
+        if (
+          confirm(`Authenticate with ${kBiometryTypeNameMap[biometryType]}?`)
+        ) {
+          return;
         }
 
-        throw new BiometryError('User cancelled', BiometryErrorType.userCancel)
+        throw new BiometryError('User cancelled', BiometryErrorType.userCancel);
       }
 
-      throw new BiometryError('Biometry not available', BiometryErrorType.biometryNotAvailable)
-    })
+      throw new BiometryError(
+        'Biometry not available',
+        BiometryErrorType.biometryNotAvailable,
+      );
+    });
   }
 
-  getCredentials({ server }: GetCredentialsOptions): Promise<Credentials> {
-    if (server) {
-      const credentials = sessionStorage.getItem(WSBiometricAuth.kStoragePrefix + server)
+  getCredentials({ domain }: GetCredentialsOptions): Promise<Credentials> {
+    if (domain) {
+      const credentials = sessionStorage.getItem(kStoragePrefix + domain);
 
       if (credentials) {
-        let json
+        let json;
 
         try {
-          json = this.decryptCredentials(credentials)
+          json = this.decryptCredentials(credentials);
         } catch (e) {
-          throw new CredentialsError(e.message, CredentialsErrorType.invalidData)
+          throw new CredentialsError(
+            e.message,
+            CredentialsErrorType.invalidData,
+          );
         }
 
         if (json.username && json.password) {
-          return Promise.resolve(json)
+          return Promise.resolve(json);
         }
 
-        throw new Error('Missing property in credentials')
+        throw new CredentialsError(
+          'Missing property in credentials',
+          CredentialsErrorType.invalidData,
+        );
       } else {
         throw new CredentialsError(
-          `Credentials not found for server: ${server}`,
-          CredentialsErrorType.notFound
-        )
+          `Credentials not found for server: ${domain}`,
+          CredentialsErrorType.notFound,
+        );
       }
     } else {
-      throw new CredentialsError('No server provided', CredentialsErrorType.missingParameter)
+      throw new CredentialsError(
+        'No server provided',
+        CredentialsErrorType.missingParameter,
+      );
     }
   }
 
-  setCredentials({ server, username, password }: SetCredentialsOptions): Promise<void> {
-    if (server) {
-      const json = this.encryptCredentials({ username, password })
-      sessionStorage.setItem(WSBiometricAuth.kStoragePrefix + server, json)
-      return Promise.resolve()
+  setCredentials({
+    domain,
+    username,
+    password,
+  }: SetCredentialsOptions): Promise<void> {
+    if (domain) {
+      const encoded = this.encryptCredentials({ username, password });
+      sessionStorage.setItem(kStoragePrefix + domain, encoded);
+      return Promise.resolve();
     } else {
-      throw new CredentialsError('No server provided', CredentialsErrorType.missingParameter)
+      throw new CredentialsError(
+        'No server provided',
+        CredentialsErrorType.missingParameter,
+      );
+    }
+  }
+
+  deleteCredentials({ domain }: DeleteCredentialsOptions): Promise<void> {
+    if (domain) {
+      sessionStorage.removeItem(kStoragePrefix + domain);
+      return Promise.resolve();
+    } else {
+      throw new CredentialsError(
+        'No server provided',
+        CredentialsErrorType.missingParameter,
+      );
     }
   }
 
   private encryptCredentials(credentials: Credentials): string {
-    // Do some basic obfuscation of the credentials so they aren't plain text:
-    // - Convert to JSON
-    // - Encode as UTF8 bytes
-    // - Convert bytes to base 36 characters
-    // - Reverse the order of the characters
-    // - Rotate13
-    const json = JSON.stringify(credentials)
-    const encoded = this.encoder.encode(json)
-    const hexString = bytesToBase36String(encoded)
-    return rot13(hexString.split('').reverse().join(''))
+    const json = JSON.stringify(credentials);
+    return this.blowfish.base64Encode(this.blowfish.encryptECB(json));
   }
 
   private decryptCredentials(ciphertext: string): Credentials {
-    const rotated = rot13(ciphertext).split('').reverse().join('')
-    const bytes = base36StringToBytes(rotated)
-    const decoded = this.decoder.decode(bytes)
-    return JSON.parse(decoded)
-  }
+    const json = this.blowfish.trimZeros(
+      this.blowfish.decryptECB(this.blowfish.base64Decode(ciphertext)),
+    );
+    let credentials: Credentials;
 
-  deleteCredentials({ server }: DeleteCredentialsOptions): Promise<void> {
-    if (server) {
-      sessionStorage.removeItem(WSBiometricAuth.kStoragePrefix + server)
-      return Promise.resolve()
-    } else {
-      throw new CredentialsError('No server provided', CredentialsErrorType.missingParameter)
+    try {
+      credentials = JSON.parse(json) as Credentials;
+    } catch (e) {
+      throw new CredentialsError(
+        'Could not parse credentials object',
+        CredentialsErrorType.invalidData,
+      );
     }
+
+    if (!credentials.username || !credentials.password) {
+      throw new CredentialsError(
+        'username or password field is missing from the decoded credentials',
+        CredentialsErrorType.invalidData,
+      );
+    }
+
+    return credentials;
   }
 }
 
-const NativeBiometric = new WSBiometricAuth()
+/**
+ * Return a human-readable name for a BiometryType.
+ *
+ * @param {BiometryType} type
+ * @returns {string}
+ */
+export function getBiometryName(type: BiometryType): string {
+  return kBiometryTypeNameMap[type] || '';
+}
 
-export { NativeBiometric }
+const WSBiometricAuth = new WSBiometricAuthWeb();
 
-registerWebPlugin(NativeBiometric)
+export { WSBiometricAuth };
+
+registerWebPlugin(WSBiometricAuth);

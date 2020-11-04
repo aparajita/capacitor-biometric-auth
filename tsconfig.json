@@ -5,16 +5,16 @@
     "experimentalDecorators": true,
     "lib": [
       "dom",
-      "es2016"
+      "esnext"
     ],
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "dist/esm",
     "sourceMap": true,
-    "target": "es2016"
+    "target": "esnext"
   },
   "files": [
     "src/index.ts"
