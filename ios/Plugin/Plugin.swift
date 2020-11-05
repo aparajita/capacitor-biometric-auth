@@ -2,6 +2,11 @@ import Foundation
 import Capacitor
 import LocalAuthentication
 
+private let kUsername = "username"
+private let kPassword = "password"
+private let kDomain = "domain"
+private let kReason = "reason"
+
 @objc(WSBiometricAuth)
 public class WSBiometricAuth: CAPPlugin {
   struct KeychainError: Error {
@@ -14,7 +19,7 @@ public class WSBiometricAuth: CAPPlugin {
     }
 
     let keychainErrorMap: [KeychainError.ErrorKind: [String]] = [
-      .notFound: ["Credentials for the server '%@' not found", "notFound"],
+      .notFound: ["Credentials for the domain '%@' not found", "notFound"],
       .missingParameter: ["No %@ parameter was given", "missingParameter"],
       .invalidData: ["The data in the store is an invalid format", "invalidData"],
       .osError: ["An OS error occurred (%d)", "osError"],
@@ -69,7 +74,7 @@ public class WSBiometricAuth: CAPPlugin {
   /**
    * Check the device's availability and type of biometric authentication.
    */
-  @objc func isAvailable(_ call: CAPPluginCall) {
+  @objc func checkBiometry(_ call: CAPPluginCall) {
     let context = LAContext()
     let available = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
 
@@ -87,9 +92,9 @@ public class WSBiometricAuth: CAPPlugin {
    * @rejects {BiometricResultError}
    */
   @objc func verifyIdentity(_ call: CAPPluginCall) {
-    let reason = call.getString("reason") ?? "Access requires authentication"
+    let reason = call.getString(kReason) ?? "Access requires authentication"
     let context = LAContext()
-    context.localizedFallbackTitle = call.getString("fallbackTitle")
+    context.localizedFallbackTitle = call.getString("iosFallbackTitle")
     context.localizedCancelTitle = call.getString("cancelTitle")
     context.touchIDAuthenticationAllowableReuseDuration = 0
 
@@ -104,30 +109,15 @@ public class WSBiometricAuth: CAPPlugin {
     }
   }
 
-  @objc func getCredentials(_ call: CAPPluginCall) {
-    guard let server = getServerParam(call) else {
-      let err = KeychainError(.missingParameter, param: "server")
-      return call.reject(err.message, err.code)
-    }
-
-    tryKeychainOp(call, {
-      let credentials = try getCredentialsFromKeychain(server)
-      call.resolve([
-        "username": credentials.username,
-        "password": credentials.password
-      ])
-    })
-  }
-
   @objc func setCredentials(_ call: CAPPluginCall) {
-    guard let server = getServerParam(call) else {
+    guard let domain = getDomainParam(call) else {
       return
     }
 
     var err: KeychainError?
-    var params: [String:String] = [:]
+    var params: [String: String] = [:]
 
-    for param in ["username", "password"] {
+    for param in [kUsername, kPassword] {
       guard let value = call.getString(param) else {
         err = KeychainError(.missingParameter, param: param)
         break
@@ -141,33 +131,48 @@ public class WSBiometricAuth: CAPPlugin {
       return
     }
 
-    let credentials = Credentials(username: params["username"]!, password: params["password"]!)
+    let credentials = Credentials(username: params[kUsername]!, password: params[kPassword]!)
 
     tryKeychainOp(call, {
-      try storeCredentialsInKeychain(credentials, server)
+      try storeCredentialsInKeychain(credentials, domain)
       call.resolve()
     })
   }
 
-  @objc func deleteCredentials(_ call: CAPPluginCall){
-    guard let server = getServerParam(call) else {
+  @objc func getCredentials(_ call: CAPPluginCall) {
+    guard let domain = getDomainParam(call) else {
+      let err = KeychainError(.missingParameter, param: kDomain)
+      return call.reject(err.message, err.code)
+    }
+
+    tryKeychainOp(call, {
+      let credentials = try getCredentialsFromKeychain(domain)
+      call.resolve([
+        kUsername: credentials.username,
+        kPassword: credentials.password
+      ])
+    })
+  }
+
+  @objc func deleteCredentials(_ call: CAPPluginCall) {
+    guard let domain = getDomainParam(call) else {
       return
     }
 
     tryKeychainOp(call, {
-      try deleteCredentialsFromKeychain(server)
+      try deleteCredentialsFromKeychain(domain)
       call.resolve()
     })
   }
 
-  func getServerParam(_ call: CAPPluginCall) -> String? {
-    guard let server = call.getString("server") else {
-      let err = KeychainError(.missingParameter, param: "server")
+  func getDomainParam(_ call: CAPPluginCall) -> String? {
+    guard let domain = call.getString(kDomain) else {
+      let err = KeychainError(.missingParameter, param: kDomain)
       call.reject(err.message, err.code)
       return nil
     }
 
-    return server
+    return domain
   }
 
   func tryKeychainOp(_ call: CAPPluginCall, _ operation: () throws -> Void) {
@@ -185,10 +190,10 @@ public class WSBiometricAuth: CAPPlugin {
     call.reject(err.message, err.code)
   }
 
-  func getCredentialsFromKeychain(_ server: String) throws -> Credentials {
+  func getCredentialsFromKeychain(_ domain: String) throws -> Credentials {
     let query = [
       kSecClass as String: kSecClassInternetPassword,
-      kSecAttrServer as String: server,
+      kSecAttrServer as String: domain,
       kSecMatchLimit as String: kSecMatchLimitOne,
       kSecReturnAttributes as String: true,
       kSecReturnData as String: true
@@ -196,7 +201,7 @@ public class WSBiometricAuth: CAPPlugin {
 
     var itemRef: CFTypeRef?
     let status = SecItemCopyMatching(query, &itemRef)
-    try checkStatus(status, server)
+    try checkStatus(status, domain)
 
     guard let item = itemRef as? [String: Any],
       let passwordData = item[kSecValueData as String] as? Data,
@@ -209,27 +214,27 @@ public class WSBiometricAuth: CAPPlugin {
     return Credentials(username: username, password: password)
   }
 
-  func storeCredentialsInKeychain(_ credentials: Credentials, _ server: String) throws {
+  func storeCredentialsInKeychain(_ credentials: Credentials, _ domain: String) throws {
     // If the credentials already exist, update them
-    if let _ = try? getCredentialsFromKeychain(server) {
-      try updateCredentialsInKeychain(credentials, server)
+    if let _ = try? getCredentialsFromKeychain(domain) {
+      try updateCredentialsInKeychain(credentials, domain)
     } else {
       let query = [
         kSecClass as String: kSecClassInternetPassword,
         kSecAttrAccount as String: credentials.username,
-        kSecAttrServer as String: server,
+        kSecAttrServer as String: domain,
         kSecValueData as String: credentials.password.data(using: .utf8)!
       ] as CFDictionary
 
       let status = SecItemAdd(query, nil)
-      try checkStatus(status, server)
+      try checkStatus(status, domain)
     }
   }
 
-  func updateCredentialsInKeychain(_ credentials: Credentials, _ server: String) throws {
+  func updateCredentialsInKeychain(_ credentials: Credentials, _ domain: String) throws {
     let query = [
       kSecClass as String: kSecClassInternetPassword,
-      kSecAttrServer as String: server
+      kSecAttrServer as String: domain
     ] as CFDictionary
 
     let account = credentials.username
@@ -240,13 +245,13 @@ public class WSBiometricAuth: CAPPlugin {
     ] as CFDictionary
 
     let status = SecItemUpdate(query, attributes)
-    try checkStatus(status, server)
+    try checkStatus(status, domain)
   }
 
-  func deleteCredentialsFromKeychain(_ server: String)throws{
+  func deleteCredentialsFromKeychain(_ domain: String)throws {
     let query = [
       kSecClass as String: kSecClassInternetPassword,
-      kSecAttrServer as String: server
+      kSecAttrServer as String: domain
     ] as CFDictionary
 
     let status = SecItemDelete(query)
@@ -256,9 +261,9 @@ public class WSBiometricAuth: CAPPlugin {
     }
   }
 
-  func checkStatus(_ status: OSStatus, _ server: String) throws {
+  func checkStatus(_ status: OSStatus, _ domain: String) throws {
     guard status != errSecItemNotFound else {
-      throw KeychainError(.notFound, param: server)
+      throw KeychainError(.notFound, param: domain)
     }
 
     guard status == errSecSuccess else {

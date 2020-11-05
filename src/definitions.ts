@@ -40,11 +40,28 @@ export enum BiometryType {
 
 export interface VerifyOptions {
   /**
-   * iOS only
-   *
-   * The reason for requesting authentication. Displays in the authentication dialog presented to the user. Default: "Access requires authentication"
+   * The reason for requesting authentication. Displays in the authentication dialog presented to the user.
+   * If not supplied, a default message is displayed.
    */
   reason?: string;
+
+  /**
+   * iOS:
+   * The system presents a cancel button during biometric authentication
+   * to let the user abort the authentication attempt. The button appears
+   * every time the system asks the user to present a finger registered with
+   * Touch ID. For Face ID, the button only appears if authentication fails
+   * and the user is prompted to try again. Either way, the user can stop
+   * trying to authenticate by tapping the button.
+   *
+   * Android:
+   * The text for the negative button. This would typically be used as a "Cancel" button,
+   * but may be also used to show an alternative method for authentication, such as a
+   * screen that asks for a backup password.
+   *
+   * Default: "Cancel"
+   */
+  cancelTitle?: string;
 
   /**
    * iOS only
@@ -58,40 +75,30 @@ export interface VerifyOptions {
    * If undefined, the localized system default title is used. Pass an empty
    * string to hide the fallback button.
    */
-  fallbackTitle?: string;
+  iosFallbackTitle?: string;
 
   /**
-   * iOS only
-   *
-   * The system presents a cancel button during biometric authentication
-   * to let the user abort the authentication attempt. The button appears
-   * every time the system asks the user to present a finger registered with
-   * Touch ID. For Face ID, the button only appears if authentication fails
-   * and the user is prompted to try again. Either way, the user can stop
-   * trying to authenticate by tapping the button.
-   */
-  cancelTitle?: string;
-
-  /**
-   * Android only
-   *
    * Title for the Android prompt. If not supplied, the system default is used.
    */
-  title?: string;
+  androidTitle?: string;
 
   /**
-   * Android only
-   *
    * Subtitle for the Android prompt. If not supplied, the system default is used.
    */
-  subtitle?: string;
+  androidSubtitle?: string;
 
   /**
-   * Android only
-   *
-   * Description for the Android prompt. If not supplied, the system default is used.
+   * If this is true, the user will first be prompted to authenticate with biometrics,
+   * and if the device is secured with a PIN, pattern, or password, will also given
+   * the option to authenticate with that.
    */
-  description?: string;
+  androidAllowDeviceCredential?: boolean;
+
+  /**
+   * The maximum number of failed biometric verification attempts before
+   * returning BiometryError.authenticationFailed. The default is 3.
+   */
+  androidMaxAttempts?: number;
 }
 
 /**
@@ -114,6 +121,7 @@ export enum BiometryErrorType {
   biometryLockout = 'biometryLockout',
   biometryNotAvailable = 'biometryNotAvailable',
   biometryNotEnrolled = 'biometryNotEnrolled',
+  noDeviceCredential = 'noDeviceCredential',
 }
 
 export interface ResultError extends PluginResultError {
@@ -132,8 +140,8 @@ export class BiometryError implements ResultError {
 
 /**
  * If one of the credentials functions throws, the error object will
- * have a .code property that contains one of these values, and the
- * .message will have a message suitable for debug purposes.
+ * have a code property that contains one of these values, and the
+ * message property will have a message suitable for debug purposes.
  */
 export enum CredentialsErrorType {
   notFound = 'notFound',

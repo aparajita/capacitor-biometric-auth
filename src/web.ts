@@ -41,9 +41,9 @@ export class WSBiometricAuthWeb
     if (process.env.WS_BIOMETRIC_AUTH_PASSPHRASE) {
       this.encryptionKey = process.env.WS_BIOMETRIC_AUTH_PASSPHRASE;
     } else {
-      this.encryptionKey = 'Please specify this as an environment variable!';
+      this.encryptionKey = 'Please specify this in an environment variable!';
       console.warn(
-        '[ws-capacitor-biometric-auth] If you are interested in security, you should provide a passphrase as the environment variable WS_BIOMETRIC_AUTH_PASSPHRASE',
+        '[ws-capacitor-biometric-auth] If you are interested in security, you should provide a passphrase in the environment variable WS_BIOMETRIC_AUTH_PASSPHRASE',
       );
     }
 

@@ -16,7 +16,10 @@
     "clean": "rimraf ./dist",
     "watch": "nodemon -w ./src -w tsconfig.json -w rollup.config.js --exec 'npm run build --silent' -e ts"
   },
-  "author": "Aparajita Fishman",
+  "contributors": [
+    "Jose Martinez",
+    "Aparajita Fishman"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@capacitor/android": "^2.4.2",
