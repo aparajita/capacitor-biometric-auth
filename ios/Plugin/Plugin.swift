@@ -9,47 +9,6 @@ private let kReason = "reason"
 
 @objc(WSBiometricAuth)
 public class WSBiometricAuth: CAPPlugin {
-  struct KeychainError: Error {
-    enum ErrorKind {
-      case notFound
-      case missingParameter
-      case invalidData
-      case osError
-      case unknownError
-    }
-
-    let keychainErrorMap: [KeychainError.ErrorKind: [String]] = [
-      .notFound: ["Credentials for the domain '%@' not found", "notFound"],
-      .missingParameter: ["No %@ parameter was given", "missingParameter"],
-      .invalidData: ["The data in the store is an invalid format", "invalidData"],
-      .osError: ["An OS error occurred (%d)", "osError"],
-      .unknownError: ["An unknown error occurred", "unknownError"]
-    ]
-
-    let kind: ErrorKind
-    var message: String = ""
-    var code: String = ""
-
-    init(_ kind: ErrorKind, status: OSStatus = 0, param: String = "") {
-      self.kind = kind
-
-      if let message = keychainErrorMap[kind] {
-        switch kind {
-          case .osError:
-            self.message = String(format: message[0], status)
-
-          case .notFound, .missingParameter:
-            self.message = String(format: message[0], param)
-
-          default:
-            self.message = message[0]
-        }
-
-        self.code = message[1]
-      }
-    }
-  }
-
   struct Credentials {
     var username: String
     var password: String
@@ -126,8 +85,8 @@ public class WSBiometricAuth: CAPPlugin {
       params[param] = value
     }
 
-    if err != nil {
-      call.reject(err!.message, err!.code)
+    if let err = err {
+      err.rejectCall(call)
       return
     }
 
@@ -141,8 +100,8 @@ public class WSBiometricAuth: CAPPlugin {
 
   @objc func getCredentials(_ call: CAPPluginCall) {
     guard let domain = getDomainParam(call) else {
-      let err = KeychainError(.missingParameter, param: kDomain)
-      return call.reject(err.message, err.code)
+      KeychainError(.missingParameter, param: kDomain).rejectCall(call)
+      return
     }
 
     tryKeychainOp(call, {
@@ -166,9 +125,9 @@ public class WSBiometricAuth: CAPPlugin {
   }
 
   func getDomainParam(_ call: CAPPluginCall) -> String? {
-    guard let domain = call.getString(kDomain) else {
-      let err = KeychainError(.missingParameter, param: kDomain)
-      call.reject(err.message, err.code)
+    guard let domain = call.getString(kDomain),
+          !domain.isEmpty else {
+      KeychainError.reject(call: call, kind: .missingParameter, param: kDomain)
       return nil
     }
 
@@ -187,7 +146,7 @@ public class WSBiometricAuth: CAPPlugin {
       err = KeychainError(.unknownError)
     }
 
-    call.reject(err.message, err.code)
+    err.rejectCall(call)
   }
 
   func getCredentialsFromKeychain(_ domain: String) throws -> Credentials {
