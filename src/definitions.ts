@@ -63,36 +63,61 @@ export interface VerifyOptions {
    */
   cancelTitle?: string;
 
-  /**
-   * iOS only
+  /***
+   * If true, allows for authentication using device unlock credentials. Default is false.
    *
+   * iOS:
+   * If biometry is available, enrolled, and not disabled, the system uses that first.
+   * After the first Touch ID failure or second Face ID failure, if iosFallbackTitle
+   * is not an empty string, a fallback button appears in the authentication dialog.
+   * If the user taps the fallback button, the system prompts the user for the device
+   * passcode or the user’s password. If iosFallbackTitle is an empty string, no
+   * fallback button will appear.
+   *
+   * If biometry is not available, enrolled and enabled, and a passcode is set,
+   * the system immediately prompts the user for the device passcode or user’s password.
+   * Authentication fails with the error code passcodeNotSet if the device passcode isn’t enabled.
+   *
+   * If a passcode is not set on the device, a passcodeNotSet error is returned.
+   *
+   * The system disables passcode authentication after 6 unsuccessful attempts, with progressively
+   * increasing delays between attempts.
+   *
+   * The title of the fallback button may be customized by setting iosFallbackTitle to
+   * a non-empty string.
+   *
+   * Android:
+   * The user will first be prompted to authenticate with biometrics, but also given
+   * the option to authenticate with their device PIN, pattern, or password by tapping
+   * a button in the authentication dialog. The title of the button is supplied by
+   * the system.
+   */
+  allowDeviceCredential?: boolean;
+
+  /**
    * The system presents a fallback button when biometric authentication fails
    * — for example, because the system doesn’t recognize the presented finger,
-   * or after several failed attempts to recognize the user’s face. Tapping
-   * the button lets the user revert to authentication using the device passcode
-   * or password instead.
+   * or after several failed attempts to recognize the user’s face.
    *
-   * If undefined, the localized system default title is used. Pass an empty
-   * string to hide the fallback button.
+   * If allowDeviceCredential is false, tapping this button dismisses the
+   * authentication dialog and returns the error code userFallback. If undefined,
+   * the localized systetm default title is used. Passing an empty string
+   * hides the fallback button completely.
+   *
+   * If allowDeviceCredential is true and this is undefined,
+   * the localized system default title is used.
    */
   iosFallbackTitle?: string;
 
   /**
-   * Title for the Android prompt. If not supplied, the system default is used.
+   * Title for the Android dialog. If not supplied, the system default is used.
    */
   androidTitle?: string;
 
   /**
-   * Subtitle for the Android prompt. If not supplied, the system default is used.
+   * Subtitle for the Android dialog. If not supplied, the system default is used.
    */
   androidSubtitle?: string;
-
-  /**
-   * If this is true, the user will first be prompted to authenticate with biometrics,
-   * and if the device is secured with a PIN, pattern, or password, will also given
-   * the option to authenticate with that.
-   */
-  androidAllowDeviceCredential?: boolean;
 
   /**
    * The maximum number of failed biometric verification attempts before
@@ -174,8 +199,9 @@ export interface CredentialsDomain {
   /**
    * The domain name under which the credentials are stored.
    * You will usually want to use a dotted domain name, e.g. 'myapp.mycompany.com'.
+   * If not specified, it defaults to the app's appId.
    */
-  domain: string;
+  domain?: string;
 }
 
 export type GetCredentialsOptions = CredentialsDomain;
@@ -193,41 +219,38 @@ export interface CheckBiometryResult {
    * The type of biometry available on the device.
    */
   biometryType: BiometryType;
+
+  /**
+   * If biometry is not available and the system gives a reason why,
+   * it will be returned here. Otherwise it's an empty string.
+   */
+  reason: string;
 }
+
+/**
+ * The signature of the callback passed to addResumeListener().
+ */
+export type ResumeListener = (info: CheckBiometryResult) => void;
 
 export interface WSBiometricAuthPlugin {
   /**
    * Check to see what biometry type (if any) is available.
-   * For testing on the web, a BiometryType name (case-insensitive)
+   * For testing on the web, a BiometryType name (case-sensitive)
    * may be specified as an environment variable. For example:
    *
-   * WS_BIOMETRY_TYPE=touchid
+   * WS_BIOMETRY_TYPE=touchId
    */
   checkBiometry(): Promise<CheckBiometryResult>;
 
   /**
-   * If you just want to know if biometry is available, this is simpler to use than checkBiometry().
-   */
-  biometryIsAvailable(): Promise<boolean>;
-
-  /**
-   * Prompt the user for biometric authorization. If authorization fails for any reason,
+   * Prompt the user for authentication. If authorization fails for any reason,
    * the promise is rejected with a BiometryError.
    *
    * @param {VerifyOptions} options
    * @returns {Promise<void>}
    * @rejects {BiometryError}
    */
-  verifyIdentity(options?: VerifyOptions): Promise<void>;
-
-  /**
-   * Retrieve the username/password for a given domain name from the secure system store.
-   *
-   * @param {GetCredentialsOptions} options
-   * @returns {Promise<Credentials>}
-   * @rejects {CredentialsResultError}
-   */
-  getCredentials(options: GetCredentialsOptions): Promise<Credentials>;
+  authenticate(options?: VerifyOptions): Promise<void>;
 
   /**
    * Store username/password under a given domain name in the secure system store.
@@ -239,11 +262,41 @@ export interface WSBiometricAuthPlugin {
   setCredentials(options: SetCredentialsOptions): Promise<void>;
 
   /**
+   * Retrieve the username/password for a given domain name from the secure system store.
+   *
+   * @param {GetCredentialsOptions} options
+   * @returns {Promise<Credentials>}
+   * @rejects {CredentialsResultError}
+   */
+  getCredentials(options?: GetCredentialsOptions): Promise<Credentials>;
+
+  /**
    * Delete username/password for a given domain name from the secure system store.
    *
    * @param {DeleteCredentialsOptions} options
    * @returns {Promise<void>}
    * @rejects {CredentialsResultError}
    */
-  deleteCredentials(options: DeleteCredentialsOptions): Promise<void>;
+  deleteCredentials(options?: DeleteCredentialsOptions): Promise<void>;
 }
+
+/**
+ * Return a human-readable name for a BiometryType.
+ *
+ * @param {BiometryType} type
+ * @returns {string}
+ */
+declare function getBiometryName(type: BiometryType): string;
+
+/**
+ * Register a function that will be called when the app resumes.
+ * The function will be passed the result of checkBiometry().
+ *
+ * @param {WSBiometricAuthPlugin} auth
+ * @param {ResumeListener} listener
+ * @returns {boolean} true if the listener is successfully added
+ */
+declare function addResumeListener(
+  auth: WSBiometricAuthPlugin,
+  listener: ResumeListener,
+): boolean;

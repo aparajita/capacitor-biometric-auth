@@ -1,4 +1,4 @@
-import { registerWebPlugin, WebPlugin } from '@capacitor/core';
+import { Plugins, registerWebPlugin, WebPlugin } from '@capacitor/core';
 import {
   CheckBiometryResult,
   VerifyOptions,
@@ -12,6 +12,7 @@ import {
   GetCredentialsOptions,
   SetCredentialsOptions,
   WSBiometricAuthPlugin,
+  ResumeListener,
 } from './definitions';
 import { Blowfish } from 'javascript-blowfish';
 
@@ -62,14 +63,11 @@ export class WSBiometricAuthWeb
     return Promise.resolve({
       isAvailable: type !== BiometryType.none,
       biometryType: type,
+      reason: '',
     });
   }
 
-  biometryIsAvailable(): Promise<boolean> {
-    return this.checkBiometry().then(result => result.isAvailable);
-  }
-
-  verifyIdentity(_options?: VerifyOptions): Promise<void> {
+  authenticate(_options?: VerifyOptions): Promise<void> {
     return this.checkBiometry().then(({ isAvailable, biometryType }) => {
       if (isAvailable) {
         if (
@@ -194,6 +192,26 @@ export class WSBiometricAuthWeb
  */
 export function getBiometryName(type: BiometryType): string {
   return kBiometryTypeNameMap[type] || '';
+}
+
+export function addResumeListener(
+  auth: WSBiometricAuthPlugin,
+  listener: ResumeListener,
+): boolean {
+  const app = Plugins.App;
+
+  if (app) {
+    app.addListener('appStateChange', async state => {
+      if (state.isActive) {
+        const info = await auth.checkBiometry();
+        listener(info);
+      }
+    });
+
+    return true;
+  }
+
+  return false;
 }
 
 const WSBiometricAuth = new WSBiometricAuthWeb();

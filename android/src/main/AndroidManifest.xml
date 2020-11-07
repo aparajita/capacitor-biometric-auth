@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.willsub.capacitor.biometricauth">
+    package="com.aparajita.capacitor.biometricauth">
 
     <application>
       <activity
-        android:name="com.willsub.capacitor.biometricauth.AuthActivity"
+        android:name="com.aparajita.capacitor.biometricauth.AuthActivity"
         android:label="@string/title_activity_auth_acitivy"
         android:theme="@style/AppTheme.Transparent"/>
     </application>

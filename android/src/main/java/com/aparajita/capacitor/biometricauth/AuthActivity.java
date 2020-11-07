@@ -1,4 +1,4 @@
-package com.willsub.capacitor.biometricauth;
+package com.aparajita.capacitor.biometricauth;
 
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;

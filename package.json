@@ -16,10 +16,7 @@
     "clean": "rimraf ./dist",
     "watch": "nodemon -w ./src -w tsconfig.json -w rollup.config.js --exec 'npm run build --silent' -e ts"
   },
-  "contributors": [
-    "Jose Martinez",
-    "Aparajita Fishman"
-  ],
+  "author": "Aparajita Fishman",
   "license": "MIT",
   "devDependencies": {
     "@capacitor/android": "^2.4.2",
@@ -29,6 +26,7 @@
     "@ionic/swiftlint-config": "^1.1.2",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
+    "@types/node": "^14.14.6",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2",
     "prettier-plugin-java": "^0.8.3",

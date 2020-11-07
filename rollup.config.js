@@ -16,7 +16,7 @@ export default {
     nodeResolve({
       // allowlist of dependencies to bundle in
       // @see https://github.com/rollup/plugins/tree/master/packages/node-resolve#resolveonly
-      resolveOnly: ['javascript-blowfish'],
+      resolveOnly: ['tslib', 'javascript-blowfish'],
     }),
     commonjs(),
   ],

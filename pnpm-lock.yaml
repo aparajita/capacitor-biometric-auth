@@ -8,6 +8,7 @@ devDependencies:
   '@ionic/swiftlint-config': 1.1.2
   '@rollup/plugin-commonjs': 16.0.0_rollup@2.33.1
   '@rollup/plugin-node-resolve': 10.0.0_rollup@2.33.1
+  '@types/node': 14.14.6
   nodemon: 2.0.6
   prettier: 2.1.2
   prettier-plugin-java: 0.8.3
@@ -781,12 +782,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-YfJT7rkpQB0updsdHLGWrvhBJfcfzNNawYDNIyQXJz0IViGf75O8EBPKSdvw2rF+LGCsX4FZ8tcr3b19LcZq4w==
-  /is-core-module/2.0.0:
+  /is-core-module/2.1.0:
     dependencies:
       has: 1.0.3
     dev: true
     resolution:
-      integrity: sha512-jq1AH6C8MuteOoBPwkxHafmByhL9j5q4OaPGdbuD+ZtQJVzH+i6E3BJDQcBA09k57i2Hh2yQbEG8yObZ0jdlWw==
+      integrity: sha512-YcV7BgVMRFRua2FqQzKtTDMz8iCuLEyGKjr70q8Zm1yy2qKcurbFEd79PAdHV77oL3NrAaOVQIbMmiHQCHB7ZA==
   /is-extglob/2.1.1:
     dev: true
     engines:
@@ -1172,7 +1173,7 @@ packages:
       integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==
   /resolve/1.18.1:
     dependencies:
-      is-core-module: 2.0.0
+      is-core-module: 2.1.0
       path-parse: 1.0.6
     dev: true
     resolution:
@@ -1496,6 +1497,7 @@ specifiers:
   '@ionic/swiftlint-config': ^1.1.2
   '@rollup/plugin-commonjs': ^16.0.0
   '@rollup/plugin-node-resolve': ^10.0.0
+  '@types/node': ^14.14.6
   javascript-blowfish: ^1.0.4
   nodemon: ^2.0.6
   prettier: ^2.1.2
