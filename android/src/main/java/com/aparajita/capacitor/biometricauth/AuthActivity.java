@@ -25,13 +25,7 @@ public class AuthActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             executor = this.getMainExecutor();
         } else {
-            executor =
-                new Executor() {
-                    @Override
-                    public void execute(Runnable command) {
-                        new Handler().post(command);
-                    }
-                };
+            executor = command -> new Handler().post(command);
         }
 
         BiometricPrompt.PromptInfo.Builder builder = new BiometricPrompt.PromptInfo.Builder();
@@ -51,7 +45,12 @@ public class AuthActivity extends AppCompatActivity {
             }
         }
 
-        builder.setTitle(title == null ? "Authenticate" : title);
+        // The title must be non-null and non-empty
+        if (title == null || title.isEmpty()) {
+            title = "Authenticate";
+        }
+
+        builder.setTitle(title);
         builder.setSubtitle(subtitle);
         builder.setDescription(description);
         builder.setDeviceCredentialAllowed(allowDeviceCredential);

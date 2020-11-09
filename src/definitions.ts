@@ -25,7 +25,7 @@ export enum BiometryType {
   /**
    * Android fingerprint authentication is available
    */
-  fingerprint,
+  fingerprintAuthentication,
 
   /**
    * Android face authentication is available
@@ -38,7 +38,7 @@ export enum BiometryType {
   irisAuthentication,
 }
 
-export interface VerifyOptions {
+export interface AuthenticateOptions {
   /**
    * The reason for requesting authentication. Displays in the authentication dialog presented to the user.
    * If not supplied, a default message is displayed.
@@ -127,7 +127,7 @@ export interface VerifyOptions {
 }
 
 /**
- * If the verifyIdentity() function throws an exception, the error object
+ * If the authenticate() method throws an exception, the error object
  * contains a .code property which will contain one of these strings,
  * indicating what the error was.
  *
@@ -162,51 +162,6 @@ export class BiometryError implements ResultError {
     this.code = code;
   }
 }
-
-/**
- * If one of the credentials functions throws, the error object will
- * have a code property that contains one of these values, and the
- * message property will have a message suitable for debug purposes.
- */
-export enum CredentialsErrorType {
-  notFound = 'notFound',
-  missingParameter = 'missingParameter',
-  invalidData = 'invalidData',
-  osError = 'osError',
-  unknownError = 'unknownError',
-}
-
-export interface CredentialsResultError extends PluginResultError {
-  code: CredentialsErrorType;
-}
-
-export class CredentialsError implements CredentialsResultError {
-  message: string;
-  code: CredentialsErrorType;
-
-  constructor(message: string, code: CredentialsErrorType) {
-    this.message = message;
-    this.code = code;
-  }
-}
-
-export interface Credentials {
-  username: string;
-  password: string;
-}
-
-export interface CredentialsDomain {
-  /**
-   * The domain name under which the credentials are stored.
-   * You will usually want to use a dotted domain name, e.g. 'myapp.mycompany.com'.
-   * If not specified, it defaults to the app's appId.
-   */
-  domain?: string;
-}
-
-export type GetCredentialsOptions = CredentialsDomain;
-export type SetCredentialsOptions = Credentials & CredentialsDomain;
-export type DeleteCredentialsOptions = CredentialsDomain;
 
 export interface CheckBiometryResult {
   /**
@@ -243,41 +198,22 @@ export interface WSBiometricAuthPlugin {
   checkBiometry(): Promise<CheckBiometryResult>;
 
   /**
+   * On the web, this method allows you to dynamically simulate
+   * different types of biometry. You may either pass a BiometryType enum
+   * or the string name of a BiometryType. If a string is passed and
+   * it isn't a valid
+   */
+  setBiometryType(type: BiometryType | string | undefined): void;
+
+  /**
    * Prompt the user for authentication. If authorization fails for any reason,
    * the promise is rejected with a BiometryError.
    *
-   * @param {VerifyOptions} options
+   * @param {AuthenticateOptions} options
    * @returns {Promise<void>}
    * @rejects {BiometryError}
    */
-  authenticate(options?: VerifyOptions): Promise<void>;
-
-  /**
-   * Store username/password under a given domain name in the secure system store.
-   *
-   * @param {SetCredentialsOptions} options
-   * @returns {Promise<void>}
-   * @rejects {CredentialsResultError}
-   */
-  setCredentials(options: SetCredentialsOptions): Promise<void>;
-
-  /**
-   * Retrieve the username/password for a given domain name from the secure system store.
-   *
-   * @param {GetCredentialsOptions} options
-   * @returns {Promise<Credentials>}
-   * @rejects {CredentialsResultError}
-   */
-  getCredentials(options?: GetCredentialsOptions): Promise<Credentials>;
-
-  /**
-   * Delete username/password for a given domain name from the secure system store.
-   *
-   * @param {DeleteCredentialsOptions} options
-   * @returns {Promise<void>}
-   * @rejects {CredentialsResultError}
-   */
-  deleteCredentials(options?: DeleteCredentialsOptions): Promise<void>;
+  authenticate(options?: AuthenticateOptions): Promise<void>;
 }
 
 /**
@@ -299,4 +235,4 @@ declare function getBiometryName(type: BiometryType): string;
 declare function addResumeListener(
   auth: WSBiometricAuthPlugin,
   listener: ResumeListener,
-): boolean;
+): void;

@@ -70,8 +70,5 @@
   },
   "bugs": {
     "url": "https://github.com/willsub/ws-capacitor-biometric-auth.git/issues"
-  },
-  "dependencies": {
-    "javascript-blowfish": "^1.0.4"
   }
 }
