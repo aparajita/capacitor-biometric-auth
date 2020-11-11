@@ -78,7 +78,7 @@ public class AuthActivity extends AppCompatActivity {
                 @Override
                 public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                     super.onAuthenticationSucceeded(result);
-                    finishActivity(BiometryResultType.SUCCESS);
+                    finishActivity();
                 }
 
                 @SuppressLint("DefaultLocale")
@@ -103,8 +103,8 @@ public class AuthActivity extends AppCompatActivity {
         prompt.authenticate(promptInfo);
     }
 
-    void finishActivity(BiometryResultType resultType) {
-        finishActivity(resultType, 0, "");
+    void finishActivity() {
+        finishActivity(BiometryResultType.SUCCESS, 0, "");
     }
 
     void finishActivity(BiometryResultType resultType, int errorCode, String errorMessage) {
