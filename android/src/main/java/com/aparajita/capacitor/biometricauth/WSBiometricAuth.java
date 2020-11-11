@@ -145,7 +145,14 @@ public class WSBiometricAuth extends Plugin {
         PluginCall call = getSavedCall();
 
         // Make sure this the auth activity we started and it returned some data
-        if (requestCode != REQUEST_CODE || resultCode != Activity.RESULT_OK) {
+        if (requestCode != REQUEST_CODE) {
+            return;
+        }
+
+        // If the system canceled the activity, we might get RESULT_CANCELED in resultCode.
+        // In that case return that immediately, because there won't be any data.
+        if (resultCode == Activity.RESULT_CANCELED) {
+            call.reject("The system canceled authentication", biometryErrorCodeMap.get(BiometricPrompt.ERROR_CANCELED));
             return;
         }
 
