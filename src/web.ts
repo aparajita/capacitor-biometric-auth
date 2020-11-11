@@ -8,6 +8,7 @@ import {
   WSBiometricAuthPlugin,
   ResumeListener,
 } from './definitions';
+import { native } from 'ws-capacitor-native-decorator';
 
 const kBiometryTypeNameMap = {
   [BiometryType.none]: '',
@@ -26,7 +27,7 @@ export class WSBiometricAuthWeb
   constructor() {
     super({
       name: 'WSBiometricAuth',
-      platforms: ['web'],
+      platforms: ['web', 'ios', 'android'],
     });
 
     this.setBiometryType(process.env.WS_BIOMETRY_TYPE);
@@ -46,6 +47,7 @@ export class WSBiometricAuthWeb
     }
   }
 
+  @native()
   checkBiometry(): Promise<CheckBiometryResult> {
     return Promise.resolve({
       isAvailable: this.biometryType !== BiometryType.none,
@@ -54,6 +56,7 @@ export class WSBiometricAuthWeb
     });
   }
 
+  @native()
   authenticate(options?: AuthenticateOptions): Promise<void> {
     return this.checkBiometry().then(({ isAvailable, biometryType }) => {
       if (isAvailable) {
@@ -75,6 +78,19 @@ export class WSBiometricAuthWeb
       );
     });
   }
+
+  addResumeListener(listener: ResumeListener): void {
+    const app = Plugins.App;
+
+    if (app) {
+      app.addListener('appStateChange', async state => {
+        if (state.isActive) {
+          const info = await this.checkBiometry();
+          listener(info);
+        }
+      });
+    }
+  }
 }
 
 /**
@@ -85,22 +101,6 @@ export class WSBiometricAuthWeb
  */
 export function getBiometryName(type: BiometryType): string {
   return kBiometryTypeNameMap[type] || '';
-}
-
-export function addResumeListener(
-  auth: WSBiometricAuthPlugin,
-  listener: ResumeListener,
-): void {
-  const app = Plugins.App;
-
-  if (app) {
-    app.addListener('appStateChange', async state => {
-      if (state.isActive) {
-        const info = await auth.checkBiometry();
-        listener(info);
-      }
-    });
-  }
 }
 
 const WSBiometricAuth = new WSBiometricAuthWeb();

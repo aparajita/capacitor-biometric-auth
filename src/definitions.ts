@@ -135,31 +135,31 @@ export interface AuthenticateOptions {
  * for a description of each error code.
  */
 export enum BiometryErrorType {
-  appCancel = 'appCancel',
-  authenticationFailed = 'authenticationFailed',
-  invalidContext = 'invalidContext',
-  notInteractive = 'notInteractive',
-  passcodeNotSet = 'passcodeNotSet',
-  systemCancel = 'systemCancel',
-  userCancel = 'userCancel',
-  userFallback = 'userFallback',
-  biometryLockout = 'biometryLockout',
-  biometryNotAvailable = 'biometryNotAvailable',
-  biometryNotEnrolled = 'biometryNotEnrolled',
-  noDeviceCredential = 'noDeviceCredential',
+  appCancel,
+  authenticationFailed,
+  invalidContext,
+  notInteractive,
+  passcodeNotSet,
+  systemCancel,
+  userCancel,
+  userFallback,
+  biometryLockout,
+  biometryNotAvailable,
+  biometryNotEnrolled,
+  noDeviceCredential,
 }
 
 export interface ResultError extends PluginResultError {
-  code: BiometryErrorType;
+  code: string;
 }
 
 export class BiometryError implements ResultError {
   message: string;
-  code: BiometryErrorType;
+  code: string;
 
   constructor(message: string, code: BiometryErrorType) {
     this.message = message;
-    this.code = code;
+    this.code = BiometryErrorType[code];
   }
 }
 
@@ -198,6 +198,8 @@ export interface WSBiometricAuthPlugin {
   checkBiometry(): Promise<CheckBiometryResult>;
 
   /**
+   * web only
+   *
    * On the web, this method allows you to dynamically simulate
    * different types of biometry. You may either pass a BiometryType enum
    * or the string name of a BiometryType. If a string is passed and
@@ -214,6 +216,15 @@ export interface WSBiometricAuthPlugin {
    * @rejects {BiometryError}
    */
   authenticate(options?: AuthenticateOptions): Promise<void>;
+
+  /**
+   * Register a function that will be called when the app resumes.
+   * The function will be passed the result of checkBiometry().
+   *
+   * @param {ResumeListener} listener
+   * @returns {boolean} true if the listener is successfully added
+   */
+  addResumeListener(listener: ResumeListener): void;
 }
 
 /**
@@ -223,16 +234,3 @@ export interface WSBiometricAuthPlugin {
  * @returns {string}
  */
 declare function getBiometryName(type: BiometryType): string;
-
-/**
- * Register a function that will be called when the app resumes.
- * The function will be passed the result of checkBiometry().
- *
- * @param {WSBiometricAuthPlugin} auth
- * @param {ResumeListener} listener
- * @returns {boolean} true if the listener is successfully added
- */
-declare function addResumeListener(
-  auth: WSBiometricAuthPlugin,
-  listener: ResumeListener,
-): void;

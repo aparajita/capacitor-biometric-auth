@@ -16,7 +16,11 @@ export default {
     nodeResolve({
       // allowlist of dependencies to bundle in
       // @see https://github.com/rollup/plugins/tree/master/packages/node-resolve#resolveonly
-      resolveOnly: ['tslib', 'javascript-blowfish'],
+      resolveOnly: [
+        'tslib',
+        'ws-capacitor-native-decorator',
+        'javascript-blowfish',
+      ],
     }),
     commonjs(),
   ],

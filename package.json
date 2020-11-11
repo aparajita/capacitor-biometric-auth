@@ -70,5 +70,9 @@
   },
   "bugs": {
     "url": "https://github.com/willsub/ws-capacitor-biometric-auth.git/issues"
+  },
+  "dependencies": {
+    "tslib": "^2.0.3",
+    "ws-capacitor-native-decorator": "link:../ws-capacitor-native-decorator"
   }
 }
