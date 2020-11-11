@@ -14,6 +14,7 @@ import java.util.concurrent.Executor;
 public class AuthActivity extends AppCompatActivity {
 
     static int attemptCount;
+    static boolean allowDeviceCredential;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class AuthActivity extends AppCompatActivity {
         String subtitle = intent.getStringExtra(WSBiometricAuth.SUBTITLE);
         String description = intent.getStringExtra(WSBiometricAuth.REASON);
         final int maxAttempts = intent.getIntExtra(WSBiometricAuth.MAX_ATTEMPTS, WSBiometricAuth.DEFAULT_MAX_ATTEMPTS);
-        boolean allowDeviceCredential = false;
+        allowDeviceCredential = false;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Android docs say we should check if the device is secure before enabling device credential fallback
@@ -86,7 +87,9 @@ public class AuthActivity extends AppCompatActivity {
                     super.onAuthenticationFailed();
                     attemptCount += 1;
 
-                    if (attemptCount > maxAttempts) {
+                    // When allowDeviceCredential is true, I can't seem to force the prompt
+                    // to go away, so skip attempt counting.
+                    if (!allowDeviceCredential && attemptCount > maxAttempts) {
                         finishActivity(
                             BiometryResultType.FAILURE,
                             0,
