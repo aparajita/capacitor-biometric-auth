@@ -65,7 +65,7 @@ public class AuthActivity extends AppCompatActivity {
         BiometricPrompt.PromptInfo promptInfo = builder.build();
         attemptCount = 0;
 
-        BiometricPrompt biometricPrompt = new BiometricPrompt(
+        BiometricPrompt prompt = new BiometricPrompt(
             this,
             executor,
             new BiometricPrompt.AuthenticationCallback() {
@@ -100,7 +100,7 @@ public class AuthActivity extends AppCompatActivity {
             }
         );
 
-        biometricPrompt.authenticate(promptInfo);
+        prompt.authenticate(promptInfo);
     }
 
     void finishActivity(BiometryResultType resultType) {
