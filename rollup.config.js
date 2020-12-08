@@ -6,7 +6,7 @@ export default {
   output: {
     file: 'dist/plugin.js',
     format: 'iife',
-    name: 'WSSplashScreen',
+    name: 'WSBiometricAuth',
     globals: {
       '@capacitor/core': 'capacitorExports',
     },

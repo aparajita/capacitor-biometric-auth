@@ -4,7 +4,7 @@
 
     <application>
       <activity
-        android:name="com.aparajita.capacitor.biometricauth.AuthActivity"
+        android:name=".AuthActivity"
         android:label="@string/title_activity_auth_acitivy"
         android:theme="@style/AppTheme.Transparent"/>
     </application>
