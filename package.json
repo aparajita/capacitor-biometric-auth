@@ -13,8 +13,10 @@
     "lint.fix": "npm run prettier.fix && npm run swiftlint.fix",
     "prettier": "prettier --check --plugin=./node_modules/prettier-plugin-java \"**/*.{css,html,ts,js,java}\"",
     "prettier.fix": "prettier --write --check --plugin=./node_modules/prettier-plugin-java \"**/*.{css,html,ts,js,java}\"",
-    "swiftlint": "node-swiftlint",
-    "swiftlint.fix": "node-swiftlint autocorrect"
+    "swiftlint": "cd ios; node-swiftlint; cd ..",
+    "swiftlint.fix": "cd ios; node-swiftlint autocorrect; cd ..",
+    "docgen": "docgen --api WSBiometricAuthPlugin --output-readme README.md",
+    "release": "standard-version"
   },
   "author": "Aparajita Fishman",
   "license": "MIT",
