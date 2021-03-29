@@ -18,7 +18,7 @@ export default {
       // @see https://github.com/rollup/plugins/tree/master/packages/node-resolve#resolveonly
       resolveOnly: [
         'tslib',
-        'ws-capacitor-native-decorator',
+        '@aparajita/capacitor-native-decorator',
         'javascript-blowfish',
       ],
     }),

@@ -1,5 +1,5 @@
 {
-  "name": "ws-capacitor-biometric-auth",
+  "name": "@aparajita/capacitor-biometric-auth",
   "version": "1.0.0",
   "description": "Provides access to the native biometric auth APIs for Capacitor apps",
   "main": "dist/esm/index.js",
@@ -42,7 +42,7 @@
     "dist/",
     "ios/",
     "android/",
-    "WsCapacitorBiometricAuth.podspec"
+    "AparajitaCapacitorBiometricAuth.podspec"
   ],
   "keywords": [
     "capacitor",

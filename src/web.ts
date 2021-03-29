@@ -8,7 +8,7 @@ import {
   WSBiometricAuthPlugin,
   ResumeListener,
 } from './definitions';
-import { native } from 'ws-capacitor-native-decorator';
+import { native } from '@aparajita/capacitor-native-decorator';
 
 const kBiometryTypeNameMap = {
   [BiometryType.none]: '',
