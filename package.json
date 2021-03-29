@@ -19,24 +19,25 @@
   "author": "Aparajita Fishman",
   "license": "MIT",
   "devDependencies": {
-    "@capacitor/android": "^2.4.4",
-    "@capacitor/core": "^2.4.4",
-    "@capacitor/ios": "^2.4.4",
+    "@aparajita/capacitor-docgen": "^0.0.10-3",
+    "@capacitor/android": "^2.4.7",
+    "@capacitor/core": "^2.4.7",
+    "@capacitor/ios": "^2.4.7",
     "@ionic/prettier-config": "^1.0.1",
     "@ionic/swiftlint-config": "^1.1.2",
-    "@rollup/plugin-commonjs": "^17.0.0",
-    "@rollup/plugin-node-resolve": "^11.0.0",
-    "@types/node": "^14.14.10",
-    "nodemon": "^2.0.6",
+    "@rollup/plugin-commonjs": "^18.0.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@types/node": "^14.14.37",
+    "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
-    "prettier-plugin-java": "^1.0.1",
+    "prettier-plugin-java": "^1.0.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.34.1",
+    "rollup": "^2.44.0",
     "swiftlint": "^1.0.1",
-    "typescript": "~4.1.2"
+    "typescript": "~4.2.3"
   },
   "peerDependencies": {
-    "@capacitor/core": "^2.4.4"
+    "@capacitor/core": "^2.4.7"
   },
   "files": [
     "dist/",
@@ -72,7 +73,7 @@
     "url": "https://github.com/willsub/ws-capacitor-biometric-auth.git/issues"
   },
   "dependencies": {
-    "tslib": "^2.0.3",
-    "ws-capacitor-native-decorator": "^1.1.0"
+    "@aparajita/capacitor-native-decorator": "^1.1.1",
+    "tslib": "^2.1.0"
   }
 }
