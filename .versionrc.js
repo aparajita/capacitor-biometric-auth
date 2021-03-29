@@ -7,6 +7,6 @@ module.exports = {
     { type: 'style', section: 'Style' },
     { type: 'refactor', section: 'Refactoring' },
     { type: 'perf', section: 'Performance' },
-    { type: 'test', hidden: true }
-  ]
-}
+    { type: 'test', hidden: true },
+  ],
+};
