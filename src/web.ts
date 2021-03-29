@@ -62,7 +62,7 @@ export class WSBiometricAuthWeb
       if (isAvailable) {
         if (
           confirm(
-            options.reason ||
+            options?.reason ||
               `Authenticate with ${kBiometryTypeNameMap[biometryType]}?`,
           )
         ) {
