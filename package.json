@@ -22,9 +22,6 @@
   "license": "MIT",
   "devDependencies": {
     "@aparajita/capacitor-docgen": "^0.0.10-3",
-    "@capacitor/android": "^2.4.7",
-    "@capacitor/core": "^2.4.7",
-    "@capacitor/ios": "^2.4.7",
     "@ionic/prettier-config": "^1.0.1",
     "@ionic/swiftlint-config": "^1.1.2",
     "@rollup/plugin-commonjs": "^18.0.0",
@@ -37,9 +34,6 @@
     "rollup": "^2.44.0",
     "swiftlint": "^1.0.1",
     "typescript": "~4.2.3"
-  },
-  "peerDependencies": {
-    "@capacitor/core": "^2.4.7"
   },
   "files": [
     "dist/",
@@ -76,6 +70,9 @@
   },
   "dependencies": {
     "@aparajita/capacitor-native-decorator": "^1.1.1",
+    "@capacitor/android": "^2.4.7",
+    "@capacitor/core": "^2.4.7",
+    "@capacitor/ios": "^2.4.7",
     "tslib": "^2.1.0"
   }
 }
