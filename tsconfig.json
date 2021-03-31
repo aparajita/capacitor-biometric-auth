@@ -16,7 +16,7 @@
     "noUnusedParameters": true,
     "outDir": "dist/esm",
     "sourceMap": true,
-    "target": "esnext"
+    "target": "es2017"
   },
   "files": [
     "src/index.ts"
