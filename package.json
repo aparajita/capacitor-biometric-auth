@@ -16,7 +16,8 @@
     "swiftlint": "cd ios; node-swiftlint; cd ..",
     "swiftlint.fix": "cd ios; node-swiftlint autocorrect; cd ..",
     "docgen": "docgen --api WSBiometricAuthPlugin --output-readme README.md",
-    "release": "standard-version"
+    "release": "standard-version",
+    "push": "git push --follow-tags origin main && npm publish"
   },
   "author": "Aparajita Fishman",
   "license": "MIT",
