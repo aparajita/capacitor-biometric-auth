@@ -63,10 +63,10 @@
   "swiftlint": "@ionic/swiftlint-config",
   "repository": {
     "type": "git",
-    "url": "https://github.com/willsub/ws-capacitor-biometric-auth.git"
+    "url": "https://github.com/aparajita/capacitor-biometric-auth.git"
   },
   "bugs": {
-    "url": "https://github.com/willsub/ws-capacitor-biometric-auth.git/issues"
+    "url": "https://github.com/aparajita/capacitor-biometric-auth.git/issues"
   },
   "dependencies": {
     "@aparajita/capacitor-native-decorator": "^1.1.1",
