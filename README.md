@@ -16,7 +16,7 @@ Not using [pnpm](https://pnpm.js.org/)? You owe it to yourself to give it a try.
 
 ## Usage
 
-The API is documented [here](src/definitions.ts) and [below](#api). For a complete example of how to use this plugin in practice, see the [demo app](https://github.com/aparajita/capacitor-biometric-auth).
+The API is documented [here](src/definitions.ts) and [below](#api). For a complete example of how to use this plugin in practice, see the [demo app](https://github.com/aparajita/capacitor-biometric-auth-demo).
 
 ### Checking availability
 
