@@ -1,6 +1,6 @@
 {
   "name": "@aparajita/capacitor-biometric-auth",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Provides access to the native biometric auth APIs for Capacitor apps",
   "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",

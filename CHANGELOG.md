@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/willsub/ws-capacitor-biometric-auth/compare/v1.0.1...v1.0.2) (2021-03-31)
+
+
+### Bug Fixes
+
+* change target to transform optional chaining ([f278127](https://github.com/willsub/ws-capacitor-biometric-auth/commit/f278127247bbb7881fe93dee889193b6fd641966))
+* deps in the wrong place ([0746a21](https://github.com/willsub/ws-capacitor-biometric-auth/commit/0746a21c1a5a8a89d5e84544de13295719797171))
+
 ### [1.0.1](https://github.com/willsub/ws-capacitor-biometric-auth/compare/v1.0.0...v1.0.1) (2021-03-29)
 
 
