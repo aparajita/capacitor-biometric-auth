@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.6](https://github.com/aparajita/capacitor-biometric-auth/compare/v1.0.5...v1.0.6) (2021-04-01)
+
+
+### Maintenance
+
+* fix license ([9852042](https://github.com/aparajita/capacitor-biometric-auth/commit/9852042678248de14adeab9ad4da7ef9ffa1310c))
+
 ### [1.0.5](https://github.com/aparajita/capacitor-biometric-auth/compare/v1.0.4...v1.0.5) (2021-04-01)
 
 
