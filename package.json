@@ -37,10 +37,16 @@
     "typescript": "~4.2.3"
   },
   "files": [
-    "dist/",
-    "ios/",
-    "android/",
-    "AparajitaCapacitorBiometricAuth.podspec"
+    "dist/esm/*.d.ts",
+    "dist/esm/*.js",
+    "ios/Plugin",
+    "ios/Podfile",
+    "ios/Podfile.lock",
+    "*.podspec",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/settings.gradle",
+    "android/src/main"
   ],
   "keywords": [
     "capacitor",
