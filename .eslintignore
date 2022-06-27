@@ -1,0 +1,6 @@
+.idea
+android
+dist
+ios
+node_modules
+!.versionrc.js
