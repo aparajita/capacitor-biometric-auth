@@ -1,3 +1,7 @@
 dist
 ios
+android/*
+!android/src
 node_modules
+CHANGELOG.md
+pnpm-lock.yaml
