@@ -1,6 +1,27 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [2.0.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v1.0.7...v2.0.0) (2022-07-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to Capacitor 3, callback support
+
+### Features
+
+* upgrade to Capacitor 3, callback support ([4177317](https://github.com/aparajita/capacitor-biometric-auth/commit/417731737d6a38e031b1ddff88a81d4cb71a994b))
+
+
+### Maintenance
+
+* add missing ignores ([81da849](https://github.com/aparajita/capacitor-biometric-auth/commit/81da8490ab6caf17ad345fb1243a8568b9f42c15))
+* format with 2 space indent (google std) ([ca1fba3](https://github.com/aparajita/capacitor-biometric-auth/commit/ca1fba3a0903911527a54c4c7e8c390629d3717f))
+* parserOptions not necessary with latest eslint ([aeae681](https://github.com/aparajita/capacitor-biometric-auth/commit/aeae6816efc254d39b1fbd6f63fe0fbe3351f3b3))
+* renamed class ([0c5c3b2](https://github.com/aparajita/capacitor-biometric-auth/commit/0c5c3b23f4e3e3dbe82a7fdf94de27d3ce05f980))
+* update config files ([f75f0d3](https://github.com/aparajita/capacitor-biometric-auth/commit/f75f0d36fcc2b914e60b799bf1ba2a2f1b12ead8))
+* upgrade dev environment ([f675f29](https://github.com/aparajita/capacitor-biometric-auth/commit/f675f29d2f957ae79c9115a4cc250b82aa055b12))
 
 ### [1.0.7](https://github.com/aparajita/capacitor-biometric-auth/compare/v1.0.6...v1.0.7) (2021-04-02)
 
