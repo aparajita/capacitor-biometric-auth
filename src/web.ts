@@ -1,14 +1,19 @@
-import { Plugins, registerWebPlugin, WebPlugin } from '@capacitor/core';
-import {
-  CheckBiometryResult,
+import { native } from '@aparajita/capacitor-native-decorator'
+import { App } from '@capacitor/app'
+import { WebPlugin } from '@capacitor/core'
+import type { PluginListenerHandle } from '@capacitor/core'
+import type {
   AuthenticateOptions,
+  BiometricAuthPlugin,
+  CheckBiometryResult,
+  ResumeListener
+} from './definitions'
+import {
   BiometryError,
   BiometryErrorType,
   BiometryType,
-  WSBiometricAuthPlugin,
-  ResumeListener,
-} from './definitions';
-import { native } from '@aparajita/capacitor-native-decorator';
+  kPluginName
+} from './definitions'
 
 const kBiometryTypeNameMap = {
   [BiometryType.none]: '',
@@ -16,80 +21,79 @@ const kBiometryTypeNameMap = {
   [BiometryType.faceId]: 'Face ID',
   [BiometryType.fingerprintAuthentication]: 'Fingerprint Authentication',
   [BiometryType.faceAuthentication]: 'Face Authentication',
-  [BiometryType.irisAuthentication]: 'Iris Authentication',
-};
+  [BiometryType.irisAuthentication]: 'Iris Authentication'
+}
 
-export class WSBiometricAuthWeb
-  extends WebPlugin
-  implements WSBiometricAuthPlugin {
-  private biometryType: BiometryType = BiometryType.none;
+export class BiometricAuth extends WebPlugin implements BiometricAuthPlugin {
+  private biometryType: BiometryType = BiometryType.none
 
-  constructor() {
-    super({
-      name: 'WSBiometricAuth',
-      platforms: ['web', 'ios', 'android'],
-    });
-
-    this.setBiometryType(process.env.WS_BIOMETRY_TYPE);
+  getRegisteredPluginName(): string {
+    return kPluginName
   }
 
-  setBiometryType(type: BiometryType | string | undefined) {
+  setBiometryType(type: BiometryType | string | undefined): void {
     if (typeof type === 'undefined') {
-      return;
+      return
     }
 
     if (typeof type === 'string') {
-      if (type && BiometryType.hasOwnProperty(type)) {
-        this.biometryType = BiometryType[type as keyof typeof BiometryType];
+      // eslint-disable-next-line no-prototype-builtins
+      if (BiometryType.hasOwnProperty(type)) {
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+        this.biometryType = BiometryType[type as keyof typeof BiometryType]
       }
     } else {
-      this.biometryType = type;
+      this.biometryType = type
     }
   }
 
   @native()
-  checkBiometry(): Promise<CheckBiometryResult> {
+  async checkBiometry(): Promise<CheckBiometryResult> {
     return Promise.resolve({
       isAvailable: this.biometryType !== BiometryType.none,
       biometryType: this.biometryType,
-      reason: '',
-    });
+      reason: ''
+    })
   }
 
   @native()
-  authenticate(options?: AuthenticateOptions): Promise<void> {
+  async authenticate(options?: AuthenticateOptions): Promise<void> {
     return this.checkBiometry().then(({ isAvailable, biometryType }) => {
       if (isAvailable) {
         if (
+          // eslint-disable-next-line no-alert
           confirm(
             options?.reason ||
-              `Authenticate with ${kBiometryTypeNameMap[biometryType]}?`,
+              `Authenticate with ${kBiometryTypeNameMap[biometryType]}?`
           )
         ) {
-          return;
+          return
         }
 
-        throw new BiometryError('User cancelled', BiometryErrorType.userCancel);
+        throw new BiometryError('User cancelled', BiometryErrorType.userCancel)
       }
 
       throw new BiometryError(
         'Biometry not available',
-        BiometryErrorType.biometryNotAvailable,
-      );
-    });
+        BiometryErrorType.biometryNotAvailable
+      )
+    })
   }
 
-  addResumeListener(listener: ResumeListener): void {
-    const app = Plugins.App;
-
-    if (app) {
-      app.addListener('appStateChange', async state => {
-        if (state.isActive) {
-          const info = await this.checkBiometry();
-          listener(info);
-        }
-      });
-    }
+  addResumeListener(
+    listener: ResumeListener
+  ): Promise<PluginListenerHandle> & PluginListenerHandle {
+    return App.addListener('appStateChange', ({ isActive }): void => {
+      if (isActive) {
+        this.checkBiometry()
+          .then((info: CheckBiometryResult) => {
+            listener(info)
+          })
+          .catch((error: Error) => {
+            console.error(error.message)
+          })
+      }
+    })
   }
 }
 
@@ -100,11 +104,5 @@ export class WSBiometricAuthWeb
  * @returns {string}
  */
 export function getBiometryName(type: BiometryType): string {
-  return kBiometryTypeNameMap[type] || '';
+  return kBiometryTypeNameMap[type] || ''
 }
-
-const WSBiometricAuth = new WSBiometricAuthWeb();
-
-export { WSBiometricAuth };
-
-registerWebPlugin(WSBiometricAuth);
