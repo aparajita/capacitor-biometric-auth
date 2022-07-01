@@ -1,12 +1,12 @@
-import Foundation
 import Capacitor
+import Foundation
 import LocalAuthentication
 
 private let kReason = "reason"
 private let kMissingFaceIDUsageEntry = "The device supports Face ID, but NSFaceIDUsageDescription is not in Info.plist."
 
-@objc(WSBiometricAuth)
-public class WSBiometricAuth: CAPPlugin {
+@objc(BiometricAuth)
+public class BiometricAuth: CAPPlugin {
   let biometryErrorCodeMap: [LAError.Code: String] = [
     .appCancel: "appCancel",
     .authenticationFailed: "authenticationFailed",

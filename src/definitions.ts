@@ -187,7 +187,7 @@ export interface CheckBiometryResult {
  */
 export type ResumeListener = (info: CheckBiometryResult) => void;
 
-export interface WSBiometricAuthPlugin {
+export interface BiometricAuthPlugin extends DecoratedNativePlugin {
   /**
    * Check to see what biometry type (if any) is available.
    * For testing on the web, a BiometryType name (case-sensitive)
