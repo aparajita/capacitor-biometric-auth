@@ -32,7 +32,7 @@ public class BiometricAuth: CAPPlugin {
     var available = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
     var reason = ""
 
-    if available && context.biometryType == .faceID {
+    if available, context.biometryType == .faceID {
       // The system may report that biometry is available, but if the type is Face ID
       // and the developer forgot to add NSFaceIDUsageDescription to Info.plist,
       // calls to evaluatePolicy() will crash.
@@ -44,7 +44,7 @@ public class BiometricAuth: CAPPlugin {
         reason = kMissingFaceIDUsageEntry
       }
     } else if !available,
-       let error = error {
+              let error = error {
       // If we get a reason from the system, return it
       reason = error.localizedDescription
 
@@ -106,7 +106,7 @@ public class BiometricAuth: CAPPlugin {
       context.localizedFallbackTitle = nil
     }
 
-    context.evaluatePolicy(policy, localizedReason: reason) { (success, error) in
+    context.evaluatePolicy(policy, localizedReason: reason) { success, error in
       if success {
         call.resolve()
       } else {

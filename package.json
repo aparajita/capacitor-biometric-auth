@@ -1,53 +1,47 @@
 {
   "name": "@aparajita/capacitor-biometric-auth",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "description": "Provides access to the native biometric auth APIs for Capacitor apps",
-  "main": "dist/esm/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
-  "scripts": {
-    "clean": "rimraf ./dist",
-    "build": "npm run clean && tsc && rollup -c rollup.config.js && make-ios-plugin",
-    "watch": "nodemon -w ./src -w tsconfig.json -w rollup.config.js --exec 'npm run build --silent' -e ts",
-    "lint": "npm run prettier && npm run swiftlint",
-    "lint.fix": "npm run prettier.fix && npm run swiftlint.fix",
-    "prettier": "prettier --check --plugin=./node_modules/prettier-plugin-java \"**/*.{css,html,ts,js,java}\"",
-    "prettier.fix": "prettier --write --check --plugin=./node_modules/prettier-plugin-java \"**/*.{css,html,ts,js,java}\"",
-    "swiftlint": "cd ios; node-swiftlint; cd ..",
-    "swiftlint.fix": "cd ios; node-swiftlint autocorrect; cd ..",
-    "docgen": "docgen --api WSBiometricAuthPlugin --output-readme README.md",
-    "release": "standard-version",
-    "push": "git push --follow-tags origin main && npm publish"
-  },
   "author": "Aparajita Fishman",
   "license": "MIT",
-  "devDependencies": {
-    "@aparajita/capacitor-docgen": "^0.0.10-3",
-    "@ionic/prettier-config": "^1.0.1",
-    "@ionic/swiftlint-config": "^1.1.2",
-    "@rollup/plugin-commonjs": "^18.0.0",
-    "@rollup/plugin-node-resolve": "^11.2.1",
-    "@types/node": "^14.14.37",
-    "nodemon": "^2.0.7",
-    "prettier": "^2.2.1",
-    "prettier-plugin-java": "^1.0.2",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.44.0",
-    "swiftlint": "^1.0.1",
-    "typescript": "~4.2.3"
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
+  "engines": {
+    "node": ">=16.15.1"
   },
   "files": [
-    "dist/esm/*.d.ts",
-    "dist/esm/*.js",
-    "ios/Plugin",
-    "ios/Podfile",
-    "ios/Podfile.lock",
-    "*.podspec",
+    "android/src/main/",
     "android/build.gradle",
-    "android/gradle.properties",
-    "android/settings.gradle",
-    "android/src/main"
+    "dist/",
+    "ios/Plugin/",
+    "*.podspec",
+    "LICENSE"
   ],
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "verify": "pnpm verify:ios && pnpm verify:android && pnpm verify:web",
+    "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin && cd ..",
+    "verify:android": "cd android && ./gradlew clean build test && cd ..",
+    "verify:web": "pnpm build",
+    "build": "pnpm clean && tsc && rollup -c rollup.config.js && pnpm docgen && pnpm make",
+    "make": "make-ios-plugin",
+    "watch": "nodemon -w ./src -w tsconfig.json -w rollup.config.js --exec 'pnpm build --silent' -e ts",
+    "lint": "eslint . && pnpm typecheck",
+    "lint.fix": "eslint --fix . && pnpm typecheck",
+    "typecheck": "tsc --noEmit",
+    "lint.swift": "pnpm swiftlint",
+    "prettier": "prettier --check \"**/*.{css,html,ts,js,java}\"",
+    "prettier.fix": "pnpm prettier --write",
+    "swiftlint": "swiftly ios",
+    "swiftlint.fix": "swiftly --fix ios",
+    "check": "pnpm lint && pnpm prettier && pnpm swiftlint",
+    "check.fix": "pnpm lint.fix && pnpm prettier.fix && pnpm swiftlint.fix",
+    "docgen": "docgen --api BiometricAuthPlugin --output-readme README.md && docgen-format",
+    "release": "commit-and-tag-version",
+    "push": "git push --follow-tags origin main"
+  },
   "keywords": [
     "capacitor",
     "plugin",
@@ -66,7 +60,6 @@
       "src": "android"
     }
   },
-  "prettier": "@ionic/prettier-config",
   "swiftlint": "@ionic/swiftlint-config",
   "repository": {
     "type": "git",
@@ -75,11 +68,41 @@
   "bugs": {
     "url": "https://github.com/aparajita/capacitor-biometric-auth/issues"
   },
+  "devDependencies": {
+    "@aparajita/capacitor-docgen": "github:aparajita/capacitor-docgen",
+    "@aparajita/capacitor-docgen-format": "github:aparajita/capacitor-docgen-format",
+    "@aparajita/eslint-config-base": "^1.1.2",
+    "@aparajita/prettier-config": "^1.0.0",
+    "@aparajita/swiftly": "^1.0.0",
+    "@capacitor/core": "^3.6.0",
+    "@ionic/swiftlint-config": "^1.1.2",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.2",
+    "@typescript-eslint/parser": "^5.30.2",
+    "chalk": "^5.0.1",
+    "commit-and-tag-version": "^10.0.1",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-import-resolver-typescript": "^3.1.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.3",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "nodemon": "^2.0.18",
+    "prettier": "^2.7.1",
+    "prettier-plugin-java": "^1.6.2",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.75.7",
+    "typescript": "~4.7.4"
+  },
   "dependencies": {
-    "@aparajita/capacitor-native-decorator": "^1.1.1",
-    "@capacitor/android": "^2.4.7",
-    "@capacitor/core": "^2.4.7",
-    "@capacitor/ios": "^2.4.7",
-    "tslib": "^2.1.0"
+    "@aparajita/capacitor-native-decorator": "link:../capacitor-native-decorator",
+    "@capacitor/android": "^3.6.0",
+    "@capacitor/app": "^1.1.1",
+    "@capacitor/ios": "^3.6.0"
+  },
+  "peerDependencies": {
+    "@capacitor/core": "^3.6.0"
   }
 }

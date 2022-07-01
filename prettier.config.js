@@ -1,5 +1,4 @@
 module.exports = {
-  semi: false,
-  singleQuote: true,
-  trailingComma: 'none'
+  ...require('@aparajita/prettier-config'),
+  plugins: ['prettier-plugin-java']
 }

@@ -1,4 +1,4 @@
-export default {
+const config = {
   input: 'dist/esm/index.js',
   output: [
     {
@@ -30,3 +30,5 @@ export default {
   // it defaults to globalThis, which older android phones won't understand.
   context: 'window'
 }
+
+export default config
