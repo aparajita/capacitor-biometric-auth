@@ -1,10 +1,10 @@
 import { registerPlugin } from '@capacitor/core'
 import { kPluginName } from './definitions'
 import type { BiometricAuthPlugin } from './definitions'
-import { name, version } from './package.json'
+import { name } from './package.json'
 import { BiometricAuth } from './web'
 
-console.log(`loaded ${name} v${version}`)
+console.log(`loaded ${name}`)
 
 // Because we are using @aparajita/capacitor-native-decorator,
 // we have one version of the TS code to rule them all, and there
