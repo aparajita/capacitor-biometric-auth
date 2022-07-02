@@ -42,8 +42,9 @@
     "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin && cd ..",
     "verify:android": "cd android && ./gradlew clean build test && cd ..",
     "verify:web": "pnpm build",
-    "release": "commit-and-tag-version",
-    "push": "git push --follow-tags origin main"
+    "push": "git push --follow-tags origin main",
+    "release.check": "commit-and-tag-version $VERSION --dry-run",
+    "release": "commit-and-tag-version $VERSION && pnpm push && pnpm publish"
   },
   "keywords": [
     "capacitor",
