@@ -79,6 +79,7 @@
     "@aparajita/swiftly": "^1.0.0",
     "@capacitor/core": "^3.6.0",
     "@ionic/swiftlint-config": "^1.1.2",
+    "@rollup/plugin-json": "^4.1.0",
     "@types/node": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.30.2",
     "@typescript-eslint/parser": "^5.30.2",

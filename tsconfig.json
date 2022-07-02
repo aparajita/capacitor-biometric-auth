@@ -12,6 +12,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "dist/esm",
+    "resolveJsonModule": true,
     "strict": true,
     "target": "es2017"
   },
