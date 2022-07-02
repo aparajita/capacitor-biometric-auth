@@ -1,6 +1,6 @@
 {
   "name": "@aparajita/capacitor-biometric-auth",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Provides access to the native biometric auth APIs for Capacitor apps",
   "author": "Aparajita Fishman",
   "license": "MIT",
@@ -43,8 +43,8 @@
     "verify:android": "cd android && ./gradlew clean build test && cd ..",
     "verify:web": "pnpm build",
     "push": "git push --follow-tags origin main",
-    "release.check": "commit-and-tag-version $VERSION --dry-run",
-    "release": "commit-and-tag-version $VERSION && pnpm push && pnpm publish"
+    "release.check": "commit-and-tag-version ${VERSION:+-r $VERSION} --dry-run",
+    "release": "commit-and-tag-version ${VERSION:+-r $VERSION} && pnpm push && pnpm publish"
   },
   "keywords": [
     "capacitor",
