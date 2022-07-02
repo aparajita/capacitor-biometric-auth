@@ -5,7 +5,6 @@
     "declaration": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "inlineSources": true,
     "lib": ["dom", "es2017"],
     "module": "esnext",
     "moduleResolution": "node",
@@ -13,8 +12,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "dist/esm",
-    "pretty": true,
-    "sourceMap": true,
     "strict": true,
     "target": "es2017"
   },
