@@ -1,6 +1,6 @@
 <div class="markdown-body">
 
-# capacitor-biometric-auth
+# capacitor-biometric-auth&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth.svg)](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth)
 
 This plugin for [Capacitor 3](https://capacitorjs.com) provides access to native biometry on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry is simulated on the web so you can test your logic without making any changes to your code.
 
