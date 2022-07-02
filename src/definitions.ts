@@ -1,6 +1,5 @@
-import type { PluginListenerHandle, PluginResultError } from '@capacitor/core'
-
 import type { DecoratedNativePlugin } from '@aparajita/capacitor-native-decorator'
+import type { PluginListenerHandle, PluginResultError } from '@capacitor/core'
 
 export enum BiometryType {
   /**
