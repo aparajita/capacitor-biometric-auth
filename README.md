@@ -6,6 +6,12 @@ This plugin for [Capacitor 3](https://capacitorjs.com) provides access to native
 
 👉 **NOTE:** This plugin only works with Capacitor 3. If you are upgrading from the Capacitor 2 version, note that the plugin name has changed to `BiometricAuth`.
 
+## Demos
+
+Here is `capacitor-biometric-auth` running on the [demo app](https://github.com/aparajita/capacitor-biometric-auth-demo) on both iOS and Android.
+
+<img src="demo/ios.mp4" width="354"/><img src="demo/android.mp4" width="365"/>
+
 ## Installation
 
 ```sh
