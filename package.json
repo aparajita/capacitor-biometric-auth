@@ -67,7 +67,7 @@
   "swiftlint": "@ionic/swiftlint-config",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aparajita/capacitor-biometric-auth"
+    "url": "https://github.com/aparajita/capacitor-biometric-auth.git"
   },
   "bugs": {
     "url": "https://github.com/aparajita/capacitor-biometric-auth/issues"
