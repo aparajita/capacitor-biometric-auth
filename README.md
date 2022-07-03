@@ -10,7 +10,9 @@ This plugin for [Capacitor 3](https://capacitorjs.com) provides access to native
 
 Here is `capacitor-biometric-auth` running on the [demo app](https://github.com/aparajita/capacitor-biometric-auth-demo) on both iOS and Android.
 
-<img src="demo/ios.mp4" width="354"/><img src="demo/android.mp4" width="365"/>
+|iOS|Android|
+|---|-------|
+|<video src="https://user-images.githubusercontent.com/22218/177023147-1f9abce4-2dc3-4157-8bf1-d8d9fdba3977.mp4" width="352" />|<video src="https://user-images.githubusercontent.com/22218/177023168-d7c18a4b-a2f9-49f9-ae39-40884219c128.mp4" width="365" />|
 
 ## Installation
 
