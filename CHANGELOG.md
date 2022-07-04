@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [2.0.4](https://github.com/aparajita/capacitor-biometric-auth/compare/v2.0.3...v2.0.4) (2022-07-04)
+
+
+### Bug Fixes
+
+* update to fixed native-decorator ([9c1c5f7](https://github.com/aparajita/capacitor-biometric-auth/commit/9c1c5f777e08df8230bf1eb0fadaf1b149fd8bc7))
+
+
+### Docs
+
+* add demo videos ([11ba830](https://github.com/aparajita/capacitor-biometric-auth/commit/11ba830b0aec86b1d81ee41003e59b761a2ffcc3))
+* add demo videos ([1e8c63e](https://github.com/aparajita/capacitor-biometric-auth/commit/1e8c63edd6d150dae8281528fe2d7d7cd7b574d5))
+
+
+### Maintenance
+
+* add missing extension ([7b83029](https://github.com/aparajita/capacitor-biometric-auth/commit/7b830298e46c4350a360f5ab9a07b06ca5352459))
+* don't need .gitattributes ([c076dc8](https://github.com/aparajita/capacitor-biometric-auth/commit/c076dc89cded17ce0544777f66f87d07776f49a0))
+* update deps ([9ecffac](https://github.com/aparajita/capacitor-biometric-auth/commit/9ecffac20eb8b101daa3668c59a885048622a8b3))
+* update deps ([608028d](https://github.com/aparajita/capacitor-biometric-auth/commit/608028d636cdbab16e61a512f004511469d97b25))
+* videos are stored on github ([e688790](https://github.com/aparajita/capacitor-biometric-auth/commit/e688790224003604c2c8515714b9e74c4531ee7e))
+
 ### [2.0.3](https://github.com/aparajita/capacitor-biometric-auth/compare/v2.0.2...v2.0.3) (2022-07-02)
 
 
