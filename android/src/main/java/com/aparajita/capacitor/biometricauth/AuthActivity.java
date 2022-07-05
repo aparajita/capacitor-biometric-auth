@@ -110,12 +110,12 @@ public class AuthActivity extends AppCompatActivity {
 
           // When allowDeviceCredential is true, I can't seem to force the prompt
           // to go away, so skip attempt counting.
-          if (!allowDeviceCredential && attemptCount > maxAttempts) {
+          if (!allowDeviceCredential && attemptCount >= maxAttempts) {
             finishActivity(
               BiometryResultType.FAILURE,
               0,
               String.format(
-                "The user exceeded the maximum of %d attempt(s)",
+                "The user reached the maximum of %d attempt(s)",
                 maxAttempts
               )
             );
