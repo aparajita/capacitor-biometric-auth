@@ -115,8 +115,9 @@ export interface AuthenticateOptions {
   androidSubtitle?: string
 
   /**
-   * The maximum number of failed biometric verification attempts before
-   * returning `BiometryError.authenticationFailed`. The default is 3.
+   * When this many consecutive biometric verification attempts fail,
+   * `authenticate` returns `BiometryErrorType.authenticationFailed`.
+   * The default is 3.
    */
   androidMaxAttempts?: number
 }
