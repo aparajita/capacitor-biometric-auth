@@ -221,9 +221,6 @@ export interface BiometricAuthPlugin extends DecoratedNativePlugin {
 
 /**
  * Return a human-readable name for a `BiometryType`.
- *
- * @param {BiometryType} type
- * @returns {string}
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare function getBiometryName(type: BiometryType): string
