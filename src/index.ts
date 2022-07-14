@@ -11,7 +11,6 @@ console.log(`loaded ${name}`)
 // is no need to lazy load. 😁
 const plugin = new BiometricAuth()
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const biometricAuth = registerPlugin<BiometricAuthPlugin>(kPluginName, {
   web: plugin,
   ios: plugin,
