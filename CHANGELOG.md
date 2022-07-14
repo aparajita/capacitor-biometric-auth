@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [2.0.6](https://github.com/aparajita/capacitor-biometric-auth/compare/v2.0.5...v2.0.6) (2022-07-14)
+
+
+### Docs
+
+* remove unnecessary jsdoc ([6be9e0a](https://github.com/aparajita/capacitor-biometric-auth/commit/6be9e0a773f0941313df7a540795efbfbbc66a92))
+* update to describe change to androidMaxAttempts ([e9aab77](https://github.com/aparajita/capacitor-biometric-auth/commit/e9aab77e38fd3c70c468688c50204d7d01e58be6))
+* update to describe change to androidMaxAttempts ([3be919e](https://github.com/aparajita/capacitor-biometric-auth/commit/3be919e13fc45bd6e4d3a8ac125abe26c268d063))
+
+
+### Maintenance
+
+* change java indent to 2 ([9b819e4](https://github.com/aparajita/capacitor-biometric-auth/commit/9b819e4bd9ca39828eb598a0e61ca0e31efd8385))
+* might as well check code here ([4cad0c4](https://github.com/aparajita/capacitor-biometric-auth/commit/4cad0c417be1dbdb3d22e25566fbe3dac1f43efc))
+* never hurts to cache eslint ([d0baa8b](https://github.com/aparajita/capacitor-biometric-auth/commit/d0baa8b89146b72b21bda01857e55d9f351d6165))
+* remove unnecessary disable ([82eac79](https://github.com/aparajita/capacitor-biometric-auth/commit/82eac798f51c4cf386d0d32c40218fbd286348bf))
+* script updates ([a63b7c7](https://github.com/aparajita/capacitor-biometric-auth/commit/a63b7c74c5909503034478878bfe8396f4173654))
+* update deps ([12bdaab](https://github.com/aparajita/capacitor-biometric-auth/commit/12bdaab7e46df256bd799849ab28daacb138ba6b))
+* update target version ([a5f8067](https://github.com/aparajita/capacitor-biometric-auth/commit/a5f806774feb11df9eb23bb67d7615f241986a51))
+
 ### [2.0.5](https://github.com/aparajita/capacitor-biometric-auth/compare/v2.0.4...v2.0.5) (2022-07-05)
 
 
