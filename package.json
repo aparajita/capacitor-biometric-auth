@@ -45,7 +45,7 @@
     "verify:android": "cd android && ./gradlew clean build test && cd ..",
     "verify:web": "pnpm build",
     "push": "git push --follow-tags origin main",
-    "release.check": "commit-and-tag-version ${VERSION:+-r $VERSION} --dry-run",
+    "release.check": "pnpm check.fix && commit-and-tag-version ${VERSION:+-r $VERSION} --dry-run",
     "release": "commit-and-tag-version ${VERSION:+-r $VERSION} && pnpm push && pnpm publish"
   },
   "keywords": [
