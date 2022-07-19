@@ -46,7 +46,8 @@
     "verify:web": "pnpm build",
     "push": "git push --follow-tags origin main",
     "release.check": "pnpm check.fix && commit-and-tag-version ${VERSION:+-r $VERSION} --dry-run",
-    "release": "commit-and-tag-version ${VERSION:+-r $VERSION} && pnpm push && pnpm publish"
+    "release.prepare": "commit-and-tag-version ${VERSION:+-r $VERSION} && pnpm builder",
+    "release": "pnpm push && pnpm publish"
   },
   "keywords": [
     "capacitor",
