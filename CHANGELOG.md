@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [2.0.7](https://github.com/aparajita/capacitor-biometric-auth/compare/v2.0.6...v2.0.7) (2022-07-19)
+
+
+### Maintenance
+
+* let eslint handle this ([8a7e90e](https://github.com/aparajita/capacitor-biometric-auth/commit/8a7e90e756d5cea9738a948f339754a54be05552))
+* reorganize build scripts ([b8ddacb](https://github.com/aparajita/capacitor-biometric-auth/commit/b8ddacba9c8d7f989686a441b8167086486e8f65))
+* update release scripts ([e25bb4b](https://github.com/aparajita/capacitor-biometric-auth/commit/e25bb4b10344626d1f3506fc832989c93aa8313f))
+* updates deps ([7805fe5](https://github.com/aparajita/capacitor-biometric-auth/commit/7805fe5c093b8cfe40525cafac918d49086a1956))
+
 ### [2.0.6](https://github.com/aparajita/capacitor-biometric-auth/compare/v2.0.5...v2.0.6) (2022-07-14)
 
 
