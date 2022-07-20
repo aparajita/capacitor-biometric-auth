@@ -26,7 +26,7 @@
     "builder": "pnpm clean && tsc $SOURCE_MAP && pnpm rollup && make-ios-plugin && pnpm docgen",
     "builder.dev": "SOURCE_MAP=--sourceMap pnpm builder",
     "rollup": "rollup -c rollup.config.mjs",
-    "watcher": "nodemon -w ./src -w tsconfig.json -w rollup.config.mjs --exec 'pnpm $BUILD --silent' -e ts",
+    "watcher": "nodemon -w ./src -w tsconfig.json -w rollup.config.mjs --exec 'pnpm --silent $BUILD' -e ts,json,md",
     "watch": "BUILD=build pnpm watcher",
     "watch.dev": "BUILD=build.dev pnpm watcher",
     "lint": "eslint --cache . && pnpm typecheck",
