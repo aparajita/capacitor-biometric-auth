@@ -3,8 +3,8 @@ lockfileVersion: 5.4
 specifiers:
   '@aparajita/capacitor-docgen': github:aparajita/capacitor-docgen
   '@aparajita/capacitor-docgen-format': github:aparajita/capacitor-docgen-format
-  '@aparajita/capacitor-native-decorator': ^2.0.7
-  '@aparajita/eslint-config-base': ^1.1.4
+  '@aparajita/capacitor-native-decorator': ^2.0.8
+  '@aparajita/eslint-config-base': ^1.1.5
   '@aparajita/prettier-config': ^1.0.0
   '@aparajita/swiftly': ^1.0.4
   '@capacitor/android': ^3.6.0
@@ -13,7 +13,7 @@ specifiers:
   '@capacitor/ios': ^3.6.0
   '@ionic/swiftlint-config': ^1.1.2
   '@rollup/plugin-json': ^4.1.0
-  '@types/node': ^18.0.6
+  '@types/node': ^18.6.0
   '@typescript-eslint/eslint-plugin': ^5.30.7
   '@typescript-eslint/parser': ^5.30.7
   chalk: ^5.0.1
@@ -21,7 +21,7 @@ specifiers:
   eslint: ^8.20.0
   eslint-config-prettier: ^8.5.0
   eslint-config-standard: ^17.0.0
-  eslint-import-resolver-typescript: ^3.2.7
+  eslint-import-resolver-typescript: ^3.3.0
   eslint-plugin-import: ^2.26.0
   eslint-plugin-n: ^15.2.4
   eslint-plugin-prettier: ^4.2.1
@@ -35,21 +35,21 @@ specifiers:
   typescript: ~4.7.4
 
 dependencies:
-  '@aparajita/capacitor-native-decorator': 2.0.7
+  '@aparajita/capacitor-native-decorator': 2.0.8
   '@capacitor/android': 3.6.0_@capacitor+core@3.6.0
   '@capacitor/app': 1.1.1_@capacitor+core@3.6.0
   '@capacitor/ios': 3.6.0_@capacitor+core@3.6.0
 
 devDependencies:
   '@aparajita/capacitor-docgen': github.com/aparajita/capacitor-docgen/8c274c060bb1e93fa0bf9aa324f1d3835842ab03
-  '@aparajita/capacitor-docgen-format': github.com/aparajita/capacitor-docgen-format/221eb6c11f233597fae2b07a8ed2092dc3bd8847
-  '@aparajita/eslint-config-base': 1.1.4_epfs6bvpbdar4s3ag565i6ev2y
+  '@aparajita/capacitor-docgen-format': github.com/aparajita/capacitor-docgen-format/abb7d6ee2c2ff0abd2694ce1b0d1942916ef55ad
+  '@aparajita/eslint-config-base': 1.1.5_6cpa3d5nwaiufuf73sxnfgy7fy
   '@aparajita/prettier-config': 1.0.0_prettier@2.7.1
   '@aparajita/swiftly': 1.0.4
   '@capacitor/core': 3.6.0
   '@ionic/swiftlint-config': 1.1.2
   '@rollup/plugin-json': 4.1.0_rollup@2.77.0
-  '@types/node': 18.0.6
+  '@types/node': 18.6.0
   '@typescript-eslint/eslint-plugin': 5.30.7_6wltbjakwuqm7awqswigmiuhd4
   '@typescript-eslint/parser': 5.30.7_he2ccbldppg44uulnyq4rwocfa
   chalk: 5.0.1
@@ -57,8 +57,8 @@ devDependencies:
   eslint: 8.20.0
   eslint-config-prettier: 8.5.0_eslint@8.20.0
   eslint-config-standard: 17.0.0_aabay5xq26dqolh67bnodxi5n4
-  eslint-import-resolver-typescript: 3.2.7_afl3vkhn63baibzal45igheroq
-  eslint-plugin-import: 2.26.0_adpenwqrbqkrj3nzlozs2cy7dq
+  eslint-import-resolver-typescript: 3.3.0_afl3vkhn63baibzal45igheroq
+  eslint-plugin-import: 2.26.0_ng73mesgr3qjuo2tra2ynrmv5i
   eslint-plugin-n: 15.2.4_eslint@8.20.0
   eslint-plugin-prettier: 4.2.1_g4fztgbwjyq2fvmcscny2sj6fy
   eslint-plugin-promise: 6.0.0_eslint@8.20.0
@@ -72,8 +72,8 @@ devDependencies:
 
 packages:
 
-  /@aparajita/capacitor-native-decorator/2.0.7:
-    resolution: {integrity: sha512-ycfQNjCCxisKYmOadYuYP9ckXQefsPnrTlY5YKABhb7aEXMF+piMIaw3Z1wawQy2CbYYGuZHTQd4wz6Z8Ejv2Q==}
+  /@aparajita/capacitor-native-decorator/2.0.8:
+    resolution: {integrity: sha512-0U/Wn35PuGyvlLZcsWX5Wb+v1RQgOg8l5D3ARQIskXCVfYAoOAiFPOXHUBuwcLk7Geb2AffMxybk8VZZO52QeA==}
     engines: {node: '>=16.15.1'}
     hasBin: true
     dependencies:
@@ -81,8 +81,8 @@ packages:
       tslib: 2.4.0
     dev: false
 
-  /@aparajita/eslint-config-base/1.1.4_epfs6bvpbdar4s3ag565i6ev2y:
-    resolution: {integrity: sha512-+OaklD8kizUZuyw34uynlBa7ON71B7EGaSQ86Jr0icO5y/GCxaMYYWWYECsImBJVmg/TpShdHYgrPbJnkzP/vg==}
+  /@aparajita/eslint-config-base/1.1.5_6cpa3d5nwaiufuf73sxnfgy7fy:
+    resolution: {integrity: sha512-n8ry3mtZMz6BGGzpTCDNXLvuisYq4QBp70DuVQUAUmJ80oRxEM4+rygCEne+exMpZkt8m33UOppmNjGt3nNZ9w==}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '>=5.29.0'
       '@typescript-eslint/parser': '>=5.29.0'
@@ -98,8 +98,8 @@ packages:
       '@typescript-eslint/parser': 5.30.7_he2ccbldppg44uulnyq4rwocfa
       eslint: 8.20.0
       eslint-config-standard: 17.0.0_aabay5xq26dqolh67bnodxi5n4
-      eslint-import-resolver-typescript: 3.2.7_afl3vkhn63baibzal45igheroq
-      eslint-plugin-import: 2.26.0_adpenwqrbqkrj3nzlozs2cy7dq
+      eslint-import-resolver-typescript: 3.3.0_afl3vkhn63baibzal45igheroq
+      eslint-plugin-import: 2.26.0_ng73mesgr3qjuo2tra2ynrmv5i
       eslint-plugin-n: 15.2.4_eslint@8.20.0
       eslint-plugin-promise: 6.0.0_eslint@8.20.0
       typescript: 4.7.4
@@ -369,7 +369,7 @@ packages:
   /@types/fs-extra/8.1.2:
     resolution: {integrity: sha512-SvSrYXfWSc7R4eqnOzbQF4TZmfpNSM9FrSWLU3EUnWBuyZqNBOrv1B1JA3byUDPUl9z4Ab3jeZG2eDdySlgNMg==}
     dependencies:
-      '@types/node': 18.0.6
+      '@types/node': 18.6.0
     dev: true
 
   /@types/json-schema/7.0.11:
@@ -384,8 +384,8 @@ packages:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: true
 
-  /@types/node/18.0.6:
-    resolution: {integrity: sha512-/xUq6H2aQm261exT6iZTMifUySEt4GR5KX8eYyY+C4MSNPqSh9oNIP7tz2GLKTlFaiBbgZNxffoR3CVRG+cljw==}
+  /@types/node/18.6.0:
+    resolution: {integrity: sha512-WZ/6I1GL0DNAo4bb01lGGKTHH8BHJyECepf11kWONg3OJoHq2WYOm16Es1V54Er7NTUXsbDCpKRKdmBc4X2xhA==}
     dev: true
 
   /@types/normalize-package-data/2.4.1:
@@ -1233,7 +1233,7 @@ packages:
       eslint-plugin-promise: ^6.0.0
     dependencies:
       eslint: 8.20.0
-      eslint-plugin-import: 2.26.0_adpenwqrbqkrj3nzlozs2cy7dq
+      eslint-plugin-import: 2.26.0_ng73mesgr3qjuo2tra2ynrmv5i
       eslint-plugin-n: 15.2.4_eslint@8.20.0
       eslint-plugin-promise: 6.0.0_eslint@8.20.0
     dev: true
@@ -1247,8 +1247,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-import-resolver-typescript/3.2.7_afl3vkhn63baibzal45igheroq:
-    resolution: {integrity: sha512-WvcsRy3aPmwVsuS/XVliAJWpIdTlaFXXZPZk3TCbvvF8RtaAkjAhcLL5bl5VEoTmE+XnTHjIbWMzNZcOQpK/DA==}
+  /eslint-import-resolver-typescript/3.3.0_afl3vkhn63baibzal45igheroq:
+    resolution: {integrity: sha512-vlooCGKfDX59rH5TbtluOekinPlIS5Ab+dyQUoCCJoE1IV11R/kn6J+RoMBuBkJhzJEIKJ4myQJhw6lGIXfkRA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '*'
@@ -1257,7 +1257,7 @@ packages:
       debug: 4.3.4
       enhanced-resolve: 5.10.0
       eslint: 8.20.0
-      eslint-plugin-import: 2.26.0_adpenwqrbqkrj3nzlozs2cy7dq
+      eslint-plugin-import: 2.26.0_ng73mesgr3qjuo2tra2ynrmv5i
       get-tsconfig: 4.2.0
       globby: 13.1.2
       is-core-module: 2.9.0
@@ -1267,7 +1267,7 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-module-utils/2.7.3_gatdomlj3u3lcpi3yp2sv7y5wa:
+  /eslint-module-utils/2.7.3_cil25ulcmkukxkx7gouducvgwq:
     resolution: {integrity: sha512-088JEC7O3lDZM9xGe0RerkOMd0EjFl+Yvd1jPWIkMT5u3H9+HC34mWWPnqPrN13gieT9pBOO+Qt07Nb/6TresQ==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -1288,7 +1288,7 @@ packages:
       '@typescript-eslint/parser': 5.30.7_he2ccbldppg44uulnyq4rwocfa
       debug: 3.2.7
       eslint-import-resolver-node: 0.3.6
-      eslint-import-resolver-typescript: 3.2.7_afl3vkhn63baibzal45igheroq
+      eslint-import-resolver-typescript: 3.3.0_afl3vkhn63baibzal45igheroq
       find-up: 2.1.0
     transitivePeerDependencies:
       - supports-color
@@ -1305,7 +1305,7 @@ packages:
       regexpp: 3.2.0
     dev: true
 
-  /eslint-plugin-import/2.26.0_adpenwqrbqkrj3nzlozs2cy7dq:
+  /eslint-plugin-import/2.26.0_ng73mesgr3qjuo2tra2ynrmv5i:
     resolution: {integrity: sha512-hYfi3FXaM8WPLf4S1cikh/r4IxnO6zrhZbEGz2b660EJRbuxgpDS5gkCuYgGWg2xxh2rBuIr4Pvhve/7c31koA==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -1322,7 +1322,7 @@ packages:
       doctrine: 2.1.0
       eslint: 8.20.0
       eslint-import-resolver-node: 0.3.6
-      eslint-module-utils: 2.7.3_gatdomlj3u3lcpi3yp2sv7y5wa
+      eslint-module-utils: 2.7.3_cil25ulcmkukxkx7gouducvgwq
       has: 1.0.3
       is-core-module: 2.9.0
       is-glob: 4.0.3
@@ -3228,10 +3228,10 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/aparajita/capacitor-docgen-format/221eb6c11f233597fae2b07a8ed2092dc3bd8847:
-    resolution: {tarball: https://codeload.github.com/aparajita/capacitor-docgen-format/tar.gz/221eb6c11f233597fae2b07a8ed2092dc3bd8847}
+  github.com/aparajita/capacitor-docgen-format/abb7d6ee2c2ff0abd2694ce1b0d1942916ef55ad:
+    resolution: {tarball: https://codeload.github.com/aparajita/capacitor-docgen-format/tar.gz/abb7d6ee2c2ff0abd2694ce1b0d1942916ef55ad}
     name: '@aparajita/capacitor-docgen-format'
-    version: 1.0.0
+    version: 1.0.1
     engines: {node: '>=16.15.1'}
     hasBin: true
     dev: true
@@ -3243,7 +3243,7 @@ packages:
     engines: {node: '>=14.5.0'}
     hasBin: true
     dependencies:
-      '@types/node': 18.0.6
+      '@types/node': 18.6.0
       colorette: 2.0.19
       github-slugger: 1.4.0
       minimist: 1.2.6
