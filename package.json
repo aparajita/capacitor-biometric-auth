@@ -21,8 +21,9 @@
   ],
   "scripts": {
     "clean": "rimraf ./dist",
-    "build": "pnpm check.fix && pnpm builder",
-    "build.dev": "pnpm check.fix && pnpm builder.dev",
+    "extract-pkg": "node scripts/packageJsonToTS.js",
+    "build": "pnpm extract-pkg && pnpm check.fix && pnpm builder",
+    "build.dev": "pnpm extract-pkg && pnpm check.fix && pnpm builder.dev",
     "builder": "pnpm clean && tsc $SOURCE_MAP && pnpm rollup && make-ios-plugin && pnpm docgen",
     "builder.dev": "SOURCE_MAP=--sourceMap pnpm builder",
     "rollup": "rollup -c rollup.config.mjs",
