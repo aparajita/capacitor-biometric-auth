@@ -62,14 +62,13 @@ On Android, fingerprint, face, and iris authentication are supported. Note that 
 ## API
 <docgen-index>
 
-[checkBiometry()](#checkbiometry)
-[setBiometryType(...)](#setbiometrytype)
-[authenticate(...)](#authenticate)
-[addResumeListener(...)](#addresumelistener)
-
-[Interfaces](#interfaces)
-[Type Aliases](#type-aliases)
-[Enums](#enums)
+* [`checkBiometry()`](#checkbiometry)
+* [`setBiometryType(...)`](#setbiometrytype)
+* [`authenticate(...)`](#authenticate)
+* [`addResumeListener(...)`](#addresumelistener)
+* [Interfaces](#interfaces)
+* [Type Aliases](#type-aliases)
+* [Enums](#enums)
 
 </docgen-index>
 <docgen-api>
