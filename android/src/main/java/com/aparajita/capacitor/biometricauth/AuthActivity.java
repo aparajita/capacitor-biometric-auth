@@ -3,6 +3,7 @@ package com.aparajita.capacitor.biometricauth;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Intent;
+import android.hardware.biometrics.BiometricManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,9 +14,9 @@ import java.util.concurrent.Executor;
 
 public class AuthActivity extends AppCompatActivity {
 
-  static int attemptCount;
   static boolean allowDeviceCredential;
 
+  @SuppressLint("WrongConstant")
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -57,10 +58,21 @@ public class AuthActivity extends AppCompatActivity {
       title = "Authenticate";
     }
 
-    builder.setTitle(title);
-    builder.setSubtitle(subtitle);
-    builder.setDescription(description);
-    builder.setDeviceCredentialAllowed(allowDeviceCredential);
+    builder.setTitle(title)
+        .setSubtitle(subtitle)
+        .setDescription(description);
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      int authenticators = BiometricManager.Authenticators.BIOMETRIC_WEAK;
+
+      if (allowDeviceCredential) {
+        authenticators |= BiometricManager.Authenticators.DEVICE_CREDENTIAL;
+      }
+
+      builder.setAllowedAuthenticators(authenticators);
+    } else {
+      builder.setDeviceCredentialAllowed(allowDeviceCredential);
+    }
 
     // Android docs say that negative button text should not be set if device credential is allowed
     if (!allowDeviceCredential) {
@@ -75,8 +87,6 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     BiometricPrompt.PromptInfo promptInfo = builder.build();
-    attemptCount = 0;
-
     BiometricPrompt prompt = new BiometricPrompt(
       this,
       executor,
@@ -100,26 +110,6 @@ public class AuthActivity extends AppCompatActivity {
         ) {
           super.onAuthenticationSucceeded(result);
           finishActivity();
-        }
-
-        @SuppressLint("DefaultLocale")
-        @Override
-        public void onAuthenticationFailed() {
-          super.onAuthenticationFailed();
-          attemptCount += 1;
-
-          // When allowDeviceCredential is true, I can't seem to force the prompt
-          // to go away, so skip attempt counting.
-          if (!allowDeviceCredential && attemptCount >= maxAttempts) {
-            finishActivity(
-              BiometryResultType.FAILURE,
-              0,
-              String.format(
-                "The user reached the maximum of %d attempt(s)",
-                maxAttempts
-              )
-            );
-          }
         }
       }
     );

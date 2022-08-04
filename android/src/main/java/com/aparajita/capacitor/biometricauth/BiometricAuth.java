@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import androidx.activity.result.ActivityResult;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
@@ -91,17 +92,22 @@ public class BiometricAuth extends Plugin {
   @PluginMethod
   public void checkBiometry(PluginCall call) {
     BiometricManager manager = BiometricManager.from(getContext());
+    int biometryResult;
 
-    int result = manager.canAuthenticate();
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      biometryResult = manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK);
+    } else {
+      biometryResult = manager.canAuthenticate();
+    }
 
     JSObject ret = new JSObject();
-    ret.put("isAvailable", result == BiometricManager.BIOMETRIC_SUCCESS);
+    ret.put("isAvailable", biometryResult == BiometricManager.BIOMETRIC_SUCCESS);
     biometryType = getDeviceBiometryType();
     ret.put("biometryType", biometryType.getType());
 
     String reason = "";
 
-    switch (result) {
+    switch (biometryResult) {
       case BiometricManager.BIOMETRIC_SUCCESS:
         break;
       case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
@@ -112,6 +118,15 @@ public class BiometricAuth extends Plugin {
         break;
       case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
         reason = "There is no biometric hardware on this device.";
+        break;
+      case BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED:
+        reason = "The user can't authenticate because a security vulnerability has been discovered with one or more hardware sensors.";
+        break;
+      case BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED:
+        reason = "The user can't authenticate because the specified options are incompatible with the current Android version.";
+        break;
+      case BiometricManager.BIOMETRIC_STATUS_UNKNOWN:
+        reason = "Unable to determine whether the user can authenticate.";
         break;
     }
 
