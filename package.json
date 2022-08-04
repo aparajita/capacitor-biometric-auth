@@ -30,7 +30,7 @@
     "build": "pnpm -s builder",
     "build.dev": "SOURCE_MAP=--sourceMap pnpm -s builder",
     "watch": "nodemon --exec 'pnpm -s build.dev'",
-    "docgen": "docgen --api BiometricAuthPlugin --output-readme README.md && docgen-format",
+    "docgen": "docgen --api BiometricAuthPlugin --output-readme README.md && docgen-format && pnpm -s lint.prettier README.md",
     "open.ios": "open ios/Plugin.xcworkspace",
     "open.android": "open -b com.google.android.studio android",
     "verify.ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin -quiet && cd ..",

@@ -16,7 +16,6 @@ Here is `capacitor-biometric-auth` running on the [demo app](https://github.com/
 | :----------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
 | <video src="https://user-images.githubusercontent.com/22218/182895212-5f7bfa39-6db1-4149-859b-85cff7012903.mp4" width="352" /> | <video src="https://user-images.githubusercontent.com/22218/182898192-d16243b8-3671-4c32-9e25-5e37feeb43d4.mp4" width="365" /> |
 
-
 ## Installation
 
 ```sh
