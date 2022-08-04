@@ -113,13 +113,6 @@ export interface AuthenticateOptions {
    * Subtitle for the Android dialog. If not supplied, the system default is used.
    */
   androidSubtitle?: string
-
-  /**
-   * When this many consecutive biometric verification attempts fail,
-   * `authenticate` returns `BiometryErrorType.authenticationFailed`.
-   * The default is 3.
-   */
-  androidMaxAttempts?: number
 }
 
 /**
@@ -203,8 +196,16 @@ export interface BiometricAuthPlugin extends DecoratedNativePlugin {
    * Prompt the user for authentication. If authorization fails for any reason,
    * the promise is rejected with a `BiometryError`.
    *
-   * @param {AuthenticateOptions} options
-   * @returns {Promise<void>}
+   * For detailed information about the behavior on iOS, see:
+   *
+   * https://developer.apple.com/documentation/localauthentication/lapolicy/deviceownerauthenticationwithbiometrics
+   *
+   * Android imposes a limit of 5 failed attempts. If `allowDeviceCredential` is
+   * `true`, the user will then be presented with a device credential prompt.
+   * If `allowDeviceCredential` is `false`, `authenticate()` will reject with
+   * a `BiometryErrorType` of `biometryLockout`, after which the user will have
+   * to wait 30 seconds before being allowed to authenticate again.
+   *
    * @rejects {BiometryError}
    */
   authenticate: (options?: AuthenticateOptions) => Promise<void>
@@ -213,7 +214,6 @@ export interface BiometricAuthPlugin extends DecoratedNativePlugin {
    * Register a function that will be called when the app resumes.
    * The function will be passed the result of `checkBiometry()`.
    *
-   * @param {ResumeListener} listener
    * @returns {boolean} true if the listener is successfully added
    */
   addResumeListener: (listener: ResumeListener) => Promise<PluginListenerHandle>
