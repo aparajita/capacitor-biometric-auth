@@ -15,7 +15,7 @@ export default defineConfig({
     {
       file: 'dist/plugin.js',
       format: 'iife',
-      name: 'capacitorDarkMode',
+      name: 'capacitorBiometricAuth',
       globals: {
         '@capacitor/core': 'capacitorExports',
         '@capacitor/app': 'app',
