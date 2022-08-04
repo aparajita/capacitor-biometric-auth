@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.0.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v2.0.8...v3.0.0) (2022-08-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* Capacitor 4 is now required.
+* `androidMaxAttempts` is no longer supported, the plugin now relies on system limits.
+
+### Features
+
+* rely only on system limits ([b502005](https://github.com/aparajita/capacitor-biometric-auth/commit/b502005e14b50d9f28ba852917ec6736ebec5da4))
+
+
+### Refactoring
+
+* new build system ([c7677a1](https://github.com/aparajita/capacitor-biometric-auth/commit/c7677a197b82aa2ce02318d7014e2cc38f262dd2))
+* rename ([35d819d](https://github.com/aparajita/capacitor-biometric-auth/commit/35d819d716d81a40f037353a4f66b605d6f22eb8))
+* upgrade to Capacitor 4 ([684c987](https://github.com/aparajita/capacitor-biometric-auth/commit/684c9878d01489ffc961fa90bc00d6a4fcddc31d))
+
 ### [2.0.8](https://github.com/aparajita/capacitor-biometric-auth/compare/v2.0.7...v2.0.8) (2022-07-25)
 
 
