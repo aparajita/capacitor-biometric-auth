@@ -65,3 +65,4 @@ captures/
 *.xcworkspace
 
 .eslintcache
+.ultra.cache.json

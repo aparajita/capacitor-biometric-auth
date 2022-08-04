@@ -20,35 +20,36 @@
     "LICENSE"
   ],
   "scripts": {
-    "clean": "rimraf ./dist",
-    "extract-pkg": "node scripts/packageJsonToTS.js",
-    "build": "pnpm extract-pkg && pnpm check.fix && pnpm builder",
-    "build.dev": "pnpm extract-pkg && pnpm check.fix && pnpm builder.dev",
-    "builder": "pnpm clean && tsc $SOURCE_MAP && pnpm rollup && make-ios-plugin && pnpm docgen",
-    "builder.dev": "SOURCE_MAP=--sourceMap pnpm builder",
-    "rollup": "rollup -c rollup.config.mjs",
-    "watcher": "nodemon -w ./src -w tsconfig.json -w rollup.config.mjs --exec 'pnpm --silent $BUILD' -e ts,json,md",
-    "watch": "BUILD=build pnpm watcher",
-    "watch.dev": "BUILD=build.dev pnpm watcher",
-    "lint": "eslint --cache . && pnpm typecheck",
-    "lint.fix": "eslint --cache --fix . && pnpm typecheck",
-    "typecheck": "tsc --noEmit",
-    "lint.swift": "pnpm swiftlint",
-    "prettier": "prettier --check \"**/*.{css,html,ts,js,json,java}\"",
-    "prettier.fix": "pnpm prettier --write",
-    "swiftlint": "swiftly ios",
-    "swiftlint.fix": "swiftly --fix ios",
-    "check": "pnpm lint && pnpm prettier && pnpm swiftlint",
-    "check.fix": "pnpm lint.fix && pnpm prettier.fix && pnpm swiftlint.fix",
+    "extract-info": "node scripts/extractPackageInfo.js",
+    "lint.eslint": "eslint --fix --cache --ext .js,.cjs,.mjs,.ts --max-warnings 0",
+    "lint.prettier": "prettier --write --cache --list-different",
+    "lint.tsc": "tsc --noEmit",
+    "lint": "pnpm -s extract-info && pnpm -s lint.eslint . && pnpm -s lint.prettier . && pnpm -s lint.tsc",
+    "tsc": "tsc ${SOURCE_MAP}",
+    "builder": "pnpm -s extract-info && rimraf dist && pnpm -s tsc && rollup -c rollup.config.mjs && pnpm -s docgen",
+    "build": "pnpm -s builder",
+    "build.dev": "SOURCE_MAP=--sourceMap pnpm -s builder",
+    "watch": "nodemon --exec 'pnpm -s build.dev'",
     "docgen": "docgen --api BiometricAuthPlugin --output-readme README.md && docgen-format",
-    "verify": "pnpm verify:ios && pnpm verify:android && pnpm verify:web",
-    "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin && cd ..",
-    "verify:android": "cd android && ./gradlew clean build test && cd ..",
-    "verify:web": "pnpm build",
-    "push": "git push --follow-tags origin main",
-    "release.check": "pnpm check.fix && commit-and-tag-version ${VERSION:+-r $VERSION} --dry-run",
-    "release.prepare": "commit-and-tag-version ${VERSION:+-r $VERSION} && pnpm builder",
-    "release": "pnpm push && pnpm publish"
+    "open.ios": "open ios/Plugin.xcworkspace",
+    "open.android": "open -b com.google.android.studio android",
+    "verify.ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin -quiet && cd ..",
+    "verify.android": "cd android && ./gradlew clean build test && cd ..",
+    "verify": "pnpm verify.ios && pnpm verify.android",
+    "prepare": "husky install",
+    "release.pre": "scripts/ensure-clean.sh && pnpm -s lint",
+    "release": "pnpm -s release.pre && commit-and-tag-version",
+    "release.publish": "pnpm -s release && git push --follow-tags && pnpm publish"
+  },
+  "commit-and-tag-version": {
+    "scripts": {
+      "postbump": "pnpm -s builder"
+    }
+  },
+  "ultra": {
+    "concurrent": [
+      "verify"
+    ]
   },
   "keywords": [
     "capacitor",
