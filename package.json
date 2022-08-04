@@ -38,8 +38,7 @@
     "verify": "pnpm verify.ios && pnpm verify.android",
     "prepare": "husky install",
     "release.pre": "scripts/ensure-clean.sh && pnpm -s lint",
-    "release": "pnpm -s release.pre && commit-and-tag-version",
-    "release.publish": "pnpm -s release && git push --follow-tags && pnpm publish"
+    "release": "pnpm -s release.pre && commit-and-tag-version && git push --follow-tags && pnpm publish"
   },
   "commit-and-tag-version": {
     "scripts": {
