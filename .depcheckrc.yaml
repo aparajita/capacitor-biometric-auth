@@ -1,0 +1,14 @@
+ignores:
+  - '@commitlint/*'
+  - lint-staged
+  - rollup
+  - ultra-runner
+
+ignore-patterns:
+  - dist
+  - node_modules
+
+specials:
+  - bin
+  - eslint
+  - prettier
