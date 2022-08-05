@@ -20,13 +20,14 @@
     "LICENSE"
   ],
   "scripts": {
+    "clean": "rimraf dist",
     "extract-info": "node scripts/extractPackageInfo.js",
     "lint.eslint": "eslint --fix --cache --ext .js,.cjs,.mjs,.ts --max-warnings 0",
     "lint.prettier": "prettier --write --cache --list-different",
     "lint.tsc": "tsc --noEmit",
     "lint": "pnpm -s extract-info && pnpm -s lint.eslint . && pnpm -s lint.prettier . && pnpm -s lint.tsc",
     "tsc": "tsc ${SOURCE_MAP}",
-    "builder": "pnpm -s extract-info && rimraf dist && pnpm -s tsc && rollup -c rollup.config.mjs && pnpm -s docgen",
+    "builder": "pnpm -s extract-info && pnpm -s clean && pnpm -s tsc && rollup -c rollup.config.mjs",
     "build": "pnpm -s builder",
     "build.dev": "SOURCE_MAP=--sourceMap pnpm -s builder",
     "watch": "nodemon --exec 'pnpm -s build.dev'",
@@ -37,8 +38,8 @@
     "verify.android": "cd android && ./gradlew clean build test && cd ..",
     "verify": "pnpm verify.ios && pnpm verify.android",
     "prepare": "husky install",
-    "release.pre": "scripts/ensure-clean.sh && pnpm -s lint",
-    "release": "pnpm -s release.pre && commit-and-tag-version && git push --follow-tags && pnpm publish"
+    "release.pre": "scripts/ensure-clean.sh && pnpm -s lint && pnpm -s docgen && git add README.md",
+    "release": "pnpm -s release.pre && commit-and-tag-version --commit-all && git push --follow-tags && pnpm publish"
   },
   "commit-and-tag-version": {
     "scripts": {
