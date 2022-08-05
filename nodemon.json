@@ -6,6 +6,7 @@
     ".editorconfig",
     ".eslintcache",
     ".ultra.cache.json",
-    "pnpm-lock.yaml"
+    "pnpm-lock.yaml",
+    "src/info.json"
   ]
 }
