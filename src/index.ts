@@ -11,12 +11,12 @@ console.log(`loaded ${info.name} v${info.version}`)
 // is no need to lazy load. 😁
 const plugin = new BiometricAuth()
 
-const biometricAuth = registerPlugin<BiometricAuthPlugin>(kPluginName, {
+registerPlugin<BiometricAuthPlugin>(kPluginName, {
   web: plugin,
   ios: plugin,
   android: plugin
 })
 
 export * from './definitions'
-export { biometricAuth as BiometricAuth }
+export { plugin as BiometricAuth }
 export { getBiometryName } from './web'

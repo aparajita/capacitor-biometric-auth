@@ -213,8 +213,6 @@ export interface BiometricAuthPlugin extends DecoratedNativePlugin {
   /**
    * Register a function that will be called when the app resumes.
    * The function will be passed the result of `checkBiometry()`.
-   *
-   * @returns {boolean} true if the listener is successfully added
    */
   addResumeListener: (listener: ResumeListener) => Promise<PluginListenerHandle>
 }
