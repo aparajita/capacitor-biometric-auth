@@ -2,7 +2,6 @@ ignores:
   - '@commitlint/*'
   - lint-staged
   - rollup
-  - ultra-runner
 
 ignore-patterns:
   - dist

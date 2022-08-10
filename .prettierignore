@@ -4,4 +4,3 @@ android/*
 !android/src
 CHANGELOG.md
 pnpm-lock.yaml
-.ultra.cache.json

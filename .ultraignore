@@ -1,9 +1,0 @@
-.depcheckrc.yaml
-.editorconfig
-.eslintcache
-.gitignore
-.idea/
-commitlint.config.js
-dist/
-node_modules/
-pnpm-lock.yaml
