@@ -90,7 +90,7 @@ Check to see what biometry type (if any) is available.
 ### setBiometryType(...)
 
 ```typescript
-setBiometryType(type: BiometryType | string | undefined) => void
+setBiometryType(type: BiometryType | string | undefined) => Promise<void>
 ```
 
 web only<br><br>On the web, this method allows you to dynamically simulate different types of biometry. You may either pass a <a href="#biometrytype">`BiometryType`</a> enum or the string name of a <a href="#biometrytype">`BiometryType`</a>. If a string is passed and it isn't a valid value, nothing happens.

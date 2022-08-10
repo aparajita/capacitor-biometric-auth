@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.1.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v3.0.2...v3.1.0) (2022-08-10)
+
+
+### Features
+
+* don’t use native-decorator, lazy load ([4a03a0d](https://github.com/aparajita/capacitor-biometric-auth/commit/4a03a0d8fce40c316a60ee70e9d9e39aa2ae838c))
+
+
+### Maintenance
+
+* ditch ultra-runner, use pre/post scripts ([184ffe0](https://github.com/aparajita/capacitor-biometric-auth/commit/184ffe06996225c237b2e312b78424eb86e34981))
+
 ### [3.0.2](https://github.com/aparajita/capacitor-biometric-auth/compare/v3.0.1...v3.0.2) (2022-08-06)
 
 
