@@ -1,5 +1,8 @@
-import type { DecoratedNativePlugin } from '@aparajita/capacitor-native-decorator'
-import type { PluginListenerHandle, PluginResultError } from '@capacitor/core'
+import type {
+  PluginListenerHandle,
+  PluginResultError,
+  WebPlugin
+} from '@capacitor/core'
 
 export enum BiometryType {
   /**
@@ -176,7 +179,7 @@ export interface CheckBiometryResult {
  */
 export type ResumeListener = (info: CheckBiometryResult) => void
 
-export interface BiometricAuthPlugin extends DecoratedNativePlugin {
+export interface BiometricAuthPlugin extends WebPlugin {
   /**
    * Check to see what biometry type (if any) is available.
    */
@@ -190,7 +193,7 @@ export interface BiometricAuthPlugin extends DecoratedNativePlugin {
    * or the string name of a `BiometryType`. If a string is passed and
    * it isn't a valid value, nothing happens.
    */
-  setBiometryType: (type: BiometryType | string | undefined) => void
+  setBiometryType: (type: BiometryType | string | undefined) => Promise<void>
 
   /**
    * Prompt the user for authentication. If authorization fails for any reason,
@@ -216,11 +219,3 @@ export interface BiometricAuthPlugin extends DecoratedNativePlugin {
    */
   addResumeListener: (listener: ResumeListener) => Promise<PluginListenerHandle>
 }
-
-/**
- * Return a human-readable name for a `BiometryType`.
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-declare function getBiometryName(type: BiometryType): string
-
-export const kPluginName = 'BiometricAuth'

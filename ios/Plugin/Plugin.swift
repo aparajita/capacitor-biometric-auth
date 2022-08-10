@@ -5,8 +5,8 @@ import LocalAuthentication
 private let kReason = "reason"
 private let kMissingFaceIDUsageEntry = "The device supports Face ID, but NSFaceIDUsageDescription is not in Info.plist."
 
-@objc(BiometricAuth)
-public class BiometricAuth: CAPPlugin {
+@objc(BiometricAuthNative)
+public class BiometricAuthNative: CAPPlugin {
   let biometryErrorCodeMap: [LAError.Code: String] = [
     .appCancel: "appCancel",
     .authenticationFailed: "authenticationFailed",
@@ -22,6 +22,7 @@ public class BiometricAuth: CAPPlugin {
   ]
 
   var canEvaluatePolicy = true
+  var count = 0
 
   /**
    * Check the device's availability and type of biometric authentication.
@@ -58,6 +59,11 @@ public class BiometricAuth: CAPPlugin {
       "biometryType": context.biometryType.rawValue,
       "reason": reason
     ])
+  }
+
+  @objc func test(_ call: CAPPluginCall) {
+    call.resolve(["count": count])
+    count += 1
   }
 
   /**

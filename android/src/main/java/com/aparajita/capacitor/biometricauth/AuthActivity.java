@@ -32,12 +32,12 @@ public class AuthActivity extends AppCompatActivity {
 
     BiometricPrompt.PromptInfo.Builder builder = new BiometricPrompt.PromptInfo.Builder();
     Intent intent = getIntent();
-    String title = intent.getStringExtra(BiometricAuth.TITLE);
-    String subtitle = intent.getStringExtra(BiometricAuth.SUBTITLE);
-    String description = intent.getStringExtra(BiometricAuth.REASON);
+    String title = intent.getStringExtra(BiometricAuthNative.TITLE);
+    String subtitle = intent.getStringExtra(BiometricAuthNative.SUBTITLE);
+    String description = intent.getStringExtra(BiometricAuthNative.REASON);
     final int maxAttempts = intent.getIntExtra(
-      BiometricAuth.MAX_ATTEMPTS,
-      BiometricAuth.DEFAULT_MAX_ATTEMPTS
+      BiometricAuthNative.MAX_ATTEMPTS,
+      BiometricAuthNative.DEFAULT_MAX_ATTEMPTS
     );
     allowDeviceCredential = false;
 
@@ -49,7 +49,7 @@ public class AuthActivity extends AppCompatActivity {
 
       if (manager.isDeviceSecure()) {
         allowDeviceCredential =
-          intent.getBooleanExtra(BiometricAuth.DEVICE_CREDENTIAL, false);
+          intent.getBooleanExtra(BiometricAuthNative.DEVICE_CREDENTIAL, false);
       }
     }
 
@@ -77,7 +77,7 @@ public class AuthActivity extends AppCompatActivity {
     // Android docs say that negative button text should not be set if device credential is allowed
     if (!allowDeviceCredential) {
       String negativeButtonText = intent.getStringExtra(
-        BiometricAuth.CANCEL_TITLE
+        BiometricAuthNative.CANCEL_TITLE
       );
       builder.setNegativeButtonText(
         negativeButtonText == null || negativeButtonText.isEmpty()
@@ -127,12 +127,12 @@ public class AuthActivity extends AppCompatActivity {
     String errorMessage
   ) {
     Intent intent = new Intent();
-    String prefix = BiometricAuth.RESULT_EXTRA_PREFIX;
+    String prefix = BiometricAuthNative.RESULT_EXTRA_PREFIX;
 
     intent
-      .putExtra(prefix + BiometricAuth.RESULT_TYPE, resultType.toString())
-      .putExtra(prefix + BiometricAuth.RESULT_ERROR_CODE, errorCode)
-      .putExtra(prefix + BiometricAuth.RESULT_ERROR_MESSAGE, errorMessage);
+      .putExtra(prefix + BiometricAuthNative.RESULT_TYPE, resultType.toString())
+      .putExtra(prefix + BiometricAuthNative.RESULT_ERROR_CODE, errorCode)
+      .putExtra(prefix + BiometricAuthNative.RESULT_ERROR_MESSAGE, errorMessage);
 
     setResult(RESULT_OK, intent);
     finish();

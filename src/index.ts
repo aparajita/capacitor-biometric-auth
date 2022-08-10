@@ -1,22 +1,18 @@
 import { registerPlugin } from '@capacitor/core'
-import { kPluginName } from './definitions'
 import type { BiometricAuthPlugin } from './definitions'
 import info from './info.json'
-import { BiometricAuth } from './web'
 
 console.log(`loaded ${info.name} v${info.version}`)
 
-// Because we are using @aparajita/capacitor-native-decorator,
-// we have one version of the TS code to rule them all, and there
-// is no need to lazy load. 😁
-const plugin = new BiometricAuth()
-
-registerPlugin<BiometricAuthPlugin>(kPluginName, {
-  web: plugin,
-  ios: plugin,
-  android: plugin
+const proxy = registerPlugin<BiometricAuthPlugin>('BiometricAuthNative', {
+  web: async () =>
+    import('./web').then((module) => new module.BiometricAuthWeb(proxy)),
+  ios: async () =>
+    import('./native').then((module) => new module.BiometricAuthNative(proxy)),
+  android: async () =>
+    import('./native').then((module) => new module.BiometricAuthNative(proxy))
 })
 
 export * from './definitions'
-export { plugin as BiometricAuth }
-export { getBiometryName } from './web'
+export * from './web-utils'
+export { proxy as BiometricAuth }

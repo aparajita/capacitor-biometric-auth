@@ -17,8 +17,8 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import java.util.HashMap;
 
 @SuppressLint("RestrictedApi")
-@CapacitorPlugin(name = "BiometricAuth")
-public class BiometricAuth extends Plugin {
+@CapacitorPlugin(name = "BiometricAuthNative")
+public class BiometricAuthNative extends Plugin {
 
   public static final String RESULT_TYPE = "type";
   public static final String RESULT_ERROR_CODE = "errorCode";
@@ -206,7 +206,7 @@ public class BiometricAuth extends Plugin {
 
     if (data != null) {
       resultTypeName =
-        data.getStringExtra(RESULT_EXTRA_PREFIX + BiometricAuth.RESULT_TYPE);
+        data.getStringExtra(RESULT_EXTRA_PREFIX + BiometricAuthNative.RESULT_TYPE);
     }
 
     if (resultTypeName == null) {
@@ -230,11 +230,11 @@ public class BiometricAuth extends Plugin {
     }
 
     int errorCode = data.getIntExtra(
-      RESULT_EXTRA_PREFIX + BiometricAuth.RESULT_ERROR_CODE,
+      RESULT_EXTRA_PREFIX + BiometricAuthNative.RESULT_ERROR_CODE,
       0
     );
     String errorMessage = data.getStringExtra(
-      RESULT_EXTRA_PREFIX + BiometricAuth.RESULT_ERROR_MESSAGE
+      RESULT_EXTRA_PREFIX + BiometricAuthNative.RESULT_ERROR_MESSAGE
     );
 
     switch (resultType) {

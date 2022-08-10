@@ -1,53 +1,12 @@
-import { native } from '@aparajita/capacitor-native-decorator'
-import { App } from '@capacitor/app'
-import { WebPlugin } from '@capacitor/core'
-import type { PluginListenerHandle } from '@capacitor/core'
-import type {
-  AuthenticateOptions,
-  BiometricAuthPlugin,
-  CheckBiometryResult,
-  ResumeListener
-} from './definitions'
-import {
-  BiometryError,
-  BiometryErrorType,
-  BiometryType,
-  kPluginName
-} from './definitions'
+import { BiometricAuthBase } from './base'
+import type { AuthenticateOptions, CheckBiometryResult } from './definitions'
+import { BiometryError, BiometryErrorType, BiometryType } from './definitions'
+import { getBiometryName } from './web-utils'
 
-const kBiometryTypeNameMap = {
-  [BiometryType.none]: '',
-  [BiometryType.touchId]: 'Touch ID',
-  [BiometryType.faceId]: 'Face ID',
-  [BiometryType.fingerprintAuthentication]: 'Fingerprint Authentication',
-  [BiometryType.faceAuthentication]: 'Face Authentication',
-  [BiometryType.irisAuthentication]: 'Iris Authentication'
-}
+// eslint-disable-next-line import/prefer-default-export
+export class BiometricAuthWeb extends BiometricAuthBase {
+  private biometryType = BiometryType.none
 
-export class BiometricAuth extends WebPlugin implements BiometricAuthPlugin {
-  private biometryType: BiometryType = BiometryType.none
-
-  getRegisteredPluginName(): string {
-    return kPluginName
-  }
-
-  setBiometryType(type: BiometryType | string | undefined): void {
-    if (typeof type === 'undefined') {
-      return
-    }
-
-    if (typeof type === 'string') {
-      // eslint-disable-next-line no-prototype-builtins
-      if (BiometryType.hasOwnProperty(type)) {
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        this.biometryType = BiometryType[type as keyof typeof BiometryType]
-      }
-    } else {
-      this.biometryType = type
-    }
-  }
-
-  @native()
   async checkBiometry(): Promise<CheckBiometryResult> {
     return Promise.resolve({
       isAvailable: this.biometryType !== BiometryType.none,
@@ -56,7 +15,6 @@ export class BiometricAuth extends WebPlugin implements BiometricAuthPlugin {
     })
   }
 
-  @native()
   async authenticate(options?: AuthenticateOptions): Promise<void> {
     return this.checkBiometry().then(({ isAvailable, biometryType }) => {
       if (isAvailable) {
@@ -64,7 +22,7 @@ export class BiometricAuth extends WebPlugin implements BiometricAuthPlugin {
           // eslint-disable-next-line no-alert
           confirm(
             options?.reason ||
-              `Authenticate with ${kBiometryTypeNameMap[biometryType]}?`
+              `Authenticate with ${getBiometryName(biometryType)}?`
           )
         ) {
           return
@@ -80,29 +38,23 @@ export class BiometricAuth extends WebPlugin implements BiometricAuthPlugin {
     })
   }
 
-  addResumeListener(
-    listener: ResumeListener
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return App.addListener('appStateChange', ({ isActive }): void => {
-      if (isActive) {
-        this.checkBiometry()
-          .then((info: CheckBiometryResult) => {
-            listener(info)
-          })
-          .catch((error: Error) => {
-            console.error(error.message)
-          })
-      }
-    })
-  }
-}
+  async setBiometryType(
+    type: BiometryType | string | undefined
+  ): Promise<void> {
+    if (typeof type === 'undefined') {
+      return Promise.resolve()
+    }
 
-/**
- * Return a human-readable name for a BiometryType.
- *
- * @param {BiometryType} type
- * @returns {string}
- */
-export function getBiometryName(type: BiometryType): string {
-  return kBiometryTypeNameMap[type] || ''
+    if (typeof type === 'string') {
+      // eslint-disable-next-line no-prototype-builtins
+      if (BiometryType.hasOwnProperty(type)) {
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+        this.biometryType = BiometryType[type as keyof typeof BiometryType]
+      }
+    } else {
+      this.biometryType = type
+    }
+
+    return Promise.resolve()
+  }
 }
