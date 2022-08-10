@@ -34,7 +34,6 @@ specifiers:
   rimraf: ^3.0.2
   rollup: ^2.77.2
   swiftlint: ^1.0.1
-  tslib: ^2.4.0
   typescript: ~4.7.4
 
 dependencies:
@@ -42,7 +41,6 @@ dependencies:
   '@capacitor/app': 4.0.1_@capacitor+core@4.0.1
   '@capacitor/core': 4.0.1
   '@capacitor/ios': 4.0.1_@capacitor+core@4.0.1
-  tslib: 2.4.0
 
 devDependencies:
   '@aparajita/capacitor-docgen': github.com/aparajita/capacitor-docgen/8c274c060bb1e93fa0bf9aa324f1d3835842ab03
