@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [3.1.1](https://github.com/aparajita/capacitor-biometric-auth/compare/v3.1.0...v3.1.1) (2022-08-10)
+
+
+### Bug Fixes
+
+* tslib is no longer necessary ([abb4cf0](https://github.com/aparajita/capacitor-biometric-auth/commit/abb4cf082f04d0643e061ebb0e2ccf50b7bcd230))
+
 ## [3.1.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v3.0.2...v3.1.0) (2022-08-10)
 
 

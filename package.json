@@ -1,6 +1,6 @@
 {
   "name": "@aparajita/capacitor-biometric-auth",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Provides access to the native biometric auth APIs for Capacitor apps",
   "author": "Aparajita Fishman",
   "license": "MIT",
