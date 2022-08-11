@@ -14,11 +14,11 @@ export abstract class BiometricAuthBase
   extends WebPlugin
   implements BiometricAuthPlugin
 {
-  private readonly _plugin: BiometricAuthPlugin
+  private readonly proxy: BiometricAuthPlugin
 
   constructor(plugin: BiometricAuthPlugin) {
     super()
-    this._plugin = plugin
+    this.proxy = plugin
   }
 
   abstract setBiometryType(
@@ -35,14 +35,12 @@ export abstract class BiometricAuthBase
   ): Promise<PluginListenerHandle> & PluginListenerHandle {
     return App.addListener('appStateChange', ({ isActive }): void => {
       if (isActive) {
-        this._plugin
+        this.proxy
           .checkBiometry()
           .then((info: CheckBiometryResult) => {
             listener(info)
           })
-          .catch((error: Error) => {
-            console.error(error.message)
-          })
+          .catch(console.error)
       }
     })
   }
