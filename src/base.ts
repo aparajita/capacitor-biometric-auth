@@ -14,13 +14,6 @@ export abstract class BiometricAuthBase
   extends WebPlugin
   implements BiometricAuthPlugin
 {
-  private readonly proxy: BiometricAuthPlugin
-
-  constructor(plugin: BiometricAuthPlugin) {
-    super()
-    this.proxy = plugin
-  }
-
   abstract setBiometryType(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     type: BiometryType | string | undefined
@@ -35,8 +28,7 @@ export abstract class BiometricAuthBase
   ): Promise<PluginListenerHandle> & PluginListenerHandle {
     return App.addListener('appStateChange', ({ isActive }): void => {
       if (isActive) {
-        this.proxy
-          .checkBiometry()
+        this.checkBiometry()
           .then((info: CheckBiometryResult) => {
             listener(info)
           })

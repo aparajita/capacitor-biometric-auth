@@ -6,7 +6,7 @@ console.log(`loaded ${info.name} v${info.version}`)
 
 const proxy = registerPlugin<BiometricAuthPlugin>('BiometricAuthNative', {
   web: async () =>
-    import('./web').then((module) => new module.BiometricAuthWeb(proxy)),
+    import('./web').then((module) => new module.BiometricAuthWeb()),
   ios: async () =>
     import('./native').then((module) => new module.BiometricAuthNative(proxy)),
   android: async () =>

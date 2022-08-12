@@ -1,9 +1,19 @@
 import { BiometricAuthBase } from './base'
-import type { AuthenticateOptions, CheckBiometryResult } from './definitions'
+import type {
+  AuthenticateOptions,
+  BiometricAuthPlugin,
+  CheckBiometryResult
+} from './definitions'
 import { BiometryType } from './definitions'
 
 // eslint-disable-next-line import/prefer-default-export
 export class BiometricAuthNative extends BiometricAuthBase {
+  constructor(capProxy: BiometricAuthPlugin) {
+    super()
+    this.checkBiometry = capProxy.checkBiometry
+    this.authenticate = capProxy.authenticate
+  }
+
   async checkBiometry(): Promise<CheckBiometryResult> {
     // Never used, satisfy the compiler
     return Promise.resolve({
