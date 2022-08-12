@@ -22,7 +22,6 @@ public class BiometricAuthNative: CAPPlugin {
   ]
 
   var canEvaluatePolicy = true
-  var count = 0
 
   /**
    * Check the device's availability and type of biometric authentication.
@@ -59,11 +58,6 @@ public class BiometricAuthNative: CAPPlugin {
       "biometryType": context.biometryType.rawValue,
       "reason": reason
     ])
-  }
-
-  @objc func test(_ call: CAPPluginCall) {
-    call.resolve(["count": count])
-    count += 1
   }
 
   /**
