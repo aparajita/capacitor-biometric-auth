@@ -109,7 +109,7 @@ web only<br><br>On the web, this method allows you to dynamically simulate diffe
 authenticate(options?: AuthenticateOptions) => Promise<void>
 ```
 
-Prompt the user for authentication. If authorization fails for any reason, the promise is rejected with a `BiometryError`.<br><br>For detailed information about the behavior on iOS, see:<br><br>https://developer.apple.com/documentation/localauthentication/lapolicy/deviceownerauthenticationwithbiometrics<br><br>Android imposes a limit of 5 failed attempts. If `allowDeviceCredential` is `true`, the user will then be presented with a device credential prompt. If `allowDeviceCredential` is `false`, `authenticate()` will reject with a `BiometryErrorType` of `biometryLockout`, after which the user will have to wait 30 seconds before being allowed to authenticate again.
+Prompt the user for authentication. If authorization fails for any reason, the promise is rejected with a `BiometryError`.<br><br>For detailed information about the behavior on iOS, see:<br><br>https://developer.apple.com/documentation/localauthentication/lapolicy/deviceownerauthenticationwithbiometrics<br><br>Some versions of Android impose a limit on the number of failed attempts. If `allowDeviceCredential` is `true`, when the limit is reached the user will then be presented with a device credential prompt. If `allowDeviceCredential` is `false`, when the limit is reached `authenticate()` will reject with a `BiometryErrorType` of `biometryLockout`, after which the user will have to wait the system-defined length of time before being allowed to authenticate again.
 
 | Param   | Type                                                   |
 | :------ | :----------------------------------------------------- |
