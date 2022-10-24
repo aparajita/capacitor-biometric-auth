@@ -28,6 +28,8 @@ Not using [pnpm](https://pnpm.js.org/)? You owe it to yourself to give it a try.
 
 The API is extensively documented in the [TypeScript definitions file](src/definitions.ts). There is also (somewhat incomplete auto-generated) documentation [below](#api). For a complete example of how to use this plugin in practice, see the [demo app](https://github.com/aparajita/capacitor-biometric-auth-demo).
 
+> **NOTE:** Your Android app must use a base theme named "AppTheme".
+
 ### Checking availability
 
 Before giving the user the option to use biometry (such as displaying a biometry icon), call [`checkBiometry`](#checkbiometry) and inspect the [`CheckBiometryResult`](#checkbiometryresult) to see what (if any) biometry is available on the device. Note that `isAvailable` may be `false` but `biometryType` may indicate the presence of biometry on the device. This occurs if the current user is not enrolled in biometry, or if biometry has been disabled for the current app. In such cases the `reason` will tell you why.
