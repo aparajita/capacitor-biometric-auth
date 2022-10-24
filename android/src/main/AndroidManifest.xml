@@ -5,7 +5,7 @@
     <application>
       <activity
         android:name=".AuthActivity"
-        android:label="@string/title_activity_auth_acitivy"
+        android:label="@string/title_activity_auth_activity"
         android:theme="@style/AppTheme.Transparent"/>
     </application>
 
