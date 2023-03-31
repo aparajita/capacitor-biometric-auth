@@ -11,7 +11,8 @@ export class BiometricAuthWeb extends BiometricAuthBase {
     return Promise.resolve({
       isAvailable: this.biometryType !== BiometryType.none,
       biometryType: this.biometryType,
-      reason: ''
+      reason: '',
+      code: BiometryErrorType.none
     })
   }
 

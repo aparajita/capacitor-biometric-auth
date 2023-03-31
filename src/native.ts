@@ -4,7 +4,7 @@ import type {
   BiometricAuthPlugin,
   CheckBiometryResult
 } from './definitions'
-import { BiometryType } from './definitions'
+import { BiometryErrorType, BiometryType } from './definitions'
 
 // eslint-disable-next-line import/prefer-default-export
 export class BiometricAuthNative extends BiometricAuthBase {
@@ -19,7 +19,8 @@ export class BiometricAuthNative extends BiometricAuthBase {
     return Promise.resolve({
       isAvailable: true,
       biometryType: BiometryType.none,
-      reason: ''
+      reason: '',
+      code: BiometryErrorType.none
     })
   }
 

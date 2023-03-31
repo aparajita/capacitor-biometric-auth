@@ -127,18 +127,19 @@ export interface AuthenticateOptions {
  * for a description of each error code.
  */
 export enum BiometryErrorType {
-  appCancel,
-  authenticationFailed,
-  invalidContext,
-  notInteractive,
-  passcodeNotSet,
-  systemCancel,
-  userCancel,
-  userFallback,
-  biometryLockout,
-  biometryNotAvailable,
-  biometryNotEnrolled,
-  noDeviceCredential
+  none = '',
+  appCancel = 'appCancel',
+  authenticationFailed = 'authenticationFailed',
+  invalidContext = 'invalidContext',
+  notInteractive = 'notInteractive',
+  passcodeNotSet = 'passcodeNotSet',
+  systemCancel = 'systemCancel',
+  userCancel = 'userCancel',
+  userFallback = 'userFallback',
+  biometryLockout = 'biometryLockout',
+  biometryNotAvailable = 'biometryNotAvailable',
+  biometryNotEnrolled = 'biometryNotEnrolled',
+  noDeviceCredential = 'noDeviceCredential'
 }
 
 export interface ResultError extends PluginResultError {
@@ -151,7 +152,7 @@ export class BiometryError implements ResultError {
 
   constructor(message: string, code: BiometryErrorType) {
     this.message = message
-    this.code = BiometryErrorType[code]
+    this.code = code
   }
 }
 
@@ -172,6 +173,19 @@ export interface CheckBiometryResult {
    * it will be returned here. Otherwise it's an empty string.
    */
   reason: string
+
+  /**
+   * If biometry is not available, the error code will be returned here.
+   * Otherwise it's an empty string. The error code will be one of the
+   * `BiometryErrorType` enum values, and is consistent across
+   * platforms. This allows you to check for specific errors in a platform-
+   * independent way, for example:
+   *
+   * if (result.code === BiometryErrorType.biometryNotEnrolled) {
+   *   ...
+   * }
+   */
+  code: BiometryErrorType
 }
 
 /**
