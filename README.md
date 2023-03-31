@@ -109,7 +109,7 @@ web only<br><br>On the web, this method allows you to dynamically simulate diffe
 authenticate(options?: AuthenticateOptions) => Promise<void>
 ```
 
-Prompt the user for authentication. If authorization fails for any reason, the promise is rejected with a `BiometryError`.<br><br>For detailed information about the behavior on iOS, see:<br><br>https://developer.apple.com/documentation/localauthentication/lapolicy/deviceownerauthenticationwithbiometrics<br><br>Some versions of Android impose a limit on the number of failed attempts. If `allowDeviceCredential` is `true`, when the limit is reached the user will then be presented with a device credential prompt. If `allowDeviceCredential` is `false`, when the limit is reached `authenticate()` will reject with a `BiometryErrorType` of `biometryLockout`, after which the user will have to wait the system-defined length of time before being allowed to authenticate again.
+Prompt the user for authentication. If authorization fails for any reason, the promise is rejected with a `BiometryError`.<br><br>For detailed information about the behavior on iOS, see:<br><br>https://developer.apple.com/documentation/localauthentication/lapolicy/deviceownerauthenticationwithbiometrics<br><br>Some versions of Android impose a limit on the number of failed attempts. If `allowDeviceCredential` is `true`, when the limit is reached the user will then be presented with a device credential prompt. If `allowDeviceCredential` is `false`, when the limit is reached `authenticate()` will reject with a <a href="#biometryerrortype">`BiometryErrorType`</a> of `biometryLockout`, after which the user will have to wait the system-defined length of time before being allowed to authenticate again.
 
 | Param   | Type                                                   |
 | :------ | :----------------------------------------------------- |
@@ -137,11 +137,12 @@ Register a function that will be called when the app resumes. The function will 
 
 #### CheckBiometryResult
 
-| Prop         | Type                                     | Description                                                                                                               |
-| :----------- | :--------------------------------------- | :------------------------------------------------------------------------------------------------------------------------ |
-| isAvailable  | boolean                                  | True if the device has biometric authentication capability and the current user has enrolled in biometry.                 |
-| biometryType | <a href="#biometrytype">BiometryType</a> | The type of biometry available on the device.                                                                             |
-| reason       | string                                   | If biometry is not available and the system gives a reason why, it will be returned here. Otherwise it's an empty string. |
+| Prop         | Type                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| :----------- | :------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| isAvailable  | boolean                                            | True if the device has biometric authentication capability and the current user has enrolled in biometry.                                                                                                                                                                                                                                                                                                                                        |
+| biometryType | <a href="#biometrytype">BiometryType</a>           | The type of biometry available on the device.                                                                                                                                                                                                                                                                                                                                                                                                    |
+| reason       | string                                             | If biometry is not available and the system gives a reason why, it will be returned here. Otherwise it's an empty string.                                                                                                                                                                                                                                                                                                                        |
+| code         | <a href="#biometryerrortype">BiometryErrorType</a> | If biometry is not available, the error code will be returned here. Otherwise it's an empty string. The error code will be one of the <a href="#biometryerrortype">`BiometryErrorType`</a> enum values, and is consistent across platforms. This allows you to check for specific errors in a platform- independent way, for example:<br><br>if (result.code === <a href="#biometryerrortype">BiometryErrorType.biometryNotEnrolled</a>) { ... } |
 
 #### AuthenticateOptions
 
@@ -180,6 +181,24 @@ The signature of the callback passed to `addResumeListener()`.
 | fingerprintAuthentication | Android fingerprint authentication is available |
 | faceAuthentication        | Android face authentication is available        |
 | irisAuthentication        | Android iris authentication is available        |
+
+#### BiometryErrorType
+
+| Members              | Value                  |
+| :------------------- | :--------------------- |
+| none                 | ''                     |
+| appCancel            | 'appCancel'            |
+| authenticationFailed | 'authenticationFailed' |
+| invalidContext       | 'invalidContext'       |
+| notInteractive       | 'notInteractive'       |
+| passcodeNotSet       | 'passcodeNotSet'       |
+| systemCancel         | 'systemCancel'         |
+| userCancel           | 'userCancel'           |
+| userFallback         | 'userFallback'         |
+| biometryLockout      | 'biometryLockout'      |
+| biometryNotAvailable | 'biometryNotAvailable' |
+| biometryNotEnrolled  | 'biometryNotEnrolled'  |
+| noDeviceCredential   | 'noDeviceCredential'   |
 
 </docgen-api>
 </div>

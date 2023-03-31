@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [4.0.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v3.1.4...v4.0.0) (2023-03-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* BiometryErrorType has changed from a numeric enum to a string enum.
+
+### Features
+
+* convert enum to string, add .none as a key ([4f179a8](https://github.com/aparajita/capacitor-biometric-auth/commit/4f179a89ae82163895bd7dbcda0ff069a726182b))
+* return error code from checkBiometry() ([5e3c012](https://github.com/aparajita/capacitor-biometric-auth/commit/5e3c012727bd17689d5282d1c74b71807a23cea6))
+
+
+### Maintenance
+
+* update deps ([69819ae](https://github.com/aparajita/capacitor-biometric-auth/commit/69819ae05f59e3b17d782cd83c4d35bf82736478))
+
 ### [3.1.4](https://github.com/aparajita/capacitor-biometric-auth/compare/v3.1.3...v3.1.4) (2022-10-24)
 
 
