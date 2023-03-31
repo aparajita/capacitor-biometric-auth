@@ -7,18 +7,18 @@ private let kMissingFaceIDUsageEntry = "The device supports Face ID, but NSFaceI
 
 @objc(BiometricAuthNative)
 public class BiometricAuthNative: CAPPlugin {
-  let biometryErrorCodeMap: [LAError.Code: String] = [
-    .appCancel: "appCancel",
-    .authenticationFailed: "authenticationFailed",
-    .invalidContext: "invalidContext",
-    .notInteractive: "notInteractive",
-    .passcodeNotSet: "passcodeNotSet",
-    .systemCancel: "systemCancel",
-    .userCancel: "userCancel",
-    .userFallback: "userFallback",
-    .biometryLockout: "biometryLockout",
-    .biometryNotAvailable: "biometryNotAvailable",
-    .biometryNotEnrolled: "biometryNotEnrolled"
+  let biometryErrorCodeMap: [Int: String] = [
+    LAError.appCancel.rawValue: "appCancel",
+    LAError.authenticationFailed.rawValue: "authenticationFailed",
+    LAError.invalidContext.rawValue: "invalidContext",
+    LAError.notInteractive.rawValue: "notInteractive",
+    LAError.passcodeNotSet.rawValue: "passcodeNotSet",
+    LAError.systemCancel.rawValue: "systemCancel",
+    LAError.userCancel.rawValue: "userCancel",
+    LAError.userFallback.rawValue: "userFallback",
+    LAError.biometryLockout.rawValue: "biometryLockout",
+    LAError.biometryNotAvailable.rawValue: "biometryNotAvailable",
+    LAError.biometryNotEnrolled.rawValue: "biometryNotEnrolled",
   ]
 
   var canEvaluatePolicy = true
@@ -31,6 +31,7 @@ public class BiometricAuthNative: CAPPlugin {
     var error: NSError?
     var available = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
     var reason = ""
+    var errorCode = ""
 
     if available, context.biometryType == .faceID {
       // The system may report that biometry is available, but if the type is Face ID
@@ -42,6 +43,7 @@ public class BiometricAuthNative: CAPPlugin {
         available = false
         canEvaluatePolicy = false
         reason = kMissingFaceIDUsageEntry
+        errorCode = biometryErrorCodeMap[LAError.biometryNotAvailable.rawValue] ?? ""
       }
     } else if !available,
               let error = error {
@@ -51,12 +53,15 @@ public class BiometricAuthNative: CAPPlugin {
       if let failureReason = error.localizedFailureReason {
         reason = "\(reason): \(failureReason)"
       }
+
+      errorCode = biometryErrorCodeMap[error.code] ?? biometryErrorCodeMap[LAError.biometryNotAvailable.rawValue] ?? ""
     }
 
     call.resolve([
       "isAvailable": available,
       "biometryType": context.biometryType.rawValue,
-      "reason": reason
+      "reason": reason,
+      "code": errorCode
     ])
   }
 
@@ -72,7 +77,7 @@ public class BiometricAuthNative: CAPPlugin {
     guard canEvaluatePolicy else {
       call.reject(
         kMissingFaceIDUsageEntry,
-        biometryErrorCodeMap[.biometryNotAvailable]
+        biometryErrorCodeMap[LAError.biometryNotAvailable.rawValue]
       )
 
       return
@@ -111,10 +116,10 @@ public class BiometricAuthNative: CAPPlugin {
         call.resolve()
       } else {
         if let policyError = error as? LAError {
-          let code = self.biometryErrorCodeMap[policyError.code]
+          let code = self.biometryErrorCodeMap[policyError.code.rawValue]
           call.reject(policyError.localizedDescription, code)
         } else {
-          call.reject("An unknown error occurred.", self.biometryErrorCodeMap[.authenticationFailed])
+          call.reject("An unknown error occurred.", self.biometryErrorCodeMap[LAError.authenticationFailed.rawValue])
         }
       }
     }

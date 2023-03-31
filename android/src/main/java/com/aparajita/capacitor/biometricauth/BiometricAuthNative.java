@@ -120,17 +120,24 @@ public class BiometricAuthNative extends Plugin {
         reason = "There is no biometric hardware on this device.";
         break;
       case BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED:
-        reason = "The user can't authenticate because a security vulnerability has been discovered with one or more hardware sensors.";
+        reason = "The user can’t authenticate because a security vulnerability has been discovered with one or more hardware sensors.";
         break;
       case BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED:
-        reason = "The user can't authenticate because the specified options are incompatible with the current Android version.";
+        reason = "The user can’t authenticate because the specified options are incompatible with the current Android version.";
         break;
       case BiometricManager.BIOMETRIC_STATUS_UNKNOWN:
         reason = "Unable to determine whether the user can authenticate.";
         break;
     }
 
+    String errorCode = biometryErrorCodeMap.get(biometryResult);
+
+    if (errorCode == null) {
+      errorCode = "biometryNotAvailable";
+    }
+
     ret.put("reason", reason);
+    ret.put("code", errorCode);
     call.resolve(ret);
   }
 
