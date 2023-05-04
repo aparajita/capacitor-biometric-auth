@@ -99,7 +99,7 @@ export interface AuthenticateOptions {
    *
    * If `allowDeviceCredential` is false, tapping this button dismisses the
    * authentication dialog and returns the error code userFallback. If undefined,
-   * the localized systetm default title is used. Passing an empty string
+   * the localized system default title is used. Passing an empty string
    * hides the fallback button completely.
    *
    * If `allowDeviceCredential` is true and this is undefined,
