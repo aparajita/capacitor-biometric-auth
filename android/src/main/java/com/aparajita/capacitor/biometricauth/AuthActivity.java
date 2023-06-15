@@ -35,10 +35,6 @@ public class AuthActivity extends AppCompatActivity {
     String title = intent.getStringExtra(BiometricAuthNative.TITLE);
     String subtitle = intent.getStringExtra(BiometricAuthNative.SUBTITLE);
     String description = intent.getStringExtra(BiometricAuthNative.REASON);
-    final int maxAttempts = intent.getIntExtra(
-      BiometricAuthNative.MAX_ATTEMPTS,
-      BiometricAuthNative.DEFAULT_MAX_ATTEMPTS
-    );
     allowDeviceCredential = false;
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
