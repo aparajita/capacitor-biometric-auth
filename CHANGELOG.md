@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.0.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v4.0.0...v5.0.0) (2023-06-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* The plugin now requires Capacitor 5.
+
+### Features
+
+* upgrade to Capacitor 5 ([a410458](https://github.com/aparajita/capacitor-biometric-auth/commit/a410458c12055774e549df346774c02cfe796d7c))
+
+
+### Docs
+
+* mention .code ([b116d18](https://github.com/aparajita/capacitor-biometric-auth/commit/b116d1821b3a472bd95610995a7769bb865f28d0))
+
+
+### Maintenance
+
+* don’t log name + version at startup ([ec2eb08](https://github.com/aparajita/capacitor-biometric-auth/commit/ec2eb086ddad5f70550f5d0861fb27b8c4648e01))
+* prettier format change ([7e3c1f1](https://github.com/aparajita/capacitor-biometric-auth/commit/7e3c1f1075352737c75ed9146f395cf0458389ca))
+* remove unused stuff ([68ab6b1](https://github.com/aparajita/capacitor-biometric-auth/commit/68ab6b1e6df958dc2cb4f975c4552c981f55134d))
+* update deps, upgrade to Capacitor 5 ([584c966](https://github.com/aparajita/capacitor-biometric-auth/commit/584c9667091e6a0c9f8e82e8fbff2297a067e90b))
+* updates to dev environment ([ae163e4](https://github.com/aparajita/capacitor-biometric-auth/commit/ae163e4135aa2dcc9ff0db7f678238e5e14ba610))
+
 ## [4.0.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v3.1.4...v4.0.0) (2023-03-31)
 
 
