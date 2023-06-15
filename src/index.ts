@@ -1,8 +1,5 @@
 import { registerPlugin } from '@capacitor/core'
 import type { BiometricAuthPlugin } from './definitions'
-import info from './info.json'
-
-console.log(`loaded ${info.name} v${info.version}`)
 
 const proxy = registerPlugin<BiometricAuthPlugin>('BiometricAuthNative', {
   web: async () =>

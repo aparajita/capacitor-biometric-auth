@@ -21,12 +21,11 @@
   ],
   "scripts": {
     "clean": "rimraf dist",
-    "extract-info": "node scripts/extractPackageInfo.js",
     "lint.eslint": "eslint --fix --cache --ext .js,.cjs,.mjs,.ts --max-warnings 0",
     "lint.prettier": "prettier --write --cache --list-different",
     "lint.tsc": "tsc --noEmit",
     "lint": "pnpm lint.eslint . && pnpm lint.prettier . && pnpm lint.tsc",
-    "prebuilder": "pnpm clean && pnpm extract-info",
+    "prebuilder": "pnpm clean",
     "builder": "tsc ${SOURCE_MAP:-} && rollup -c rollup.config.mjs",
     "prebuild": "pnpm lint",
     "build": "pnpm builder",
