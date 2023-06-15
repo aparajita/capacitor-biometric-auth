@@ -2,9 +2,9 @@
 
 # capacitor-biometric-auth&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth.svg)](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth)
 
-This plugin for [Capacitor 4](https://capacitorjs.com) provides access to native biometry on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry is simulated on the web so you can test your logic without making any changes to your code.
+This plugin for [Capacitor 5](https://capacitorjs.com) provides access to native biometry on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry is simulated on the web so you can test your logic without making any changes to your code.
 
-👉 **NOTE:** This plugin only works with Capacitor 4. If you are upgrading from the Capacitor 2 version, note that the plugin name has changed to `BiometricAuth`.
+👉 **NOTE:** This plugin only works with Capacitor 5. If you are upgrading from the Capacitor 2 version, note that the plugin name has changed to `BiometricAuth`.
 
 🛑 **BREAKING CHANGE:** If you are upgrading from a version prior to 3.0.0, please note that `androidMaxAttempts` is no longer supported. See the documentation for [`authenticate()`](#authenticate) for more information.
 
