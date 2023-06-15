@@ -6,7 +6,7 @@ import type {
   BiometricAuthPlugin,
   CheckBiometryResult,
   ResumeListener,
-  BiometryType
+  BiometryType,
 } from './definitions'
 
 // eslint-disable-next-line import/prefer-default-export

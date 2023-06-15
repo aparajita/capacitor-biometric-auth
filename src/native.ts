@@ -2,7 +2,7 @@ import { BiometricAuthBase } from './base'
 import type {
   AuthenticateOptions,
   BiometricAuthPlugin,
-  CheckBiometryResult
+  CheckBiometryResult,
 } from './definitions'
 import { BiometryErrorType, BiometryType } from './definitions'
 
@@ -20,7 +20,7 @@ export class BiometricAuthNative extends BiometricAuthBase {
       isAvailable: true,
       biometryType: BiometryType.none,
       reason: '',
-      code: BiometryErrorType.none
+      code: BiometryErrorType.none,
     })
   }
 

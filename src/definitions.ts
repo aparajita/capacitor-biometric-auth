@@ -1,7 +1,7 @@
 import type {
   PluginListenerHandle,
   PluginResultError,
-  WebPlugin
+  WebPlugin,
 } from '@capacitor/core'
 
 export enum BiometryType {
@@ -33,7 +33,7 @@ export enum BiometryType {
   /**
    * Android iris authentication is available
    */
-  irisAuthentication
+  irisAuthentication,
 }
 
 export interface AuthenticateOptions {
@@ -139,7 +139,7 @@ export enum BiometryErrorType {
   biometryLockout = 'biometryLockout',
   biometryNotAvailable = 'biometryNotAvailable',
   biometryNotEnrolled = 'biometryNotEnrolled',
-  noDeviceCredential = 'noDeviceCredential'
+  noDeviceCredential = 'noDeviceCredential',
 }
 
 export interface ResultError extends PluginResultError {

@@ -7,8 +7,8 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       parserOptions: {
         tsconfigRootDir: './',
-        project: ['./tsconfig.json']
-      }
-    }
-  ]
+        project: ['./tsconfig.json'],
+      },
+    },
+  ],
 }

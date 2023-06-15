@@ -6,7 +6,7 @@ const kBiometryTypeNameMap = {
   [BiometryType.faceId]: 'Face ID',
   [BiometryType.fingerprintAuthentication]: 'Fingerprint Authentication',
   [BiometryType.faceAuthentication]: 'Face Authentication',
-  [BiometryType.irisAuthentication]: 'Iris Authentication'
+  [BiometryType.irisAuthentication]: 'Iris Authentication',
 }
 
 /**

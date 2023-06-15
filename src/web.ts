@@ -12,7 +12,7 @@ export class BiometricAuthWeb extends BiometricAuthBase {
       isAvailable: this.biometryType !== BiometryType.none,
       biometryType: this.biometryType,
       reason: '',
-      code: BiometryErrorType.none
+      code: BiometryErrorType.none,
     })
   }
 

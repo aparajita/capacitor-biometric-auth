@@ -10,7 +10,7 @@ const proxy = registerPlugin<BiometricAuthPlugin>('BiometricAuthNative', {
   ios: async () =>
     import('./native').then((module) => new module.BiometricAuthNative(proxy)),
   android: async () =>
-    import('./native').then((module) => new module.BiometricAuthNative(proxy))
+    import('./native').then((module) => new module.BiometricAuthNative(proxy)),
 })
 
 export * from './definitions'
