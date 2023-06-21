@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.0.2](https://github.com/aparajita/capacitor-biometric-auth/compare/v5.0.1...v5.0.2) (2023-06-21)
+
+
+### Bug Fixes
+
+* lint native code ([f83bb76](https://github.com/aparajita/capacitor-biometric-auth/commit/f83bb7621effc1a1d8c41bac18e3b6294a47323b))
+
+
+### Maintenance
+
+* remove unused file refs ([3850666](https://github.com/aparajita/capacitor-biometric-auth/commit/3850666f1a854639dce5c78e38340df2b45198fc))
+* update deps ([09e32b8](https://github.com/aparajita/capacitor-biometric-auth/commit/09e32b8a50c54a23101680a130508db11487f2a9))
+
 ## [5.0.1](https://github.com/aparajita/capacitor-biometric-auth/compare/v5.0.0...v5.0.1) (2023-06-15)
 
 
