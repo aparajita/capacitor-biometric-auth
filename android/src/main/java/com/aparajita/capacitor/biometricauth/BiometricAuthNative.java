@@ -95,13 +95,17 @@ public class BiometricAuthNative extends Plugin {
     int biometryResult;
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-      biometryResult = manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK);
+      biometryResult =
+        manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK);
     } else {
       biometryResult = manager.canAuthenticate();
     }
 
     JSObject ret = new JSObject();
-    ret.put("isAvailable", biometryResult == BiometricManager.BIOMETRIC_SUCCESS);
+    ret.put(
+      "isAvailable",
+      biometryResult == BiometricManager.BIOMETRIC_SUCCESS
+    );
     biometryType = getDeviceBiometryType();
     ret.put("biometryType", biometryType.getType());
 
@@ -120,10 +124,12 @@ public class BiometricAuthNative extends Plugin {
         reason = "There is no biometric hardware on this device.";
         break;
       case BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED:
-        reason = "The user can’t authenticate because a security vulnerability has been discovered with one or more hardware sensors.";
+        reason =
+          "The user can’t authenticate because a security vulnerability has been discovered with one or more hardware sensors.";
         break;
       case BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED:
-        reason = "The user can’t authenticate because the specified options are incompatible with the current Android version.";
+        reason =
+          "The user can’t authenticate because the specified options are incompatible with the current Android version.";
         break;
       case BiometricManager.BIOMETRIC_STATUS_UNKNOWN:
         reason = "Unable to determine whether the user can authenticate.";
@@ -213,7 +219,9 @@ public class BiometricAuthNative extends Plugin {
 
     if (data != null) {
       resultTypeName =
-        data.getStringExtra(RESULT_EXTRA_PREFIX + BiometricAuthNative.RESULT_TYPE);
+        data.getStringExtra(
+          RESULT_EXTRA_PREFIX + BiometricAuthNative.RESULT_TYPE
+        );
     }
 
     if (resultTypeName == null) {

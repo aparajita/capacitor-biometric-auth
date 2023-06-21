@@ -30,7 +30,8 @@ public class AuthActivity extends AppCompatActivity {
       executor = command -> new Handler(this.getMainLooper()).post(command);
     }
 
-    BiometricPrompt.PromptInfo.Builder builder = new BiometricPrompt.PromptInfo.Builder();
+    BiometricPrompt.PromptInfo.Builder builder =
+      new BiometricPrompt.PromptInfo.Builder();
     Intent intent = getIntent();
     String title = intent.getStringExtra(BiometricAuthNative.TITLE);
     String subtitle = intent.getStringExtra(BiometricAuthNative.SUBTITLE);
@@ -54,9 +55,7 @@ public class AuthActivity extends AppCompatActivity {
       title = "Authenticate";
     }
 
-    builder.setTitle(title)
-        .setSubtitle(subtitle)
-        .setDescription(description);
+    builder.setTitle(title).setSubtitle(subtitle).setDescription(description);
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
       int authenticators = BiometricManager.Authenticators.BIOMETRIC_WEAK;
@@ -128,7 +127,10 @@ public class AuthActivity extends AppCompatActivity {
     intent
       .putExtra(prefix + BiometricAuthNative.RESULT_TYPE, resultType.toString())
       .putExtra(prefix + BiometricAuthNative.RESULT_ERROR_CODE, errorCode)
-      .putExtra(prefix + BiometricAuthNative.RESULT_ERROR_MESSAGE, errorMessage);
+      .putExtra(
+        prefix + BiometricAuthNative.RESULT_ERROR_MESSAGE,
+        errorMessage
+      );
 
     setResult(RESULT_OK, intent);
     finish();

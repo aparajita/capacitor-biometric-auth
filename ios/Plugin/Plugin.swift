@@ -18,7 +18,7 @@ public class BiometricAuthNative: CAPPlugin {
     LAError.userFallback.rawValue: "userFallback",
     LAError.biometryLockout.rawValue: "biometryLockout",
     LAError.biometryNotAvailable.rawValue: "biometryNotAvailable",
-    LAError.biometryNotEnrolled.rawValue: "biometryNotEnrolled",
+    LAError.biometryNotEnrolled.rawValue: "biometryNotEnrolled"
   ]
 
   var canEvaluatePolicy = true
