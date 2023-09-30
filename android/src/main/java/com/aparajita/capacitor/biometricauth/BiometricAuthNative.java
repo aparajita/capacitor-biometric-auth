@@ -150,12 +150,12 @@ public class BiometricAuthNative extends Plugin {
   private BiometryType getDeviceBiometryType() {
     PackageManager manager = getContext().getPackageManager();
 
-    if (manager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
-      return BiometryType.FINGERPRINT;
-    }
-
     if (manager.hasSystemFeature(PackageManager.FEATURE_FACE)) {
       return BiometryType.FACE;
+    }
+
+    if (manager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
+      return BiometryType.FINGERPRINT;
     }
 
     if (manager.hasSystemFeature(PackageManager.FEATURE_IRIS)) {
