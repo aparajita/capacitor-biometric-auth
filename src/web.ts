@@ -22,8 +22,8 @@ export class BiometricAuthWeb extends BiometricAuthBase {
         if (
           // eslint-disable-next-line no-alert
           confirm(
-            options?.reason ||
-              `Authenticate with ${getBiometryName(biometryType)}?`
+            options?.reason ??
+              `Authenticate with ${getBiometryName(biometryType)}?`,
           )
         ) {
           return
@@ -34,13 +34,13 @@ export class BiometricAuthWeb extends BiometricAuthBase {
 
       throw new BiometryError(
         'Biometry not available',
-        BiometryErrorType.biometryNotAvailable
+        BiometryErrorType.biometryNotAvailable,
       )
     })
   }
 
   async setBiometryType(
-    type: BiometryType | string | undefined
+    type: BiometryType | string | undefined,
   ): Promise<void> {
     if (typeof type === 'undefined') {
       return Promise.resolve()

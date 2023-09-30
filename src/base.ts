@@ -16,7 +16,7 @@ export abstract class BiometricAuthBase
 {
   abstract setBiometryType(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    type: BiometryType | string | undefined
+    type: BiometryType | string | undefined,
   ): Promise<void>
 
   abstract checkBiometry(): Promise<CheckBiometryResult>
@@ -24,7 +24,7 @@ export abstract class BiometricAuthBase
   abstract authenticate(options?: AuthenticateOptions): Promise<void>
 
   addResumeListener(
-    listener: ResumeListener
+    listener: ResumeListener,
   ): Promise<PluginListenerHandle> & PluginListenerHandle {
     return App.addListener('appStateChange', ({ isActive }): void => {
       if (isActive) {
