@@ -40,6 +40,7 @@ public class BiometricAuthNative extends Plugin {
 
   static {
     biometryErrorCodeMap = new HashMap<>();
+    biometryErrorCodeMap.put(BiometricManager.BIOMETRIC_SUCCESS, "");
     biometryErrorCodeMap.put(BiometricPrompt.ERROR_CANCELED, "systemCancel");
     biometryErrorCodeMap.put(
       BiometricPrompt.ERROR_HW_NOT_PRESENT,

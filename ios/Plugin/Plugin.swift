@@ -8,6 +8,7 @@ private let kMissingFaceIDUsageEntry = "The device supports Face ID, but NSFaceI
 @objc(BiometricAuthNative)
 public class BiometricAuthNative: CAPPlugin {
   let biometryErrorCodeMap: [Int: String] = [
+    0: "",
     LAError.appCancel.rawValue: "appCancel",
     LAError.authenticationFailed.rawValue: "authenticationFailed",
     LAError.invalidContext.rawValue: "invalidContext",
