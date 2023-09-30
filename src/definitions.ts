@@ -171,8 +171,11 @@ export interface CheckBiometryResult {
   biometryType: BiometryType
 
   /**
-   * All of the biometry types supported by the device. If no biometry
-   * is available, this will be an empty array.
+   * All of the biometry types supported by the device (currently only
+   * Android devices support multiple biometry types). If no biometry
+   * is available, this will be an empty array. If multiple types
+   * are supported, Android only guarantees that one of them is actually
+   * available.
    */
   biometryTypes: BiometryType[]
 
