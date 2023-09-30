@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.1.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v5.0.2...v5.1.0) (2023-09-30)
+
+
+### Features
+
+* capacitor 5 support ([ad65d2e](https://github.com/aparajita/capacitor-biometric-auth/commit/ad65d2eeeb3e51381d4feef546f7b04ee2a093cc))
+* return all available biometry types ([348fe01](https://github.com/aparajita/capacitor-biometric-auth/commit/348fe01ba556b0fa0e8b1374d84fd4eece62d03c))
+
+
+### Bug Fixes
+
+* prefer face if fingerprint is also available ([8846fe8](https://github.com/aparajita/capacitor-biometric-auth/commit/8846fe886557a3dcb8ea54fc5db28f4da07c8fba))
+* return empty code on success ([7573118](https://github.com/aparajita/capacitor-biometric-auth/commit/7573118901666a327fe954f636fe4bad434fac2b))
+* specify prettier glob ([bae1b29](https://github.com/aparajita/capacitor-biometric-auth/commit/bae1b298215bf59ad1aef92ff49f26c1dd5a5d6a))
+
+
+### Maintenance
+
+* reformat ([2199461](https://github.com/aparajita/capacitor-biometric-auth/commit/2199461fd73c9905ac409d4b950538a6740b7954))
+* typo ([15b6e1b](https://github.com/aparajita/capacitor-biometric-auth/commit/15b6e1b8153652bb2e6524951e99292104b97775))
+* update deps ([fc67631](https://github.com/aparajita/capacitor-biometric-auth/commit/fc676313c70b5b2ba170eaac06cf4d0bca36e84f))
+* update deps ([fef77dd](https://github.com/aparajita/capacitor-biometric-auth/commit/fef77dd184634d9aed86c8bd311ee0affaf55423))
+
+
+### Docs
+
+* document Android limitations ([bdec858](https://github.com/aparajita/capacitor-biometric-auth/commit/bdec858922dbe6d411e596042d5281fce3beab57))
+
 ## [5.0.2](https://github.com/aparajita/capacitor-biometric-auth/compare/v5.0.1...v5.0.2) (2023-06-21)
 
 
