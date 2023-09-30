@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@aparajita/eslint-config-base':
-    specifier: link:../eslint-config-base
-    version: link:../eslint-config-base
   '@capacitor/android':
     specifier: ^5.4.1
     version: 5.4.1(@capacitor/core@5.4.1)
@@ -28,6 +25,9 @@ devDependencies:
   '@aparajita/capacitor-docgen-format':
     specifier: github:aparajita/capacitor-docgen-format
     version: github.com/aparajita/capacitor-docgen-format/abb7d6ee2c2ff0abd2694ce1b0d1942916ef55ad
+  '@aparajita/eslint-config-base':
+    specifier: ^1.1.6
+    version: 1.1.6(@typescript-eslint/eslint-plugin@6.7.3)(@typescript-eslint/parser@6.7.3)(eslint-config-standard@17.1.0)(eslint-import-resolver-typescript@3.6.1)(eslint-plugin-import@2.28.1)(eslint-plugin-n@16.1.0)(eslint-plugin-promise@6.1.1)(eslint@8.50.0)(typescript@5.2.2)
   '@aparajita/prettier-config':
     specifier: ^2.0.0
     version: 2.0.0(prettier@3.0.3)
@@ -109,6 +109,30 @@ packages:
   /@aashutoshrathi/word-wrap@1.2.6:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /@aparajita/eslint-config-base@1.1.6(@typescript-eslint/eslint-plugin@6.7.3)(@typescript-eslint/parser@6.7.3)(eslint-config-standard@17.1.0)(eslint-import-resolver-typescript@3.6.1)(eslint-plugin-import@2.28.1)(eslint-plugin-n@16.1.0)(eslint-plugin-promise@6.1.1)(eslint@8.50.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-llCAehkzPCZLDPsF+lobK8aJjpSJs5jaGHOnisJnbw9RYpnvty9YHQyzyoVhkjVRuZ8XYmpdD4JTM8LhHUeFvA==}
+    peerDependencies:
+      '@typescript-eslint/eslint-plugin': '>=6.7.3'
+      '@typescript-eslint/parser': '>=6.7.3'
+      eslint: '>=8.50.0'
+      eslint-config-standard: '>=17.1.0'
+      eslint-import-resolver-typescript: '>=3.6.1'
+      eslint-plugin-import: '>=2.28.1'
+      eslint-plugin-n: '>=16.1.0'
+      eslint-plugin-promise: '>=6.1.1'
+      typescript: '>=5.2.2'
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 6.7.3(@typescript-eslint/parser@6.7.3)(eslint@8.50.0)(typescript@5.2.2)
+      '@typescript-eslint/parser': 6.7.3(eslint@8.50.0)(typescript@5.2.2)
+      eslint: 8.50.0
+      eslint-config-standard: 17.1.0(eslint-plugin-import@2.28.1)(eslint-plugin-n@16.1.0)(eslint-plugin-promise@6.1.1)(eslint@8.50.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.7.3)(eslint-plugin-import@2.28.1)(eslint@8.50.0)
+      eslint-plugin-import: 2.28.1(@typescript-eslint/parser@6.7.3)(eslint-import-resolver-typescript@3.6.1)(eslint@8.50.0)
+      eslint-plugin-n: 16.1.0(eslint@8.50.0)
+      eslint-plugin-promise: 6.1.1(eslint@8.50.0)
+      typescript: 5.2.2
     dev: true
 
   /@aparajita/prettier-config@2.0.0(prettier@3.0.3):

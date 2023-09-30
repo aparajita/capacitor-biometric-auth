@@ -74,6 +74,7 @@
   "devDependencies": {
     "@aparajita/capacitor-docgen": "github:aparajita/capacitor-docgen",
     "@aparajita/capacitor-docgen-format": "github:aparajita/capacitor-docgen-format",
+    "@aparajita/eslint-config-base": "^1.1.6",
     "@aparajita/prettier-config": "^2.0.0",
     "@aparajita/swiftly": "^1.0.4",
     "@capacitor/cli": "^5.4.1",
@@ -101,7 +102,6 @@
     "typescript": "~5.2.2"
   },
   "dependencies": {
-    "@aparajita/eslint-config-base": "link:../eslint-config-base",
     "@capacitor/android": "^5.4.1",
     "@capacitor/app": "^5.0.6",
     "@capacitor/core": "^5.4.1",
