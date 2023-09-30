@@ -22,9 +22,9 @@
   "scripts": {
     "clean": "rimraf dist",
     "lint.eslint": "eslint --fix --cache --ext .js,.cjs,.mjs,.ts --max-warnings 0",
-    "lint.prettier": "prettier --write --plugin ./node_modules/prettier-plugin-java --cache --list-different",
+    "lint.prettier": "prettier --write --cache --list-different",
     "lint.tsc": "tsc --noEmit",
-    "lint": "pnpm lint.eslint . && pnpm lint.prettier . && pnpm lint.tsc && swiftly ios",
+    "lint": "pnpm lint.eslint . && pnpm lint.prettier '**/*.{js,mjs,ts,json,md,java}' && pnpm lint.tsc && swiftly ios",
     "prebuilder": "pnpm clean",
     "builder": "tsc ${SOURCE_MAP:-} && rollup -c rollup.config.mjs",
     "prebuild": "pnpm lint",
