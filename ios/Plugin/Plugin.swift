@@ -58,9 +58,13 @@ public class BiometricAuthNative: CAPPlugin {
       errorCode = biometryErrorCodeMap[error.code] ?? biometryErrorCodeMap[LAError.biometryNotAvailable.rawValue] ?? ""
     }
 
+    var types = JSArray()
+    types.append(context.biometryType.rawValue)
+
     call.resolve([
       "isAvailable": available,
       "biometryType": context.biometryType.rawValue,
+      "biometryTypes": types,
       "reason": reason,
       "code": errorCode
     ])

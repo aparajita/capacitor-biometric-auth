@@ -159,14 +159,22 @@ export class BiometryError implements ResultError {
 export interface CheckBiometryResult {
   /**
    * True if the device has biometric authentication capability
-   * and the current user has enrolled in biometry.
+   * and the current user has enrolled in some form of biometry.
    */
   isAvailable: boolean
 
   /**
-   * The type of biometry available on the device.
+   * The primary type of biometry available on the device. If the device
+   * supports both fingerprint and face authentication, this will be
+   * `BiometryType.touchId`.
    */
   biometryType: BiometryType
+
+  /**
+   * All of the biometry types supported by the device. If no biometry
+   * is available, this will be an empty array.
+   */
+  biometryTypes: BiometryType[]
 
   /**
    * If biometry is not available and the system gives a reason why,

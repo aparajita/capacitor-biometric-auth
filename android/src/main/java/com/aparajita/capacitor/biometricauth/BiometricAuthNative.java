@@ -8,12 +8,14 @@ import android.os.Build;
 import androidx.activity.result.ActivityResult;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
+import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.ActivityCallback;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @SuppressLint("RestrictedApi")
@@ -85,7 +87,7 @@ public class BiometricAuthNative extends Plugin {
     biometryNameMap.put(BiometryType.IRIS, "Iris Authentication");
   }
 
-  private BiometryType biometryType;
+  private ArrayList<BiometryType> biometryTypes;
 
   /**
    * Check the device's availability and type of biometric authentication.
@@ -107,8 +109,17 @@ public class BiometricAuthNative extends Plugin {
       "isAvailable",
       biometryResult == BiometricManager.BIOMETRIC_SUCCESS
     );
-    biometryType = getDeviceBiometryType();
-    ret.put("biometryType", biometryType.getType());
+
+    biometryTypes = getDeviceBiometryTypes();
+    ret.put("biometryType", biometryTypes.get(0).getType());
+
+    JSArray returnTypes = new JSArray();
+
+    for (BiometryType type : biometryTypes) {
+      returnTypes.put(type.getType());
+    }
+
+    ret.put("biometryTypes", returnTypes);
 
     String reason = "";
 
@@ -148,22 +159,27 @@ public class BiometricAuthNative extends Plugin {
     call.resolve(ret);
   }
 
-  private BiometryType getDeviceBiometryType() {
+  private ArrayList<BiometryType> getDeviceBiometryTypes() {
+    ArrayList<BiometryType> types = new ArrayList<BiometryType>();
     PackageManager manager = getContext().getPackageManager();
 
-    if (manager.hasSystemFeature(PackageManager.FEATURE_FACE)) {
-      return BiometryType.FACE;
+    if (manager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
+      types.add(BiometryType.FINGERPRINT);
     }
 
-    if (manager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
-      return BiometryType.FINGERPRINT;
+    if (manager.hasSystemFeature(PackageManager.FEATURE_FACE)) {
+      types.add(BiometryType.FACE);
     }
 
     if (manager.hasSystemFeature(PackageManager.FEATURE_IRIS)) {
-      return BiometryType.IRIS;
+      types.add(BiometryType.IRIS);
     }
 
-    return BiometryType.NONE;
+    if (types.size() == 0) {
+      types.add(BiometryType.NONE);
+    }
+
+    return types;
   }
 
   /**
@@ -179,7 +195,7 @@ public class BiometricAuthNative extends Plugin {
     // Pass the options to the activity
     intent.putExtra(
       TITLE,
-      call.getString(TITLE, biometryNameMap.get(biometryType))
+      call.getString(TITLE, biometryNameMap.get(biometryTypes.get(0)))
     );
     intent.putExtra(SUBTITLE, call.getString(SUBTITLE));
     intent.putExtra(REASON, call.getString(REASON));

@@ -19,6 +19,7 @@ export class BiometricAuthNative extends BiometricAuthBase {
     return Promise.resolve({
       isAvailable: true,
       biometryType: BiometryType.none,
+      biometryTypes: [],
       reason: '',
       code: BiometryErrorType.none,
     })
