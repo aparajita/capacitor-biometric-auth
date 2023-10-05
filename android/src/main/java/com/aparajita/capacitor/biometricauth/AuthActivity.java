@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
@@ -83,7 +82,9 @@ public class AuthActivity extends AppCompatActivity {
       );
     }
 
-    builder.setConfirmationRequired(intent.getBooleanExtra(BiometricAuthNative.CONFIRMATION_REQUIRED, true));
+    builder.setConfirmationRequired(
+      intent.getBooleanExtra(BiometricAuthNative.CONFIRMATION_REQUIRED, true)
+    );
 
     BiometricPrompt.PromptInfo promptInfo = builder.build();
     BiometricPrompt prompt = new BiometricPrompt(

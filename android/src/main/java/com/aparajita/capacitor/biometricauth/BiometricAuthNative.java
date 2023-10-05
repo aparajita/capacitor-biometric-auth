@@ -30,7 +30,8 @@ public class BiometricAuthNative extends Plugin {
   public static final String REASON = "reason";
   public static final String CANCEL_TITLE = "cancelTitle";
   public static final String DEVICE_CREDENTIAL = "allowDeviceCredential";
-  public static final String CONFIRMATION_REQUIRED = "androidConfirmationRequired";
+  public static final String CONFIRMATION_REQUIRED =
+    "androidConfirmationRequired";
   public static final String MAX_ATTEMPTS = "androidMaxAttempts";
   public static final int DEFAULT_MAX_ATTEMPTS = 3;
   // Error code when biometry is not recognized
@@ -207,7 +208,10 @@ public class BiometricAuthNative extends Plugin {
     );
 
     if (call.hasOption(CONFIRMATION_REQUIRED)) {
-      intent.putExtra(CONFIRMATION_REQUIRED, call.getBoolean(CONFIRMATION_REQUIRED, true));
+      intent.putExtra(
+        CONFIRMATION_REQUIRED,
+        call.getBoolean(CONFIRMATION_REQUIRED, true)
+      );
     }
 
     // Just in case the developer does something dumb like using a number < 1...
