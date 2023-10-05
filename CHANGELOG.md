@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.2.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v5.1.0...v5.2.0) (2023-10-05)
+
+
+### Features
+
+* add androidConfirmationRequired option ([95280d9](https://github.com/aparajita/capacitor-biometric-auth/commit/95280d918b64fe2ce8ba695fdcfe11952f53c57a))
+
+
+### Maintenance
+
+* prettier ([7efa43f](https://github.com/aparajita/capacitor-biometric-auth/commit/7efa43fb16e3b6d575a4488e4e6d38f63ce7d47c))
+
 ## [5.1.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v5.0.2...v5.1.0) (2023-09-30)
 
 
