@@ -80,7 +80,8 @@ public class AuthActivity extends AppCompatActivity {
           : negativeButtonText
       );
     }
-
+    builder.setConfirmationRequired(false);
+    
     BiometricPrompt.PromptInfo promptInfo = builder.build();
     BiometricPrompt prompt = new BiometricPrompt(
       this,
