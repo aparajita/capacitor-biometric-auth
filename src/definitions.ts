@@ -116,6 +116,15 @@ export interface AuthenticateOptions {
    * Subtitle for the Android dialog. If not supplied, the system default is used.
    */
   androidSubtitle?: string
+
+  /**
+   * For information on this setting, see:
+   *
+   * https://developer.android.com/reference/android/hardware/biometrics/BiometricPrompt.Builder#setConfirmationRequired(boolean)
+   *
+   * If not set, defaults to true.
+   */
+  androidConfirmationRequired?: boolean
 }
 
 /**
