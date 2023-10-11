@@ -22,12 +22,32 @@ public class BiometricAuthNative: CAPPlugin {
     LAError.biometryNotEnrolled.rawValue: "biometryNotEnrolled"
   ]
 
-  var canEvaluatePolicy = true
+  struct CheckDeviceBiometryResult {
+    let isAvailable: Bool
+    let biometryType: LABiometryType.RawValue
+    let biometryTypes: JSArray
+    let reason: String
+    let code: String
+  }
+
+  /**
+   * Plugin call checkBiometry()
+   */
+  @objc func checkBiometry(_ call: CAPPluginCall) {
+    let checkResult = checkDeviceBiometry()
+    call.resolve([
+      "isAvailable": checkResult.isAvailable,
+      "biometryType": checkResult.biometryType,
+      "biometryTypes": checkResult.biometryTypes,
+      "reason": checkResult.reason,
+      "code": checkResult.code
+    ])
+  }
 
   /**
    * Check the device's availability and type of biometric authentication.
    */
-  @objc func checkBiometry(_ call: CAPPluginCall) {
+  func checkDeviceBiometry() -> CheckDeviceBiometryResult {
     let context = LAContext()
     var error: NSError?
     var available = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
@@ -42,7 +62,6 @@ public class BiometricAuthNative: CAPPlugin {
 
       if entry == nil {
         available = false
-        canEvaluatePolicy = false
         reason = kMissingFaceIDUsageEntry
         errorCode = biometryErrorCodeMap[LAError.biometryNotAvailable.rawValue] ?? ""
       }
@@ -61,13 +80,13 @@ public class BiometricAuthNative: CAPPlugin {
     var types = JSArray()
     types.append(context.biometryType.rawValue)
 
-    call.resolve([
-      "isAvailable": available,
-      "biometryType": context.biometryType.rawValue,
-      "biometryTypes": types,
-      "reason": reason,
-      "code": errorCode
-    ])
+    return CheckDeviceBiometryResult(
+      isAvailable: available,
+      biometryType: context.biometryType.rawValue,
+      biometryTypes: types,
+      reason: reason,
+      code: errorCode
+    )
   }
 
   /**
@@ -79,9 +98,11 @@ public class BiometricAuthNative: CAPPlugin {
    */
   @objc func authenticate(_ call: CAPPluginCall) {
     // Make sure the app can evaluate policy, otherwise evaluatePolicy() will crash
-    guard canEvaluatePolicy else {
+    let checkResult = checkDeviceBiometry()
+
+    guard checkResult.isAvailable else {
       call.reject(
-        kMissingFaceIDUsageEntry,
+        checkResult.reason,
         biometryErrorCodeMap[LAError.biometryNotAvailable.rawValue]
       )
 

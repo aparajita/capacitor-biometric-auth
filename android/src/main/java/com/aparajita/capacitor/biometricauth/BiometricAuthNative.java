@@ -96,6 +96,13 @@ public class BiometricAuthNative extends Plugin {
    */
   @PluginMethod
   public void checkBiometry(PluginCall call) {
+    call.resolve(checkDeviceBiometry());
+  }
+
+  /**
+   * Check the device's availability and type of biometric authentication.
+   */
+  private JSObject checkDeviceBiometry() {
     BiometricManager manager = BiometricManager.from(getContext());
     int biometryResult;
 
@@ -106,14 +113,14 @@ public class BiometricAuthNative extends Plugin {
       biometryResult = manager.canAuthenticate();
     }
 
-    JSObject ret = new JSObject();
-    ret.put(
+    JSObject result = new JSObject();
+    result.put(
       "isAvailable",
       biometryResult == BiometricManager.BIOMETRIC_SUCCESS
     );
 
     biometryTypes = getDeviceBiometryTypes();
-    ret.put("biometryType", biometryTypes.get(0).getType());
+    result.put("biometryType", biometryTypes.get(0).getType());
 
     JSArray returnTypes = new JSArray();
 
@@ -121,7 +128,7 @@ public class BiometricAuthNative extends Plugin {
       returnTypes.put(type.getType());
     }
 
-    ret.put("biometryTypes", returnTypes);
+    result.put("biometryTypes", returnTypes);
 
     String reason = "";
 
@@ -156,13 +163,13 @@ public class BiometricAuthNative extends Plugin {
       errorCode = "biometryNotAvailable";
     }
 
-    ret.put("reason", reason);
-    ret.put("code", errorCode);
-    call.resolve(ret);
+    result.put("reason", reason);
+    result.put("code", errorCode);
+    return result;
   }
 
   private ArrayList<BiometryType> getDeviceBiometryTypes() {
-    ArrayList<BiometryType> types = new ArrayList<BiometryType>();
+    ArrayList<BiometryType> types = new ArrayList<>();
     PackageManager manager = getContext().getPackageManager();
 
     if (manager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
@@ -189,6 +196,17 @@ public class BiometricAuthNative extends Plugin {
    */
   @PluginMethod
   public void authenticate(final PluginCall call) {
+    // Make sure biometry is available
+    JSObject checkResult = checkDeviceBiometry();
+
+    if (Boolean.FALSE.equals(checkResult.getBoolean("isAvailable", false))) {
+      call.reject(
+        checkResult.getString("reason", ""),
+        checkResult.getString("code", "")
+      );
+      return;
+    }
+
     // The result of an intent is supposed to have the package name as a prefix
     RESULT_EXTRA_PREFIX = getContext().getPackageName() + ".";
 
@@ -279,23 +297,19 @@ public class BiometricAuthNative extends Plugin {
     );
 
     switch (resultType) {
-      case SUCCESS:
-        call.resolve();
-        break;
-      case FAILURE:
-        // Biometry was successfully presented but was not recognized
-        call.reject(errorMessage, BIOMETRIC_FAILURE);
-        break;
-      case ERROR:
-        // The user cancelled, the system cancelled, or some error occurred.
-        // If the user cancelled, errorMessage is the text of the "negative" button,
-        // which is not especially descriptive.
+      case SUCCESS -> call.resolve();
+      // Biometry was successfully presented but was not recognized
+      case FAILURE -> call.reject(errorMessage, BIOMETRIC_FAILURE);
+      // The user cancelled, the system cancelled, or some error occurred.
+      // If the user cancelled, errorMessage is the text of the "negative" button,
+      // which is not especially descriptive.
+      case ERROR -> {
         if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
           errorMessage = "Cancel button was pressed";
         }
 
         call.reject(errorMessage, biometryErrorCodeMap.get(errorCode));
-        break;
+      }
     }
   }
 
