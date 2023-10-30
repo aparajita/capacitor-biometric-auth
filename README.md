@@ -24,6 +24,16 @@ pnpm add @aparajita/capacitor-biometric-auth
 
 Not using [pnpm](https://pnpm.js.org/)? You owe it to yourself to give it a try. It’s faster, better with monorepos, and uses _way, way_ less disk space than the alternatives.
 
+### iOS
+
+👉 **IMPORTANT!!** In order to use Face ID, you must add the `NSFaceIDUsageDescription` key to your `Info.plist` file. This is a string that describes why your app needs access to Face ID. If you don’t add this key, the system won’t allow your app to use Face ID.
+
+1. In Xcode, open your app’s `Info.plist` file.
+2. Hover your mouse over one of the existing keys, and click the `+` button that appears.
+3. In the popup that appears, type `Privacy - Face ID Usage Description` and press Enter.
+4. In the Value column, enter a string that describes why your app needs access to Face ID.
+5. Save your changes.
+
 ## Usage
 
 The API is extensively documented in the [TypeScript definitions file](src/definitions.ts). There is also (somewhat incomplete auto-generated) documentation [below](#api). For a complete example of how to use this plugin in practice, see the [demo app](https://github.com/aparajita/capacitor-biometric-auth-demo).
