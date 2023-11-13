@@ -6,7 +6,7 @@ This plugin for [Capacitor 5](https://capacitorjs.com) provides access to native
 
 👉 **NOTE:** This plugin only works with Capacitor 5. If you are upgrading from the Capacitor 2 version, note that the plugin name has changed to `BiometricAuth`.
 
-🛑 **BREAKING CHANGE:** If you are upgrading from a version prior to 3.0.0, please note that `androidMaxAttempts` is no longer supported. See the documentation for [`authenticate()`](#authenticate) for more information.
+🛑 **BREAKING CHANGE:** If you are upgrading from a version prior to 6.0.0, please note that [`authenticate()`](#authenticate) now throws an instance of `BiometryError`, and `BiometryError.code` is now typed as [`BiometryErrorType`](#biometryerrortype).
 
 ## Demos
 
@@ -38,24 +38,88 @@ Not using [pnpm](https://pnpm.js.org/)? You owe it to yourself to give it a try.
 
 The API is extensively documented in the [TypeScript definitions file](src/definitions.ts). There is also (somewhat incomplete auto-generated) documentation [below](#api). For a complete example of how to use this plugin in practice, see the [demo app](https://github.com/aparajita/capacitor-biometric-auth-demo).
 
-> **NOTE:** Your Android app must use a base theme named "AppTheme".
+👉 **NOTE:** Your Android app must use a base theme named "AppTheme".
 
 ### Checking availability
 
-Before giving the user the option to use biometry (such as displaying a biometry icon), call [`checkBiometry`](#checkbiometry) and inspect the [`CheckBiometryResult`](#checkbiometryresult) to see what (if any) biometry is available on the device. Note that `isAvailable` may be `false` but `biometryType` may indicate the presence of biometry on the device. This occurs if the current user is not enrolled in biometry, or if biometry has been disabled for the current app. In such cases the `reason` and `code` will tell you why.
+Before giving the user the option to use biometry (such as displaying a biometry icon), call [`checkBiometry()`](#checkbiometry) and inspect the [`CheckBiometryResult`](#checkbiometryresult) to see what (if any) biometry is available on the device. Note the following:
 
-Because the availability of biometry can change while your app is in the background, it’s important to check availability when your app resumes. By calling [`addResumeListener`](#addresumelistener) you can register a callback that is passed a [`CheckBiometryResult`](#checkbiometryresult) when your app resumes.
+- `isAvailable` may be `false` but `biometryType` may indicate the presence of biometry on the device. This occurs if the current user is not enrolled in biometry, or if biometry has been disabled for the current app. In such cases the `reason` and `code` will tell you why.
+
+- `biometryTypes` may contain more than one type of biometry. This occurs on Android devices that support multiple types of biometry. In such cases the `biometryType` will indicate the primary (most secure) type of biometry, and the `biometryTypes` array will contain all of the biometry types supported by the device. Note that Android only guarantees that one of the types is actually available.
+
+Because the availability of biometry can change while your app is in the background, it’s important to check availability when your app resumes. By calling [`addResumeListener()`](#addresumelistener) you can register a callback that is passed a [`CheckBiometryResult`](#checkbiometryresult) when your app resumes.
+
+#### Example
+
+```typescript
+import { CheckBiometryResult } from './definitions'
+
+let appListener: PluginListenerHandle
+
+function updateBiometryInfo(info: CheckBiometryResult): void {
+  if (info.isAvailable) {
+    // Biometry is available, info.biometryType will tell you the primary type.
+  } else {
+    // Biometry is not available, info.reason and info.code will tell you why.
+  }
+}
+
+async function onComponentMounted(): Promise<void> {
+  updateBiometryInfo(await BiometricAuth.checkBiometry())
+
+  try {
+    appListener = await BiometricAuth.addResumeListener(updateBiometryInfo)
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message)
+    }
+  }
+}
+
+async function onComponentUnmounted(): Promise<void> {
+  await appListener?.remove()
+}
+```
 
 ### Authenticating
 
-Once you have determined that biometry is available, to initiate biometric authentication call [`authenticate`](#authenticate). `authenticate` takes an [`AuthenticateOptions`](#authenticateoptions) object which you will want to use in order to control the behavior and appearance of the biometric prompt.
+To initiate biometric authentication call [`authenticate()`](#authenticate). `authenticate` takes an [`AuthenticateOptions`](#authenticateoptions) object which you will want to use in order to control the behavior and appearance of the biometric prompt.
 
-If authentication succeeds, the Promise resolves. If authentication fails, the Promise is rejected with a `BiometryError`, which has two properties:
+If authentication succeeds, the Promise resolves. If authentication fails, the Promise is rejected with an instance of [`BiometryError`](#biometryerror), which has two properties:
 
 | Property | Type                                                                                                    | Description                                       |
 | :------- | :------------------------------------------------------------------------------------------------------ | :------------------------------------------------ |
 | message  | string                                                                                                  | A description of the error suitable for debugging |
 | code     | [BiometryErrorType](https://github.com/aparajita/capacitor-biometric-auth/blob/main/src/definitions.ts) | What caused the error                             |
+
+#### Example
+
+```typescript
+import { BiometryError, BiometryErrorType } from './definitions'
+
+async function authenticate(): Promise<void> {
+  try {
+    await BiometricAuth.authenticate({
+      reason: 'Please authenticate',
+      cancelTitle: 'Cancel',
+      allowDeviceCredential: true,
+      iosFallbackTitle: 'Use passcode',
+      androidTitle: 'Biometric login',
+      androidSubtitle: 'Log in using biometric authentication',
+      androidConfirmationRequired: false,
+    })
+  } catch (error) {
+    // error is always an instance of BiometryError.
+    if (error instanceof BiometryError) {
+      if (error.code !== BiometryErrorType.userCancel) {
+        // Display the error.
+        await showAlert(error.message)
+      }
+    }
+  }
+}
+```
 
 ## Biometry support
 
@@ -69,7 +133,7 @@ On iOS, Touch ID and Face ID are supported.
 
 ### Android
 
-On Android, fingerprint, face, and iris authentication are supported. Note that if a device supports more than one type of biometry, the plugin will only present the primary type, which is determined by the system.
+On Android, fingerprint, face, and iris authentication are supported. Note that if a device supports more than one type of biometry, the plugin will only present the primary (most secure) type, which is determined by the system.
 
 ## API
 
@@ -86,6 +150,8 @@ On Android, fingerprint, face, and iris authentication are supported. Note that 
 </docgen-index>
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
+
+This is the public interface of the plugin.
 
 ### checkBiometry()
 
@@ -133,7 +199,7 @@ Prompt the user for authentication. If authorization fails for any reason, the p
 addResumeListener(listener: ResumeListener) => Promise<PluginListenerHandle>
 ```
 
-Register a function that will be called when the app resumes. The function will be passed the result of `checkBiometry()`.
+Register a function that will be called when the app resumes. The function will be passed the result of `checkBiometry()`.<br><br>👉 **NOTE:** checkBiometry() must be called at least once before calling this method.
 
 | Param    | Type                                         |
 | :------- | :------------------------------------------- |
@@ -147,13 +213,13 @@ Register a function that will be called when the app resumes. The function will 
 
 #### CheckBiometryResult
 
-| Prop          | Type                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| :------------ | :------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| isAvailable   | boolean                                            | True if the device has biometric authentication capability and the current user has enrolled in some form of biometry.                                                                                                                                                                                                                                                                                                                           |
-| biometryType  | <a href="#biometrytype">BiometryType</a>           | The primary type of biometry available on the device. If the device supports both fingerprint and face authentication, this will be <a href="#biometrytype">`BiometryType.touchId`</a>.                                                                                                                                                                                                                                                          |
-| biometryTypes | BiometryType[]                                     | All of the biometry types supported by the device (currently only Android devices support multiple biometry types). If no biometry is available, this will be an empty array. If multiple types are supported, Android only guarantees that one of them is actually available.                                                                                                                                                                   |
-| reason        | string                                             | If biometry is not available and the system gives a reason why, it will be returned here. Otherwise it's an empty string.                                                                                                                                                                                                                                                                                                                        |
-| code          | <a href="#biometryerrortype">BiometryErrorType</a> | If biometry is not available, the error code will be returned here. Otherwise it's an empty string. The error code will be one of the <a href="#biometryerrortype">`BiometryErrorType`</a> enum values, and is consistent across platforms. This allows you to check for specific errors in a platform- independent way, for example:<br><br>if (result.code === <a href="#biometryerrortype">BiometryErrorType.biometryNotEnrolled</a>) { ... } |
+| Prop          | Type                                               | Description                                                                                                                                                                                                                                                                    |
+| :------------ | :------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| isAvailable   | boolean                                            | True if the device has biometric authentication capability and the current user has enrolled in some form of biometry.                                                                                                                                                         |
+| biometryType  | <a href="#biometrytype">BiometryType</a>           | The primary type of biometry available on the device. If the device supports both fingerprint and face authentication, this will be <a href="#biometrytype">`BiometryType.touchId`</a>.                                                                                        |
+| biometryTypes | BiometryType[]                                     | All of the biometry types supported by the device (currently only Android devices support multiple biometry types). If no biometry is available, this will be an empty array. If multiple types are supported, Android only guarantees that one of them is actually available. |
+| reason        | string                                             | If biometry is not available and the system gives a reason why, it will be returned here. Otherwise it's an empty string.                                                                                                                                                      |
+| code          | <a href="#biometryerrortype">BiometryErrorType</a> | If biometry is not available, the error code will be returned here. Otherwise it's an empty string. The error code will be one of the <a href="#biometryerrortype">`BiometryErrorType`</a> enum values, and is consistent across platforms.                                    |
 
 #### AuthenticateOptions
 
@@ -165,7 +231,7 @@ Register a function that will be called when the app resumes. The function will 
 | iosFallbackTitle            | string  | The system presents a fallback button when biometric authentication fails — for example, because the system doesn’t recognize the presented finger, or after several failed attempts to recognize the user’s face.<br><br>If `allowDeviceCredential` is false, tapping this button dismisses the authentication dialog and returns the error code userFallback. If undefined, the localized system default title is used. Passing an empty string hides the fallback button completely.<br><br>If `allowDeviceCredential` is true and this is undefined, the localized system default title is used.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | androidTitle                | string  | Title for the Android dialog. If not supplied, the system default is used.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | androidSubtitle             | string  | Subtitle for the Android dialog. If not supplied, the system default is used.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| androidConfirmationRequired | boolean | For information on this setting, see:<br><br>https://developer.android.com/reference/android/hardware/biometrics/BiometricPrompt.Builder#setConfirmationRequired(boolean)<br><br>If not set, defaults to true.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| androidConfirmationRequired | boolean | If not set, defaults to true.<br><br>For information on this setting, see https://developer.android.com/reference/android/hardware/biometrics/BiometricPrompt.Builder#setConfirmationRequired(boolean).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 #### PluginListenerHandle
 
