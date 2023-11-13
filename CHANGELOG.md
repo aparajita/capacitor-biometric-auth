@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [6.0.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v5.2.1...v6.0.0) (2023-11-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* authenticate() now throws a BiometryError instance, and BiometryError.code is typed as BiometryErrorType.
+
+### Features
+
+* throw BiometryError from authenticate ([6ff0be0](https://github.com/aparajita/capacitor-biometric-auth/commit/6ff0be081f19eb1ed93fb8ab81eb2ceba1444f8f))
+
+
+### Maintenance
+
+* update config ([d1f0abe](https://github.com/aparajita/capacitor-biometric-auth/commit/d1f0abe414f262abe58d5f690cbb511ae19abd93))
+* update deps ([60f20c0](https://github.com/aparajita/capacitor-biometric-auth/commit/60f20c0c30503873e7defdef16e170eeb7675e19))
+* update deps ([dae6ac1](https://github.com/aparajita/capacitor-biometric-auth/commit/dae6ac1bc38aec29155f3d5f088a4d20367fe016))
+
+
+### Docs
+
+* add examples, other improvements ([5264666](https://github.com/aparajita/capacitor-biometric-auth/commit/5264666beca91236c4b368ef9f00ea4bdd9c78bb))
+* add section on NSFaceIDUsageDescription ([3620107](https://github.com/aparajita/capacitor-biometric-auth/commit/3620107a632f3a2ffef271365c9fa8328e756bcc))
+
 ## [5.2.1](https://github.com/aparajita/capacitor-biometric-auth/compare/v5.2.0...v5.2.1) (2023-10-11)
 
 
