@@ -10,12 +10,27 @@ import { BiometryErrorType, BiometryType } from './definitions'
 export class BiometricAuthNative extends BiometricAuthBase {
   constructor(capProxy: BiometricAuthPlugin) {
     super()
-    this.checkBiometry = capProxy.checkBiometry
-    this.authenticate = capProxy.authenticate
+
+    /*
+      In order to call native methods and maintain the ability to
+      call pure Javascript methods as well, we have to bind the native methods
+      to the proxy.
+
+      capProxy is a proxy of an instance of this class, so it is safe
+      to cast it to this class.
+    */
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const proxy = capProxy as BiometricAuthNative
+
+    /* eslint-disable @typescript-eslint/unbound-method */
+    this.checkBiometry = proxy.checkBiometry
+    this.internalAuthenticate = proxy.internalAuthenticate
+    /* eslint-enable */
   }
 
-  async checkBiometry(): Promise<CheckBiometryResult> {
-    // Never used, satisfy the compiler
+  // @native
+  override async checkBiometry(): Promise<CheckBiometryResult> {
+    // Never used, but we have to satisfy the compiler.
     return Promise.resolve({
       isAvailable: true,
       biometryType: BiometryType.none,
@@ -25,14 +40,19 @@ export class BiometricAuthNative extends BiometricAuthBase {
     })
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
-  async authenticate(options?: AuthenticateOptions): Promise<void> {}
+  // @native
+  // On native platforms, this will present the native authentication UI.
+  override async internalAuthenticate(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    options?: AuthenticateOptions,
+  ): Promise<void> {}
 
+  // Web only, used for simulating biometric authentication.
   // eslint-disable-next-line @typescript-eslint/require-await
-  async setBiometryType(
+  override async setBiometryType(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     type: BiometryType | string | undefined,
   ): Promise<void> {
-    throw this.unimplemented('setBiometryType is web only')
+    throw this.unimplemented('setBiometryType() is web only')
   }
 }

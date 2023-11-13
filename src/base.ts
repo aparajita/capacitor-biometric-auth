@@ -1,5 +1,5 @@
 import { App } from '@capacitor/app'
-import { WebPlugin } from '@capacitor/core'
+import { CapacitorException, WebPlugin } from '@capacitor/core'
 import type { PluginListenerHandle } from '@capacitor/core'
 import type {
   AuthenticateOptions,
@@ -7,13 +7,16 @@ import type {
   CheckBiometryResult,
   ResumeListener,
   BiometryType,
+  BiometryErrorType,
 } from './definitions'
+import { BiometryError } from './definitions'
 
 // eslint-disable-next-line import/prefer-default-export
 export abstract class BiometricAuthBase
   extends WebPlugin
   implements BiometricAuthPlugin
 {
+  // Web only, used for simulating biometric authentication.
   abstract setBiometryType(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     type: BiometryType | string | undefined,
@@ -21,7 +24,27 @@ export abstract class BiometricAuthBase
 
   abstract checkBiometry(): Promise<CheckBiometryResult>
 
-  abstract authenticate(options?: AuthenticateOptions): Promise<void>
+  async authenticate(options?: AuthenticateOptions): Promise<void> {
+    try {
+      await this.internalAuthenticate(options)
+    } catch (error) {
+      // error will be an instance of CapacitorException on native platforms,
+      // an instance of BiometryError on the web.
+      if (error instanceof CapacitorException) {
+        throw new BiometryError(
+          error.message,
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- error.data values are typed as any
+          error.data!.code as BiometryErrorType,
+        )
+      } else {
+        throw error
+      }
+    }
+  }
+
+  protected abstract internalAuthenticate(
+    options?: AuthenticateOptions,
+  ): Promise<void>
 
   addResumeListener(
     listener: ResumeListener,

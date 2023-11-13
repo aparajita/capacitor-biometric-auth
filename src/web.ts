@@ -7,7 +7,8 @@ import { getBiometryName } from './web-utils'
 export class BiometricAuthWeb extends BiometricAuthBase {
   private biometryType = BiometryType.none
 
-  async checkBiometry(): Promise<CheckBiometryResult> {
+  // On the web, return the fake biometry set by setBiometryType().
+  override async checkBiometry(): Promise<CheckBiometryResult> {
     return Promise.resolve({
       isAvailable: this.biometryType !== BiometryType.none,
       biometryType: this.biometryType,
@@ -17,30 +18,35 @@ export class BiometricAuthWeb extends BiometricAuthBase {
     })
   }
 
-  async authenticate(options?: AuthenticateOptions): Promise<void> {
-    return this.checkBiometry().then(({ isAvailable, biometryType }) => {
-      if (isAvailable) {
-        if (
-          // eslint-disable-next-line no-alert
-          confirm(
-            options?.reason ??
-              `Authenticate with ${getBiometryName(biometryType)}?`,
-          )
-        ) {
-          return
-        }
+  // On the web, fake authentication with a confirm dialog.
+  override async internalAuthenticate(
+    options?: AuthenticateOptions,
+  ): Promise<void> {
+    const { isAvailable, biometryType } = await this.checkBiometry()
 
-        throw new BiometryError('User cancelled', BiometryErrorType.userCancel)
+    if (isAvailable) {
+      if (
+        // eslint-disable-next-line no-alert
+        confirm(
+          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- we want to use the default value if options?.reason is an empty string
+          options?.reason ||
+            `Authenticate with ${getBiometryName(biometryType)}?`,
+        )
+      ) {
+        return
       }
 
-      throw new BiometryError(
-        'Biometry not available',
-        BiometryErrorType.biometryNotAvailable,
-      )
-    })
+      throw new BiometryError('User cancelled', BiometryErrorType.userCancel)
+    }
+
+    throw new BiometryError(
+      'Biometry not available',
+      BiometryErrorType.biometryNotAvailable,
+    )
   }
 
-  async setBiometryType(
+  // Web only, used for simulating biometric authentication.
+  override async setBiometryType(
     type: BiometryType | string | undefined,
   ): Promise<void> {
     if (typeof type === 'undefined') {

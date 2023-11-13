@@ -96,7 +96,7 @@ public class BiometricAuthNative: CAPPlugin {
    * @returns {Promise<void>}
    * @rejects {BiometricResultError}
    */
-  @objc func authenticate(_ call: CAPPluginCall) {
+  @objc func internalAuthenticate(_ call: CAPPluginCall) {
     // Make sure the app can evaluate policy, otherwise evaluatePolicy() will crash
     let checkResult = checkDeviceBiometry()
 

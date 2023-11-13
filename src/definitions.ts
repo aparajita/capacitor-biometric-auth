@@ -1,8 +1,6 @@
-import type {
-  PluginListenerHandle,
-  PluginResultError,
-  WebPlugin,
-} from '@capacitor/core'
+// noinspection JSUnusedGlobalSymbols
+
+import type { PluginListenerHandle, WebPlugin } from '@capacitor/core'
 
 export enum BiometryType {
   /**
@@ -118,18 +116,16 @@ export interface AuthenticateOptions {
   androidSubtitle?: string
 
   /**
-   * For information on this setting, see:
-   *
-   * https://developer.android.com/reference/android/hardware/biometrics/BiometricPrompt.Builder#setConfirmationRequired(boolean)
-   *
    * If not set, defaults to true.
+   *
+   * For information on this setting, see https://developer.android.com/reference/android/hardware/biometrics/BiometricPrompt.Builder#setConfirmationRequired(boolean).
    */
   androidConfirmationRequired?: boolean
 }
 
 /**
- * If the `authenticate()` method throws an exception, the error object
- * contains a .code property which will contain one of these strings,
+ * If the `authenticate()` method throws an exception, the `BiometryError`
+ * instance contains a .code property which will contain one of these strings,
  * indicating what the error was.
  *
  * See https://developer.apple.com/documentation/localauthentication/laerror
@@ -151,18 +147,14 @@ export enum BiometryErrorType {
   noDeviceCredential = 'noDeviceCredential',
 }
 
-export interface ResultError extends PluginResultError {
-  code: string
-}
-
-export class BiometryError implements ResultError {
-  message: string
-  code: string
-
-  constructor(message: string, code: BiometryErrorType) {
-    this.message = message
-    this.code = code
-  }
+/**
+ * `authenticate()` throws instances of this class.
+ */
+export class BiometryError {
+  constructor(
+    public message: string,
+    public code: BiometryErrorType,
+  ) {}
 }
 
 export interface CheckBiometryResult {
@@ -198,12 +190,7 @@ export interface CheckBiometryResult {
    * If biometry is not available, the error code will be returned here.
    * Otherwise it's an empty string. The error code will be one of the
    * `BiometryErrorType` enum values, and is consistent across
-   * platforms. This allows you to check for specific errors in a platform-
-   * independent way, for example:
-   *
-   * if (result.code === BiometryErrorType.biometryNotEnrolled) {
-   *   ...
-   * }
+   * platforms.
    */
   code: BiometryErrorType
 }
@@ -213,6 +200,9 @@ export interface CheckBiometryResult {
  */
 export type ResumeListener = (info: CheckBiometryResult) => void
 
+/**
+ * This is the public interface of the plugin.
+ */
 export interface BiometricAuthPlugin extends WebPlugin {
   /**
    * Check to see what biometry type (if any) is available.
@@ -252,6 +242,9 @@ export interface BiometricAuthPlugin extends WebPlugin {
   /**
    * Register a function that will be called when the app resumes.
    * The function will be passed the result of `checkBiometry()`.
+   *
+   * 👉 **NOTE:** checkBiometry() must be called at least once
+   * before calling this method.
    */
   addResumeListener: (listener: ResumeListener) => Promise<PluginListenerHandle>
 }

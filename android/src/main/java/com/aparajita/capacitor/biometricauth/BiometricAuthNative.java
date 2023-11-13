@@ -195,7 +195,7 @@ public class BiometricAuthNative extends Plugin {
    * Prompt the user for biometric authentication.
    */
   @PluginMethod
-  public void authenticate(final PluginCall call) {
+  public void internalAuthenticate(final PluginCall call) {
     // Make sure biometry is available
     JSObject checkResult = checkDeviceBiometry();
 
