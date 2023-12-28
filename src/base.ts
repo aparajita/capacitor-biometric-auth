@@ -33,7 +33,7 @@ export abstract class BiometricAuthBase
       if (error instanceof CapacitorException) {
         throw new BiometryError(
           error.message,
-          // error.code is typed as ExceptionCode, but should accept BiometryErrorType.
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- we are converting from ExceptionCode to BiometryErrorType
           error.code as unknown as BiometryErrorType,
         )
       } else {
