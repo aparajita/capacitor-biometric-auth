@@ -26,6 +26,7 @@ public class BiometricAuthNative: CAPPlugin {
     let isAvailable: Bool
     let biometryType: LABiometryType.RawValue
     let biometryTypes: JSArray
+    let deviceIsSecure: Bool
     let reason: String
     let code: String
   }
@@ -39,6 +40,7 @@ public class BiometricAuthNative: CAPPlugin {
       "isAvailable": checkResult.isAvailable,
       "biometryType": checkResult.biometryType,
       "biometryTypes": checkResult.biometryTypes,
+      "deviceIsSecure": checkResult.deviceIsSecure,
       "reason": checkResult.reason,
       "code": checkResult.code
     ])
@@ -49,8 +51,9 @@ public class BiometricAuthNative: CAPPlugin {
    */
   func checkDeviceBiometry() -> CheckDeviceBiometryResult {
     let context = LAContext()
-    var error: NSError?
-    var available = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+    var availableError: NSError?
+    var available = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &availableError)
+    var deviceIsSecure = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
     var reason = ""
     var errorCode = ""
 
@@ -66,7 +69,7 @@ public class BiometricAuthNative: CAPPlugin {
         errorCode = biometryErrorCodeMap[LAError.biometryNotAvailable.rawValue] ?? ""
       }
     } else if !available,
-              let error = error {
+              let error = availableError {
       // If we get a reason from the system, return it
       reason = error.localizedDescription
 
@@ -84,6 +87,7 @@ public class BiometricAuthNative: CAPPlugin {
       isAvailable: available,
       biometryType: context.biometryType.rawValue,
       biometryTypes: types,
+      deviceIsSecure: deviceIsSecure,
       reason: reason,
       code: errorCode
     )

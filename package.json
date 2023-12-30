@@ -1,7 +1,7 @@
 {
   "name": "@aparajita/capacitor-biometric-auth",
   "version": "6.0.1",
-  "description": "Provides access to the native biometric auth APIs for Capacitor apps",
+  "description": "Provides access to the native biometric auth & device security APIs for Capacitor apps",
   "author": "Aparajita Fishman",
   "license": "MIT",
   "main": "dist/plugin.cjs.js",
@@ -53,7 +53,8 @@
     "biometric",
     "auth",
     "faceid",
-    "touchid"
+    "touchid",
+    "security"
   ],
   "capacitor": {
     "ios": {

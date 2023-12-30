@@ -181,6 +181,13 @@ export interface CheckBiometryResult {
   biometryTypes: BiometryType[]
 
   /**
+   * Returns true if the device is secure. On iOS, this means that the
+   * device has a passcode set. On Android, this means that the device
+   * has a PIN, pattern, or password set.
+   */
+  deviceIsSecure: boolean
+
+  /**
    * If biometry is not available and the system gives a reason why,
    * it will be returned here. Otherwise it's an empty string.
    */
@@ -218,6 +225,22 @@ export interface BiometricAuthPlugin extends WebPlugin {
    * it isn't a valid value, nothing happens.
    */
   setBiometryType: (type: BiometryType | string | undefined) => Promise<void>
+
+  /**
+   * web only
+   *
+   * On the web, this method allows you to dynamically simulate whether or not
+   * the user has enrolled in biometry.
+   */
+  setBiometryIsEnrolled: (isSecure: boolean) => Promise<void>
+
+  /**
+   * web only
+   *
+   * On the web, this method allows you to dynamically simulate whether or not
+   * the user has secured the device with a PIN, pattern or passcode.
+   */
+  setDeviceIsSecure: (isSecure: boolean) => Promise<void>
 
   /**
    * Prompt the user for authentication. If authorization fails for any reason,

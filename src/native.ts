@@ -35,6 +35,7 @@ export class BiometricAuthNative extends BiometricAuthBase {
       isAvailable: true,
       biometryType: BiometryType.none,
       biometryTypes: [],
+      deviceIsSecure: false,
       reason: '',
       code: BiometryErrorType.none,
     })
@@ -54,5 +55,23 @@ export class BiometricAuthNative extends BiometricAuthBase {
     type: BiometryType | string | undefined,
   ): Promise<void> {
     throw this.unimplemented('setBiometryType() is web only')
+  }
+
+  // Web only, used for simulating biometry enrollment.
+  // eslint-disable-next-line @typescript-eslint/require-await
+  override async setBiometryIsEnrolled(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    enrolled: boolean,
+  ): Promise<void> {
+    throw this.unimplemented('setBiometryEnrolled() is web only')
+  }
+
+  // Web only, used for simulating device security.
+  // eslint-disable-next-line @typescript-eslint/require-await
+  override async setDeviceIsSecure(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    isSecure: boolean,
+  ): Promise<void> {
+    throw this.unimplemented('setDeviceIsSecure() is web only')
   }
 }

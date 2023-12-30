@@ -24,6 +24,12 @@ export abstract class BiometricAuthBase
 
   abstract checkBiometry(): Promise<CheckBiometryResult>
 
+  // Web only, used for simulating biometry enrollment.
+  abstract setBiometryIsEnrolled(enrolled: boolean): Promise<void>
+
+  // Web only, used for simulating device security.
+  abstract setDeviceIsSecure(isSecure: boolean): Promise<void>
+
   async authenticate(options?: AuthenticateOptions): Promise<void> {
     try {
       await this.internalAuthenticate(options)
