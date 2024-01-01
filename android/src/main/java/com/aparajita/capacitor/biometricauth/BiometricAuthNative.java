@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import androidx.activity.result.ActivityResult;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
@@ -91,20 +90,14 @@ public class BiometricAuthNative extends Plugin {
 
   private ArrayList<BiometryType> biometryTypes;
 
-  /**
-   * Check the device's availability and type of biometric authentication.
-   */
-  @PluginMethod
-  public void checkBiometry(PluginCall call) {
-    call.resolve(checkDeviceBiometry());
   }
 
   /**
    * Check the device's availability and type of biometric authentication.
    */
-  private JSObject checkDeviceBiometry() {
+  @PluginMethod
+  public void checkBiometry(PluginCall call) {
     BiometricManager manager = BiometricManager.from(getContext());
-    int biometryResult;
 
     // First check for weak biometry or better.
     int biometryResult = manager.canAuthenticate(
@@ -163,7 +156,7 @@ public class BiometricAuthNative extends Plugin {
 
     result.put("reason", reason);
     result.put("code", errorCode);
-    return result;
+    call.resolve(result);
   }
 
   private ArrayList<BiometryType> getDeviceBiometryTypes() {
@@ -194,18 +187,7 @@ public class BiometricAuthNative extends Plugin {
    */
   @PluginMethod
   public void internalAuthenticate(final PluginCall call) {
-    // Make sure biometry is available
-    JSObject checkResult = checkDeviceBiometry();
-
-    if (Boolean.FALSE.equals(checkResult.getBoolean("isAvailable", false))) {
-      call.reject(
-        checkResult.getString("reason", ""),
-        checkResult.getString("code", "")
-      );
-      return;
-    }
-
-    // The result of an intent is supposed to have the package name as a prefix
+    // The result of an intent is supposed to have the package name as a prefix.
     RESULT_EXTRA_PREFIX = getContext().getPackageName() + ".";
 
     Intent intent = new Intent(getContext(), AuthActivity.class);

@@ -1,12 +1,10 @@
 package com.aparajita.capacitor.biometricauth;
 
 import android.annotation.SuppressLint;
-import android.app.KeyguardManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricManager;
@@ -33,22 +31,20 @@ public class AuthActivity extends AppCompatActivity {
 
     BiometricPrompt.PromptInfo.Builder builder =
       new BiometricPrompt.PromptInfo.Builder();
+
     Intent intent = getIntent();
     String title = intent.getStringExtra(BiometricAuthNative.TITLE);
     String subtitle = intent.getStringExtra(BiometricAuthNative.SUBTITLE);
     String description = intent.getStringExtra(BiometricAuthNative.REASON);
-    allowDeviceCredential = false;
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      // Android docs say we should check if the device is secure before enabling device credential fallback
-      KeyguardManager manager = (KeyguardManager) getSystemService(
-        KEYGUARD_SERVICE
-      );
+    int authenticators = intent.getIntExtra(
+      BiometricAuthNative.BIOMETRIC_STRENGTH,
+      BiometricManager.Authenticators.BIOMETRIC_WEAK
+    );
 
-      if (manager.isDeviceSecure()) {
-        allowDeviceCredential =
-          intent.getBooleanExtra(BiometricAuthNative.DEVICE_CREDENTIAL, false);
-      }
+    allowDeviceCredential =
+      intent.getBooleanExtra(BiometricAuthNative.DEVICE_CREDENTIAL, false);
+
     // Android docs say that BIOMETRIC_STRONG | DEVICE_CREDENTIAL cannot be used on API 28-29.
     // If that is the case, fall back to BIOMETRIC_WEAK.
     if (
@@ -60,6 +56,12 @@ public class AuthActivity extends AppCompatActivity {
       authenticators = BiometricManager.Authenticators.BIOMETRIC_WEAK;
     }
 
+    if (allowDeviceCredential) {
+      authenticators |= BiometricManager.Authenticators.DEVICE_CREDENTIAL;
+    }
+
+    builder.setAllowedAuthenticators(authenticators);
+
     // The title must be non-null and non-empty
     if (title == null || title.isEmpty()) {
       title = "Authenticate";
@@ -67,8 +69,7 @@ public class AuthActivity extends AppCompatActivity {
 
     builder.setTitle(title).setSubtitle(subtitle).setDescription(description);
 
-
-    // Android docs say that negative button text should not be set if device credential is allowed
+    // Android docs say that negative button text should not be set if device credential is allowed.
     if (!allowDeviceCredential) {
       String negativeButtonText = intent.getStringExtra(
         BiometricAuthNative.CANCEL_TITLE

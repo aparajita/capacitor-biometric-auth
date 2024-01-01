@@ -5,16 +5,10 @@
 This plugin for [Capacitor 5](https://capacitorjs.com) provides access to native biometry on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry is simulated on the web so you can test your logic without making any changes to your code.
 
 👉 **NOTE:** This plugin only works with Capacitor 5. If you are upgrading from the Capacitor 2 version, note that the plugin name has changed to `BiometricAuth`.
+🛑 **BREAKING CHANGES:**
 
-🛑 **BREAKING CHANGE:** If you are upgrading from a version prior to 6.0.0, please note that [`authenticate()`](#authenticate) now throws an instance of `BiometryError`, and `BiometryError.code` is now typed as [`BiometryErrorType`](#biometryerrortype).
-
-## Demos
-
-Here is `capacitor-biometric-auth` running on the [demo app](https://github.com/aparajita/capacitor-biometric-auth-demo) on both iOS and Android.
-
-| iOS                                                                                                                            | Android                                                                                                                        |
-| :----------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
-| <video src="https://user-images.githubusercontent.com/22218/182895212-5f7bfa39-6db1-4149-859b-85cff7012903.mp4" width="352" /> | <video src="https://user-images.githubusercontent.com/22218/182898192-d16243b8-3671-4c32-9e25-5e37feeb43d4.mp4" width="365" /> |
+- If you are upgrading from a version prior to 6.0.0, please note that [`authenticate()`](#authenticate) now throws an instance of `BiometryError`, and `BiometryError.code` is now typed as [`BiometryErrorType`](#biometryerrortype).
+- If you are upgrading from a version prior to 7.0.0, please note that [`authenticate()`](#authenticate) will _immediately_ present a prompt for device credentials if `deviceIsSecure` is true, `allowDeviceCredentials` is true, and no biometry of the requested strength is available.
 
 ## Installation
 

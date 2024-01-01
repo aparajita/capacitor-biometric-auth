@@ -22,34 +22,10 @@ public class BiometricAuthNative: CAPPlugin {
     LAError.biometryNotEnrolled.rawValue: "biometryNotEnrolled"
   ]
 
-  struct CheckDeviceBiometryResult {
-    let isAvailable: Bool
-    let biometryType: LABiometryType.RawValue
-    let biometryTypes: JSArray
-    let deviceIsSecure: Bool
-    let reason: String
-    let code: String
-  }
-
   /**
    * Plugin call checkBiometry()
    */
   @objc func checkBiometry(_ call: CAPPluginCall) {
-    let checkResult = checkDeviceBiometry()
-    call.resolve([
-      "isAvailable": checkResult.isAvailable,
-      "biometryType": checkResult.biometryType,
-      "biometryTypes": checkResult.biometryTypes,
-      "deviceIsSecure": checkResult.deviceIsSecure,
-      "reason": checkResult.reason,
-      "code": checkResult.code
-    ])
-  }
-
-  /**
-   * Check the device's availability and type of biometric authentication.
-   */
-  func checkDeviceBiometry() -> CheckDeviceBiometryResult {
     let context = LAContext()
     var availableError: NSError?
     var available = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &availableError)
@@ -83,14 +59,15 @@ public class BiometricAuthNative: CAPPlugin {
     var types = JSArray()
     types.append(context.biometryType.rawValue)
 
-    return CheckDeviceBiometryResult(
-      isAvailable: available,
-      biometryType: context.biometryType.rawValue,
-      biometryTypes: types,
-      deviceIsSecure: deviceIsSecure,
-      reason: reason,
-      code: errorCode
-    )
+    call.resolve([
+      "isAvailable": available,
+      "strongBiometryIsAvailable": available,
+      "biometryType": context.biometryType.rawValue,
+      "biometryTypes": types,
+      "deviceIsSecure": deviceIsSecure,
+      "reason": reason,
+      "code": errorCode
+    ])
   }
 
   /**
@@ -101,18 +78,6 @@ public class BiometricAuthNative: CAPPlugin {
    * @rejects {BiometricResultError}
    */
   @objc func internalAuthenticate(_ call: CAPPluginCall) {
-    // Make sure the app can evaluate policy, otherwise evaluatePolicy() will crash
-    let checkResult = checkDeviceBiometry()
-
-    guard checkResult.isAvailable else {
-      call.reject(
-        checkResult.reason,
-        biometryErrorCodeMap[LAError.biometryNotAvailable.rawValue]
-      )
-
-      return
-    }
-
     var reason: String
 
     // The reason must be non-nil and non-empty, otherwise evaluatePolicy() crashes.
