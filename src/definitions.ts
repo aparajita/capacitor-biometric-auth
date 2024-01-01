@@ -34,6 +34,18 @@ export enum BiometryType {
   irisAuthentication,
 }
 
+export enum AndroidBiometryStrength {
+  /**
+   * `authenticate()` will present any available biometry.
+   */
+  weak,
+
+  /**
+   * `authenticate()` will only present strong biometry.
+   */
+  strong,
+}
+
 export interface AuthenticateOptions {
   /**
    * The reason for requesting authentication. Displays in the authentication dialog
@@ -121,6 +133,13 @@ export interface AuthenticateOptions {
    * For information on this setting, see https://developer.android.com/reference/android/hardware/biometrics/BiometricPrompt.Builder#setConfirmationRequired(boolean).
    */
   androidConfirmationRequired?: boolean
+
+  /**
+   * Set the strength of Android biometric authentication that will be accepted.
+   *
+   * Default: `AndroidBiometryStrength.weak`
+   */
+  androidBiometryStrength?: AndroidBiometryStrength
 }
 
 /**
@@ -159,15 +178,26 @@ export class BiometryError {
 
 export interface CheckBiometryResult {
   /**
-   * True if the device has biometric authentication capability
-   * and the current user has enrolled in some form of biometry.
+   * True if the device supports *at least* weak biometric authentication
+   * and the current user has enrolled in some form of biometry. Note that
+   * if `strongBiometryIsAvailable` is true, this will also be true.
    */
   isAvailable: boolean
 
   /**
-   * The primary type of biometry available on the device. If the device
-   * supports both fingerprint and face authentication, this will be
-   * `BiometryType.touchId`.
+   * True if the device has strong biometric authentication capability
+   * and the current user has enrolled in that strong biometry.
+   *
+   * On iOS this value and `isAvailable` will always be the same, since iOS
+   * only supports strong biometry.
+   *
+   * On Android, for example, if the device supports both fingerprint
+   * and face authentication, and the user has enrolled only in face
+   * authentication, and Android considers face authentication on that
+   * device to be weak, then `isAvailable` will be true but this value
+   * will be false.
+   */
+  strongBiometryIsAvailable: boolean
    */
   biometryType: BiometryType
 

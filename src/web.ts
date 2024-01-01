@@ -26,12 +26,23 @@ export class BiometricAuthWeb extends BiometricAuthBase {
 
     return Promise.resolve({
       isAvailable: available,
+      strongBiometryIsAvailable:
+        this.biometryIsEnrolled && this.hasStrongBiometry(),
       biometryType: this.biometryType,
       biometryTypes: hasBiometry ? [this.biometryType] : [],
       deviceIsSecure: this.deviceIsSecure,
       reason,
       code,
     })
+  }
+
+  private hasStrongBiometry(): boolean {
+    return this.biometryTypes.some(
+      (type) =>
+        type === BiometryType.faceId ||
+        type === BiometryType.touchId ||
+        type === BiometryType.fingerprintAuthentication,
+    )
   }
 
   /* eslint-disable no-alert */

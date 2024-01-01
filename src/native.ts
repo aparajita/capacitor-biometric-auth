@@ -33,6 +33,7 @@ export class BiometricAuthNative extends BiometricAuthBase {
     // Never used, but we have to satisfy the compiler.
     return Promise.resolve({
       isAvailable: true,
+      strongBiometryIsAvailable: false,
       biometryType: BiometryType.none,
       biometryTypes: [],
       deviceIsSecure: false,

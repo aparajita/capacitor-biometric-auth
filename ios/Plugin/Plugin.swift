@@ -29,7 +29,7 @@ public class BiometricAuthNative: CAPPlugin {
     let context = LAContext()
     var availableError: NSError?
     var available = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &availableError)
-    var deviceIsSecure = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+    let deviceIsSecure = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
     var reason = ""
     var errorCode = ""
 

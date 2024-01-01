@@ -2,6 +2,8 @@ package com.aparajita.capacitor.biometricauth;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import androidx.activity.result.ActivityResult;
@@ -28,6 +30,7 @@ public class BiometricAuthNative extends Plugin {
   public static final String SUBTITLE = "androidSubtitle";
   public static final String REASON = "reason";
   public static final String CANCEL_TITLE = "cancelTitle";
+  public static final String BIOMETRIC_STRENGTH = "biometricStrength";
   public static final String DEVICE_CREDENTIAL = "allowDeviceCredential";
   public static final String CONFIRMATION_REQUIRED =
     "androidConfirmationRequired";
@@ -90,6 +93,18 @@ public class BiometricAuthNative extends Plugin {
 
   private ArrayList<BiometryType> biometryTypes;
 
+  private int getAuthenticatorFromCall(PluginCall call) {
+    Integer value = call.getInt(
+      "androidBiometryStrength",
+      BiometryStrength.WEAK.ordinal()
+    );
+    int authenticator = BiometricManager.Authenticators.BIOMETRIC_WEAK;
+
+    if (value == BiometryStrength.STRONG.ordinal()) {
+      authenticator = BiometricManager.Authenticators.BIOMETRIC_STRONG;
+    }
+
+    return authenticator;
   }
 
   /**
@@ -110,6 +125,14 @@ public class BiometricAuthNative extends Plugin {
       biometryResult == BiometricManager.BIOMETRIC_SUCCESS
     );
 
+    // Now check for strong biometry.
+    biometryResult =
+      manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG);
+    result.put(
+      "strongBiometryIsAvailable",
+      biometryResult == BiometricManager.BIOMETRIC_SUCCESS
+    );
+
     biometryTypes = getDeviceBiometryTypes();
     result.put("biometryType", biometryTypes.get(0).getType());
 
@@ -120,6 +143,15 @@ public class BiometricAuthNative extends Plugin {
     }
 
     result.put("biometryTypes", returnTypes);
+
+    KeyguardManager keyguardManager = (KeyguardManager) this.getContext()
+      .getSystemService(Context.KEYGUARD_SERVICE);
+
+    if (keyguardManager != null) {
+      result.put("deviceIsSecure", keyguardManager.isKeyguardSecure());
+    } else {
+      result.put("deviceIsSecure", false);
+    }
 
     String reason = "";
 
@@ -192,7 +224,7 @@ public class BiometricAuthNative extends Plugin {
 
     Intent intent = new Intent(getContext(), AuthActivity.class);
 
-    // Pass the options to the activity
+    // Pass the options to the activity.
     intent.putExtra(
       TITLE,
       call.getString(TITLE, biometryNameMap.get(biometryTypes.get(0)))
@@ -204,6 +236,7 @@ public class BiometricAuthNative extends Plugin {
       DEVICE_CREDENTIAL,
       call.getBoolean(DEVICE_CREDENTIAL, false)
     );
+    intent.putExtra(BIOMETRIC_STRENGTH, getAuthenticatorFromCall(call));
 
     if (call.hasOption(CONFIRMATION_REQUIRED)) {
       intent.putExtra(
@@ -237,7 +270,7 @@ public class BiometricAuthNative extends Plugin {
       return;
     }
 
-    // Convert the string result type to an enum
+    // Convert the string result type to an enum.
     Intent data = result.getData();
     String resultTypeName = null;
 
@@ -278,7 +311,7 @@ public class BiometricAuthNative extends Plugin {
 
     switch (resultType) {
       case SUCCESS -> call.resolve();
-      // Biometry was successfully presented but was not recognized
+      // Biometry was successfully presented but was not recognized.
       case FAILURE -> call.reject(errorMessage, BIOMETRIC_FAILURE);
       // The user cancelled, the system cancelled, or some error occurred.
       // If the user cancelled, errorMessage is the text of the "negative" button,

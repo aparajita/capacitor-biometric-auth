@@ -2,7 +2,7 @@
 
 # capacitor-biometric-auth&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth.svg)](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth)
 
-This plugin for [Capacitor 5](https://capacitorjs.com) provides access to native biometry on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry is simulated on the web so you can test your logic without making any changes to your code.
+This plugin for [Capacitor 5](https://capacitorjs.com) provides access to native biometry and device credentials on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry and device credentials are simulated on the web so you can test your logic without making any changes to your code.
 
 👉 **NOTE:** This plugin only works with Capacitor 5. If you are upgrading from the Capacitor 2 version, note that the plugin name has changed to `BiometricAuth`.
 🛑 **BREAKING CHANGES:**
@@ -36,11 +36,13 @@ The API is extensively documented in the [TypeScript definitions file](src/defin
 
 ### Checking availability
 
-Before giving the user the option to use biometry (such as displaying a biometry icon), call [`checkBiometry()`](#checkbiometry) and inspect the [`CheckBiometryResult`](#checkbiometryresult) to see what (if any) biometry is available on the device. Note the following:
+Before giving the user the option to use biometry (such as displaying a biometry icon), call [`checkBiometry()`](#checkbiometry) and inspect the [`CheckBiometryResult`](#checkbiometryresult) to see what (if any) biometry and/or device credentials are available on the device. Note the following:
 
 - `isAvailable` may be `false` but `biometryType` may indicate the presence of biometry on the device. This occurs if the current user is not enrolled in biometry, or if biometry has been disabled for the current app. In such cases the `reason` and `code` will tell you why.
 
-- `biometryTypes` may contain more than one type of biometry. This occurs on Android devices that support multiple types of biometry. In such cases the `biometryType` will indicate the primary (most secure) type of biometry, and the `biometryTypes` array will contain all of the biometry types supported by the device. Note that Android only guarantees that one of the types is actually available.
+- On iOS, `isAvailable` and `strongBiometryIsAvailable` will always have the same value. On Android, `isAvailable` will be `true` if _any_ type of biometry is available, but `strongBiometryIsAvailable` will be `true` only if strong biometry is available. For example, on a typical device, if the device supports both fingerprint and face authentication, `isAvailable` will be `true` if either is enrolled, but `strongBiometryIsAvailable` will be `true` only if fingerprint authentication is enrolled.
+
+- `biometryTypes` may contain more than one type of biometry. This occurs on Android devices that support multiple types of biometry. In such cases `biometryType` will indicate the primary (most secure) type of biometry, and the `biometryTypes` array will contain all of the biometry types supported by the device. Note that Android only guarantees that one of the types is actually available.
 
 Because the availability of biometry can change while your app is in the background, it’s important to check availability when your app resumes. By calling [`addResumeListener()`](#addresumelistener) you can register a callback that is passed a [`CheckBiometryResult`](#checkbiometryresult) when your app resumes.
 
@@ -90,7 +92,11 @@ If authentication succeeds, the Promise resolves. If authentication fails, the P
 #### Example
 
 ```typescript
-import { BiometryError, BiometryErrorType } from './definitions'
+import {
+  AndroidBiometryStrength,
+  BiometryError,
+  BiometryErrorType,
+} from './definitions'
 
 async function authenticate(): Promise<void> {
   try {
@@ -102,6 +108,7 @@ async function authenticate(): Promise<void> {
       androidTitle: 'Biometric login',
       androidSubtitle: 'Log in using biometric authentication',
       androidConfirmationRequired: false,
+      androidBiometryStrength: AndroidBiometryStrength.weak,
     })
   } catch (error) {
     // error is always an instance of BiometryError.
