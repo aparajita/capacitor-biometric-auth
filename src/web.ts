@@ -6,6 +6,7 @@ import { getBiometryName } from './web-utils'
 // eslint-disable-next-line import/prefer-default-export
 export class BiometricAuthWeb extends BiometricAuthBase {
   private biometryType = BiometryType.none
+  private biometryTypes: BiometryType[] = []
   private biometryIsEnrolled = false
   private deviceIsSecure = false
 
@@ -29,7 +30,7 @@ export class BiometricAuthWeb extends BiometricAuthBase {
       strongBiometryIsAvailable:
         this.biometryIsEnrolled && this.hasStrongBiometry(),
       biometryType: this.biometryType,
-      biometryTypes: hasBiometry ? [this.biometryType] : [],
+      biometryTypes: this.biometryTypes,
       deviceIsSecure: this.deviceIsSecure,
       reason,
       code,
@@ -59,7 +60,9 @@ export class BiometricAuthWeb extends BiometricAuthBase {
         confirm(
           // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- we want to use the default value if options?.reason is an empty string
           options?.reason ||
-            `Authenticate with ${getBiometryName(result.biometryType)}?`,
+            `Authenticate with ${result.biometryTypes
+              .map((type) => getBiometryName(type))
+              .join(' or ')}?`,
         )
       ) {
         return
@@ -105,20 +108,38 @@ export class BiometricAuthWeb extends BiometricAuthBase {
 
   // Web only, used for simulating biometric authentication.
   override async setBiometryType(
-    type: BiometryType | string | undefined,
+    type: BiometryType | string | Array<BiometryType | string> | undefined,
   ): Promise<void> {
-    if (typeof type === 'undefined') {
+    if (type === undefined) {
       return Promise.resolve()
     }
 
-    if (typeof type === 'string') {
-      // eslint-disable-next-line no-prototype-builtins
-      if (BiometryType.hasOwnProperty(type)) {
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        this.biometryType = BiometryType[type as keyof typeof BiometryType]
-      }
+    const types = Array.isArray(type) ? type : [type]
+    this.biometryTypes = []
+    this.biometryType = BiometryType.none
+
+    if (types.length === 0) {
+      return Promise.resolve()
+    }
+
+    if (isBiometryTypes(types)) {
+      this.biometryType = types[0]
+      this.biometryTypes = types
     } else {
-      this.biometryType = type
+      for (let i = 0; i < types.length; i++) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (BiometryType.hasOwnProperty(types[i])) {
+          const biometryType =
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+            BiometryType[types[i] as keyof typeof BiometryType]
+
+          this.biometryTypes.push(biometryType)
+
+          if (i === 0) {
+            this.biometryType = biometryType
+          }
+        }
+      }
     }
 
     return Promise.resolve()
@@ -135,4 +156,11 @@ export class BiometricAuthWeb extends BiometricAuthBase {
     this.deviceIsSecure = isSecure
     return Promise.resolve()
   }
+}
+
+function isBiometryTypes(
+  value: Array<string | BiometryType>,
+): value is BiometryType[] {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  return Object.values(BiometryType).includes(value[0] as BiometryType)
 }

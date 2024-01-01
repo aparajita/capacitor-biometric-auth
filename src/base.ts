@@ -11,7 +11,6 @@ import type {
 } from './definitions'
 import { BiometryError } from './definitions'
 
-// eslint-disable-next-line import/prefer-default-export
 export abstract class BiometricAuthBase
   extends WebPlugin
   implements BiometricAuthPlugin
@@ -19,7 +18,7 @@ export abstract class BiometricAuthBase
   // Web only, used for simulating biometric authentication.
   abstract setBiometryType(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    type: BiometryType | string | undefined,
+    type: BiometryType | string | Array<BiometryType | string> | undefined,
   ): Promise<void>
 
   abstract checkBiometry(): Promise<CheckBiometryResult>

@@ -53,7 +53,7 @@ export class BiometricAuthNative extends BiometricAuthBase {
   // eslint-disable-next-line @typescript-eslint/require-await
   override async setBiometryType(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    type: BiometryType | string | undefined,
+    type: BiometryType | string | Array<BiometryType | string> | undefined,
   ): Promise<void> {
     throw this.unimplemented('setBiometryType() is web only')
   }

@@ -250,11 +250,13 @@ export interface BiometricAuthPlugin extends WebPlugin {
    * web only
    *
    * On the web, this method allows you to dynamically simulate
-   * different types of biometry. You may either pass a `BiometryType` enum
-   * or the string name of a `BiometryType`. If a string is passed and
-   * it isn't a valid value, nothing happens.
+   * different types of biometry. You may either pass `BiometryType` enums
+   * or the string names of the `BiometryType` enums. If undefined or a string
+   * is passed and it isn't a valid value, nothing happens.
    */
-  setBiometryType: (type: BiometryType | string | undefined) => Promise<void>
+  setBiometryType: (
+    type: BiometryType | string | Array<BiometryType | string> | undefined,
+  ) => Promise<void>
 
   /**
    * web only
