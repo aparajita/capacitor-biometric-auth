@@ -32,7 +32,7 @@ export class BiometricAuthNative extends BiometricAuthBase {
   override async checkBiometry(): Promise<CheckBiometryResult> {
     // Never used, but we have to satisfy the compiler.
     return Promise.resolve({
-      isAvailable: true,
+      isAvailable: false,
       strongBiometryIsAvailable: false,
       biometryType: BiometryType.none,
       biometryTypes: [],
