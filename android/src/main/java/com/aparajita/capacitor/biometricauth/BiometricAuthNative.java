@@ -139,7 +139,9 @@ public class BiometricAuthNative extends Plugin {
     JSArray returnTypes = new JSArray();
 
     for (BiometryType type : biometryTypes) {
-      returnTypes.put(type.getType());
+      if (type != BiometryType.NONE) {
+        returnTypes.put(type.getType());
+      }
     }
 
     result.put("biometryTypes", returnTypes);

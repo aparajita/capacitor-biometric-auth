@@ -57,7 +57,10 @@ public class BiometricAuthNative: CAPPlugin {
     }
 
     var types = JSArray()
-    types.append(context.biometryType.rawValue)
+
+    if context.biometryType != LABiometryType.none {
+      types.append(context.biometryType.rawValue)
+    }
 
     call.resolve([
       "isAvailable": available,
