@@ -2,34 +2,34 @@
 
 import type { PluginListenerHandle, WebPlugin } from '@capacitor/core'
 
+/**
+ * The type of biometry supported by the device.
+ */
 export enum BiometryType {
-  /**
-   * No biometry is available
-   */
   none,
 
   /**
-   * iOS Touch ID is available
+   * iOS Touch ID
    */
   touchId,
 
   /**
-   * iOS Face ID is available
+   * iOS Face ID
    */
   faceId,
 
   /**
-   * Android fingerprint authentication is available
+   * Android fingerprint authentication
    */
   fingerprintAuthentication,
 
   /**
-   * Android face authentication is available
+   * Android face authentication
    */
   faceAuthentication,
 
   /**
-   * Android iris authentication is available
+   * Android iris authentication
    */
   irisAuthentication,
 }
@@ -48,8 +48,10 @@ export enum AndroidBiometryStrength {
 
 export interface AuthenticateOptions {
   /**
-   * The reason for requesting authentication. Displays in the authentication dialog
-   * presented to the user. If not supplied, a default message is displayed.
+   * Displays the reason for requesting authentication in the authentication
+   * dialog presented to the user.
+   *
+   * Default: System default
    */
   reason?: string
 
@@ -63,36 +65,40 @@ export interface AuthenticateOptions {
    * trying to authenticate by tapping the button.
    *
    * Android:
-   * The text for the negative button. This would typically be used as a "Cancel" button,
-   * but may be also used to show an alternative method for authentication, such as a
-   * screen that asks for a backup password.
+   * The text for the negative button. This would typically be used as a
+   * "Cancel" button, but may be also used to show an alternative method
+   * for authentication, such as a screen that asks for a backup password.
    *
    * Default: "Cancel"
    */
   cancelTitle?: string
 
   /**
-   * If true, allows for authentication using device unlock credentials. Default is false.
+   * If true, allows for authentication using device unlock credentials.
+   *
+   * Default: false.
    *
    * iOS:
-   * If biometry is available, enrolled, and not disabled, the system uses that first.
-   * After the first Touch ID failure or second Face ID failure, if `iosFallbackTitle`
-   * is not an empty string, a fallback button appears in the authentication dialog.
-   * If the user taps the fallback button, the system prompts the user for the device
-   * passcode or the user’s password. If `iosFallbackTitle` is an empty string, no
-   * fallback button will appear.
+   * If biometry is available, enrolled, and not disabled, the system uses that
+   * first. After the first Touch ID failure or second Face ID failure, if
+   * `iosFallbackTitle` is not an empty string, a fallback button appears in
+   * the authentication dialog. If the user taps the fallback button, the
+   * system prompts the user for the device passcode or the user’s password.
+   * If `iosFallbackTitle` is an empty string, no fallback button will appear.
    *
-   * If biometry is not available, enrolled and enabled, and a passcode is set,
-   * the system immediately prompts the user for the device passcode or user’s password.
-   * Authentication fails with the error code `passcodeNotSet` if the device passcode isn’t enabled.
+   * If no biometry is enrolled and enabled, and a passcode is set, the system
+   * immediately prompts the user for the device passcode or user’s password.
+   * Authentication fails with the error code `passcodeNotSet` if the device
+   * passcode isn’t enabled.
    *
-   * If a passcode is not set on the device, a `passcodeNotSet` error is returned.
+   * If a passcode is not set on the device, a `passcodeNotSet` error is
+   * returned.
    *
-   * The system disables passcode authentication after 6 unsuccessful attempts, with progressively
-   * increasing delays between attempts.
+   * The system disables passcode authentication after 6 unsuccessful attempts,
+   * with progressively increasing delays between attempts.
    *
-   * The title of the fallback button may be customized by setting `iosFallbackTitle` to
-   * a non-empty string.
+   * The title of the fallback button may be customized by setting
+   * `iosFallbackTitle` to a non-empty string.
    *
    * Android:
    * The user will first be prompted to authenticate with biometrics, but also given
@@ -128,9 +134,11 @@ export interface AuthenticateOptions {
   androidSubtitle?: string
 
   /**
-   * If not set, defaults to true.
+   * Determines if successful weak biometric authentication must be confirmed.
    *
    * For information on this setting, see https://developer.android.com/reference/android/hardware/biometrics/BiometricPrompt.Builder#setConfirmationRequired(boolean).
+   *
+   * Default: `true`
    */
   androidConfirmationRequired?: boolean
 
@@ -144,7 +152,7 @@ export interface AuthenticateOptions {
 
 /**
  * If the `authenticate()` method throws an exception, the `BiometryError`
- * instance contains a .code property which will contain one of these strings,
+ * instance contains a `.code` property which will contain one of these strings,
  * indicating what the error was.
  *
  * See https://developer.apple.com/documentation/localauthentication/laerror
@@ -198,15 +206,21 @@ export interface CheckBiometryResult {
    * will be false.
    */
   strongBiometryIsAvailable: boolean
+
+  /**
+   * The primary (most secure) type of biometry supported by the device.
+   * Note that _supported_ is not the same as _available_, which requires
+   * the biometry to be enrolled.
    */
   biometryType: BiometryType
 
   /**
-   * All of the biometry types supported by the device (currently only
-   * Android devices support multiple biometry types). If no biometry
-   * is available, this will be an empty array. If multiple types
-   * are supported, Android only guarantees that one of them is actually
-   * available.
+   * All of the biometry types supported by the hardware on the device
+   * (currently only Android devices support multiple biometry types).
+   * If no biometry is supported, this will be an empty array.
+   *
+   * Note that _supported_ is not the same as _available_, which requires
+   * the biometry to be enrolled.
    */
   biometryTypes: BiometryType[]
 

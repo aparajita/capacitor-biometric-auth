@@ -4,7 +4,6 @@
 
 This plugin for [Capacitor 5](https://capacitorjs.com) provides access to native biometry and device credentials on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry and device credentials are simulated on the web so you can test your logic without making any changes to your code.
 
-👉 **NOTE:** This plugin only works with Capacitor 5. If you are upgrading from the Capacitor 2 version, note that the plugin name has changed to `BiometricAuth`.
 🛑 **BREAKING CHANGES:**
 
 - If you are upgrading from a version prior to 6.0.0, please note that [`authenticate()`](#authenticate) now throws an instance of `BiometryError`, and `BiometryError.code` is now typed as [`BiometryErrorType`](#biometryerrortype).
@@ -14,6 +13,8 @@ This plugin for [Capacitor 5](https://capacitorjs.com) provides access to native
 
 ```sh
 pnpm add @aparajita/capacitor-biometric-auth
+npm install @aparajita/capacitor-biometric-auth
+yarn add @aparajita/capacitor-biometric-auth
 ```
 
 Not using [pnpm](https://pnpm.js.org/)? You owe it to yourself to give it a try. It’s faster, better with monorepos, and uses _way, way_ less disk space than the alternatives.
@@ -134,7 +135,7 @@ On iOS, Touch ID and Face ID are supported.
 
 ### Android
 
-On Android, fingerprint, face, and iris authentication are supported. Note that if a device supports more than one type of biometry, the plugin will only present the primary (most secure) type, which is determined by the system.
+On Android, fingerprint, face, and iris authentication are supported. Note that if a device supports more than one type of biometry, the plugin will initially present the primary (most secure) available type, which is determined by the system.
 
 ## API
 
