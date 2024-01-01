@@ -3,13 +3,13 @@ package com.aparajita.capacitor.biometricauth;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Intent;
-import android.hardware.biometrics.BiometricManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import java.util.concurrent.Executor;
 
@@ -49,6 +49,15 @@ public class AuthActivity extends AppCompatActivity {
         allowDeviceCredential =
           intent.getBooleanExtra(BiometricAuthNative.DEVICE_CREDENTIAL, false);
       }
+    // Android docs say that BIOMETRIC_STRONG | DEVICE_CREDENTIAL cannot be used on API 28-29.
+    // If that is the case, fall back to BIOMETRIC_WEAK.
+    if (
+      authenticators == BiometricManager.Authenticators.BIOMETRIC_STRONG &&
+      allowDeviceCredential &&
+      Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
+      Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q
+    ) {
+      authenticators = BiometricManager.Authenticators.BIOMETRIC_WEAK;
     }
 
     // The title must be non-null and non-empty
@@ -58,17 +67,6 @@ public class AuthActivity extends AppCompatActivity {
 
     builder.setTitle(title).setSubtitle(subtitle).setDescription(description);
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-      int authenticators = BiometricManager.Authenticators.BIOMETRIC_WEAK;
-
-      if (allowDeviceCredential) {
-        authenticators |= BiometricManager.Authenticators.DEVICE_CREDENTIAL;
-      }
-
-      builder.setAllowedAuthenticators(authenticators);
-    } else {
-      builder.setDeviceCredentialAllowed(allowDeviceCredential);
-    }
 
     // Android docs say that negative button text should not be set if device credential is allowed
     if (!allowDeviceCredential) {
