@@ -106,12 +106,10 @@ public class BiometricAuthNative extends Plugin {
     BiometricManager manager = BiometricManager.from(getContext());
     int biometryResult;
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-      biometryResult =
-        manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK);
-    } else {
-      biometryResult = manager.canAuthenticate();
-    }
+    // First check for weak biometry or better.
+    int biometryResult = manager.canAuthenticate(
+      BiometricManager.Authenticators.BIOMETRIC_WEAK
+    );
 
     JSObject result = new JSObject();
     result.put(
