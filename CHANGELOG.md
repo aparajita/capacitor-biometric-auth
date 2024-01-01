@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [7.0.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v6.0.1...v7.0.0) (2024-01-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* present device credentials immediately
+
+### Features
+
+* first pass at device security support ([cdcabd2](https://github.com/aparajita/capacitor-biometric-auth/commit/cdcabd2c255aea195d1adf43697de79dde3cc175))
+* present device credentials immediately ([f1bbf83](https://github.com/aparajita/capacitor-biometric-auth/commit/f1bbf836a8669939e599a3a5bfc8290597ac495a))
+* setBiometryType() can take an array ([39261cb](https://github.com/aparajita/capacitor-biometric-auth/commit/39261cbffc6ca5fbce4c44f3df50cd99161b4d07))
+* strongBiometryIsAvailable & deviceIsSecure ([6cada04](https://github.com/aparajita/capacitor-biometric-auth/commit/6cada04c4936971a3295a3aa1725bdb308a808e7))
+
+
+### Bug Fixes
+
+* biometryTypes is empty of no biometry ([8b98a9c](https://github.com/aparajita/capacitor-biometric-auth/commit/8b98a9c8f17348a5f8239575dcc092caec7fee34))
+
+
+### Maintenance
+
+* remove unnecessary version check ([beb7ded](https://github.com/aparajita/capacitor-biometric-auth/commit/beb7ded0c9aa7c2b6c0f132b50ad6308cb25c825))
+* update deps ([f64b77d](https://github.com/aparajita/capacitor-biometric-auth/commit/f64b77d309d7ea52822bc7c9e62c88cc2ce7b289))
+* update deps ([119cb9d](https://github.com/aparajita/capacitor-biometric-auth/commit/119cb9d80ed6e99b89fef3d8c239d7efe3d8e09b))
+* use androidx.biometric.BiometricManager ([e6049cb](https://github.com/aparajita/capacitor-biometric-auth/commit/e6049cb95b0228722fd247b93a6683647fb4df2e))
+* various tweaks ([30f87e7](https://github.com/aparajita/capacitor-biometric-auth/commit/30f87e7d81de7cea259921228236e5bff8f60523))
+
+
+### Docs
+
+* various tweaks & clarifications ([4d6d754](https://github.com/aparajita/capacitor-biometric-auth/commit/4d6d754c859d62b13d81a8f18f44562c33102c0e))
+
 ## [6.0.1](https://github.com/aparajita/capacitor-biometric-auth/compare/v6.0.0...v6.0.1) (2023-12-28)
 
 
