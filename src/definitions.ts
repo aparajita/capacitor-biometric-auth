@@ -145,6 +145,10 @@ export interface AuthenticateOptions {
   /**
    * Set the strength of Android biometric authentication that will be accepted.
    *
+   * 👉 **NOTE:** On Android 9 & 10 (API 28-29), this will effectively always
+   * be `.weak` if `allowDeviceCredential` is true. This is a known limitation
+   * of the Android API. 🤯
+   *
    * Default: `AndroidBiometryStrength.weak`
    */
   androidBiometryStrength?: AndroidBiometryStrength
