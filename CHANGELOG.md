@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [7.0.2](https://github.com/aparajita/capacitor-biometric-auth/compare/v7.0.1...v7.0.2) (2024-01-04)
+
+
+### Docs
+
+* document Android limitation ([252a6df](https://github.com/aparajita/capacitor-biometric-auth/commit/252a6df1ae1ffd2337ee0096762c88cba4704c73))
+
 ## [7.0.1](https://github.com/aparajita/capacitor-biometric-auth/compare/v7.0.0...v7.0.1) (2024-01-04)
 
 
