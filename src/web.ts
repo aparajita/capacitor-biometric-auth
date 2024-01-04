@@ -124,7 +124,10 @@ export class BiometricAuthWeb extends BiometricAuthBase {
 
     if (isBiometryTypes(types)) {
       this.biometryType = types[0]
-      this.biometryTypes = types
+
+      if (this.biometryType !== BiometryType.none) {
+        this.biometryTypes = types
+      }
     } else {
       for (let i = 0; i < types.length; i++) {
         // eslint-disable-next-line no-prototype-builtins
@@ -133,7 +136,11 @@ export class BiometricAuthWeb extends BiometricAuthBase {
             // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             BiometryType[types[i] as keyof typeof BiometryType]
 
-          this.biometryTypes.push(biometryType)
+          if (this.biometryType === BiometryType.none) {
+            this.biometryTypes = []
+          } else {
+            this.biometryTypes.push(biometryType)
+          }
 
           if (i === 0) {
             this.biometryType = biometryType

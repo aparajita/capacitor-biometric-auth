@@ -217,7 +217,8 @@ export interface CheckBiometryResult {
   /**
    * All of the biometry types supported by the hardware on the device
    * (currently only Android devices support multiple biometry types).
-   * If no biometry is supported, this will be an empty array.
+   * If no biometry is supported, i.e. `biometryType === BiometryType.none`,
+   * this will be an empty array.
    *
    * Note that _supported_ is not the same as _available_, which requires
    * the biometry to be enrolled.
