@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [7.0.1](https://github.com/aparajita/capacitor-biometric-auth/compare/v7.0.0...v7.0.1) (2024-01-04)
+
+
+### Bug Fixes
+
+* biometryTypes is empty if biometryType.none ([445883c](https://github.com/aparajita/capacitor-biometric-auth/commit/445883cd44bf9f17d81e0406490e5301ebd4fc0e))
+
 ## [7.0.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v6.0.1...v7.0.0) (2024-01-01)
 
 
