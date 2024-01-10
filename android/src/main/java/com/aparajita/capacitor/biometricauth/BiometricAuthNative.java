@@ -112,25 +112,31 @@ public class BiometricAuthNative extends Plugin {
    */
   @PluginMethod
   public void checkBiometry(PluginCall call) {
+    JSObject result = new JSObject();
     BiometricManager manager = BiometricManager.from(getContext());
 
     // First check for weak biometry or better.
-    int biometryResult = manager.canAuthenticate(
+    int weakBiometryResult = manager.canAuthenticate(
       BiometricManager.Authenticators.BIOMETRIC_WEAK
     );
 
-    JSObject result = new JSObject();
+    setReasonAndCode(weakBiometryResult, false, result);
+
     result.put(
       "isAvailable",
-      biometryResult == BiometricManager.BIOMETRIC_SUCCESS
+      weakBiometryResult == BiometricManager.BIOMETRIC_SUCCESS
     );
 
     // Now check for strong biometry.
-    biometryResult =
-      manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG);
+    int strongBiometryResult = manager.canAuthenticate(
+      BiometricManager.Authenticators.BIOMETRIC_STRONG
+    );
+
+    setReasonAndCode(strongBiometryResult, true, result);
+
     result.put(
       "strongBiometryIsAvailable",
-      biometryResult == BiometricManager.BIOMETRIC_SUCCESS
+      strongBiometryResult == BiometricManager.BIOMETRIC_SUCCESS
     );
 
     biometryTypes = getDeviceBiometryTypes();
@@ -155,9 +161,17 @@ public class BiometricAuthNative extends Plugin {
       result.put("deviceIsSecure", false);
     }
 
+    call.resolve(result);
+  }
+
+  private static void setReasonAndCode(
+    int canAuthenticateResult,
+    boolean strong,
+    JSObject result
+  ) {
     String reason = "";
 
-    switch (biometryResult) {
+    switch (canAuthenticateResult) {
       case BiometricManager.BIOMETRIC_SUCCESS:
         break;
       case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
@@ -182,15 +196,14 @@ public class BiometricAuthNative extends Plugin {
         break;
     }
 
-    String errorCode = biometryErrorCodeMap.get(biometryResult);
+    String errorCode = biometryErrorCodeMap.get(canAuthenticateResult);
 
     if (errorCode == null) {
       errorCode = "biometryNotAvailable";
     }
 
-    result.put("reason", reason);
-    result.put("code", errorCode);
-    call.resolve(result);
+    result.put(strong ? "strongReason" : "reason", reason);
+    result.put(strong ? "strongCode" : "code", errorCode);
   }
 
   private ArrayList<BiometryType> getDeviceBiometryTypes() {

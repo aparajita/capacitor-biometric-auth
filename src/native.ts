@@ -39,6 +39,8 @@ export class BiometricAuthNative extends BiometricAuthBase {
       deviceIsSecure: false,
       reason: '',
       code: BiometryErrorType.none,
+      strongReason: '',
+      strongCode: BiometryErrorType.none,
     })
   }
 

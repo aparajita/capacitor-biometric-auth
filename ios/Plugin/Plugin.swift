@@ -69,7 +69,9 @@ public class BiometricAuthNative: CAPPlugin {
       "biometryTypes": types,
       "deviceIsSecure": deviceIsSecure,
       "reason": reason,
-      "code": errorCode
+      "code": errorCode,
+      "strongReason": reason,
+      "strongCode": errorCode
     ])
   }
 

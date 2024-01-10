@@ -237,18 +237,38 @@ export interface CheckBiometryResult {
   deviceIsSecure: boolean
 
   /**
-   * If biometry is not available and the system gives a reason why,
-   * it will be returned here. Otherwise it's an empty string.
+   * If weak or better biometry is not available and the system gives
+   * a reason why, it will be returned here. Otherwise it's an empty string.
    */
   reason: string
 
   /**
-   * If biometry is not available, the error code will be returned here.
-   * Otherwise it's an empty string. The error code will be one of the
-   * `BiometryErrorType` enum values, and is consistent across
+   * If weak or better biometry is not available, the error code will be
+   * returned here. Otherwise it's an empty string. The error code will be
+   * one of the `BiometryErrorType` enum values, and is consistent across
    * platforms.
    */
   code: BiometryErrorType
+
+  /**
+   * If strong biometry is not available and the system gives
+   * a reason why, it will be returned here. Otherwise it's an empty string.
+   *
+   * On iOS, this will always be the same as `reason`, since all biometry
+   * on iOS is strong.
+   */
+  strongReason?: string
+
+  /**
+   * If strong biometry is not available, the error code will be
+   * returned here. Otherwise it's an empty string. The error code will be
+   * one of the `BiometryErrorType` enum values, and is consistent across
+   * platforms.
+   *
+   * On iOS, this will always be the same as `code`, since all biometry
+   * on iOS is strong.
+   */
+  strongCode?: BiometryErrorType
 }
 
 /**
