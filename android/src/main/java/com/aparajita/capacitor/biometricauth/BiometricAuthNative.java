@@ -94,13 +94,14 @@ public class BiometricAuthNative extends Plugin {
   private ArrayList<BiometryType> biometryTypes;
 
   private int getAuthenticatorFromCall(PluginCall call) {
+    int authenticator = BiometricManager.Authenticators.BIOMETRIC_WEAK;
+
     Integer value = call.getInt(
       "androidBiometryStrength",
       BiometryStrength.WEAK.ordinal()
     );
-    int authenticator = BiometricManager.Authenticators.BIOMETRIC_WEAK;
 
-    if (value == BiometryStrength.STRONG.ordinal()) {
+    if (value != null && value == BiometryStrength.STRONG.ordinal()) {
       authenticator = BiometricManager.Authenticators.BIOMETRIC_STRONG;
     }
 
