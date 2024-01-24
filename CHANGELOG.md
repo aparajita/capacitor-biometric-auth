@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [7.1.1](https://github.com/aparajita/capacitor-biometric-auth/compare/v7.1.0...v7.1.1) (2024-01-24)
+
+
+### Bug Fixes
+
+* check for null value ([e5ca3ec](https://github.com/aparajita/capacitor-biometric-auth/commit/e5ca3ec813bbf36b404e189078339f2bc4a290bb))
+
+
+### Maintenance
+
+* update deps ([b297e8a](https://github.com/aparajita/capacitor-biometric-auth/commit/b297e8a41717ddc0f53fa53920b61ffdba7179f4))
+
 ## [7.1.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v7.0.2...v7.1.0) (2024-01-10)
 
 
