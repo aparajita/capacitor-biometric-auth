@@ -35,7 +35,7 @@ The API is extensively documented in the [TypeScript definitions file](src/defin
 
 ### Checking availability
 
-Before giving the user the option to use biometry (such as displaying a biometry icon), call [`checkBiometry()`](#checkbiometry) and inspect the [`CheckBiometryResult`](#checkbiometryresult) to see what (if any) biometry and/or device credentials are available on the device. Note the following:
+Although not strictly necessary, before giving the user the option to use biometry (such as displaying a biometry icon), you will probably want to call [`checkBiometry()`](#checkbiometry) and inspect the [`CheckBiometryResult`](#checkbiometryresult) to see what (if any) biometry and/or device credentials are available on the device. Note the following:
 
 - `isAvailable` may be `false` but `biometryType` may indicate the presence of biometry on the device. This occurs if the current user is not enrolled in biometry, or if biometry has been disabled for the current app. In such cases the `reason` and `code` will tell you why.
 

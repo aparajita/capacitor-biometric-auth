@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import androidx.activity.result.ActivityResult;
+import androidx.annotation.NonNull;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import com.getcapacitor.JSArray;
@@ -113,6 +114,10 @@ public class BiometricAuthNative extends Plugin {
    */
   @PluginMethod
   public void checkBiometry(PluginCall call) {
+    call.resolve(checkBiometry());
+  }
+
+  private JSObject checkBiometry() {
     JSObject result = new JSObject();
     BiometricManager manager = BiometricManager.from(getContext());
 
@@ -162,7 +167,7 @@ public class BiometricAuthNative extends Plugin {
       result.put("deviceIsSecure", false);
     }
 
-    call.resolve(result);
+    return result;
   }
 
   private static void setReasonAndCode(
@@ -207,6 +212,7 @@ public class BiometricAuthNative extends Plugin {
     result.put(strong ? "strongCode" : "code", errorCode);
   }
 
+  @NonNull
   private ArrayList<BiometryType> getDeviceBiometryTypes() {
     ArrayList<BiometryType> types = new ArrayList<>();
     PackageManager manager = getContext().getPackageManager();
@@ -235,16 +241,26 @@ public class BiometricAuthNative extends Plugin {
    */
   @PluginMethod
   public void internalAuthenticate(final PluginCall call) {
+    // If the user has not called checkBiometry() first, we need to get the list
+    // of supported biometry.
+    if (biometryTypes == null) {
+      biometryTypes = getDeviceBiometryTypes();
+    }
+
     // The result of an intent is supposed to have the package name as a prefix.
     RESULT_EXTRA_PREFIX = getContext().getPackageName() + ".";
 
     Intent intent = new Intent(getContext(), AuthActivity.class);
 
     // Pass the options to the activity.
-    intent.putExtra(
-      TITLE,
-      call.getString(TITLE, biometryNameMap.get(biometryTypes.get(0)))
-    );
+    String title = "";
+
+    // If no biometry is available, biometryTypes will be an empty list.
+    if (!biometryTypes.isEmpty()) {
+      title = biometryNameMap.get(biometryTypes.get(0));
+    }
+
+    intent.putExtra(TITLE, call.getString(TITLE, title));
     intent.putExtra(SUBTITLE, call.getString(SUBTITLE));
     intent.putExtra(REASON, call.getString(REASON));
     intent.putExtra(CANCEL_TITLE, call.getString(CANCEL_TITLE));
