@@ -42,8 +42,10 @@ public class AuthActivity extends AppCompatActivity {
       BiometricManager.Authenticators.BIOMETRIC_WEAK
     );
 
-    allowDeviceCredential =
-      intent.getBooleanExtra(BiometricAuthNative.DEVICE_CREDENTIAL, false);
+    allowDeviceCredential = intent.getBooleanExtra(
+      BiometricAuthNative.DEVICE_CREDENTIAL,
+      false
+    );
 
     // Android docs say that BIOMETRIC_STRONG | DEVICE_CREDENTIAL cannot be used on API 28-29.
     // If that is the case, fall back to BIOMETRIC_WEAK.

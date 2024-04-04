@@ -229,7 +229,7 @@ public class BiometricAuthNative extends Plugin {
       types.add(BiometryType.IRIS);
     }
 
-    if (types.size() == 0) {
+    if (types.isEmpty()) {
       types.add(BiometryType.NONE);
     }
 
@@ -307,10 +307,9 @@ public class BiometricAuthNative extends Plugin {
     String resultTypeName = null;
 
     if (data != null) {
-      resultTypeName =
-        data.getStringExtra(
-          RESULT_EXTRA_PREFIX + BiometricAuthNative.RESULT_TYPE
-        );
+      resultTypeName = data.getStringExtra(
+        RESULT_EXTRA_PREFIX + BiometricAuthNative.RESULT_TYPE
+      );
     }
 
     if (resultTypeName == null) {
