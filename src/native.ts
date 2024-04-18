@@ -19,7 +19,6 @@ export class BiometricAuthNative extends BiometricAuthBase {
       capProxy is a proxy of an instance of this class, so it is safe
       to cast it to this class.
     */
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     const proxy = capProxy as BiometricAuthNative
 
     /* eslint-disable @typescript-eslint/unbound-method */

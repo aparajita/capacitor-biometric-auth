@@ -133,7 +133,6 @@ export class BiometricAuthWeb extends BiometricAuthBase {
         // eslint-disable-next-line no-prototype-builtins
         if (BiometryType.hasOwnProperty(types[i])) {
           const biometryType =
-            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             BiometryType[types[i] as keyof typeof BiometryType]
 
           if (this.biometryType === BiometryType.none) {
@@ -168,6 +167,5 @@ export class BiometricAuthWeb extends BiometricAuthBase {
 function isBiometryTypes(
   value: Array<string | BiometryType>,
 ): value is BiometryType[] {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   return Object.values(BiometryType).includes(value[0] as BiometryType)
 }
