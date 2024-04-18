@@ -6,6 +6,8 @@ import type {
 } from './definitions'
 import { BiometryErrorType, BiometryType } from './definitions'
 
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/require-await */
+
 // eslint-disable-next-line import/prefer-default-export
 export class BiometricAuthNative extends BiometricAuthBase {
   constructor(capProxy: BiometricAuthPlugin) {
@@ -24,7 +26,7 @@ export class BiometricAuthNative extends BiometricAuthBase {
     /* eslint-disable @typescript-eslint/unbound-method */
     this.checkBiometry = proxy.checkBiometry
     this.internalAuthenticate = proxy.internalAuthenticate
-    /* eslint-enable */
+    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   // @native
@@ -46,32 +48,25 @@ export class BiometricAuthNative extends BiometricAuthBase {
   // @native
   // On native platforms, this will present the native authentication UI.
   override async internalAuthenticate(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     options?: AuthenticateOptions,
   ): Promise<void> {}
 
   // Web only, used for simulating biometric authentication.
-  // eslint-disable-next-line @typescript-eslint/require-await
   override async setBiometryType(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     type: BiometryType | string | Array<BiometryType | string> | undefined,
   ): Promise<void> {
     throw this.unimplemented('setBiometryType() is web only')
   }
 
   // Web only, used for simulating biometry enrollment.
-  // eslint-disable-next-line @typescript-eslint/require-await
   override async setBiometryIsEnrolled(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     enrolled: boolean,
   ): Promise<void> {
     throw this.unimplemented('setBiometryEnrolled() is web only')
   }
 
   // Web only, used for simulating device security.
-  // eslint-disable-next-line @typescript-eslint/require-await
   override async setDeviceIsSecure(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isSecure: boolean,
   ): Promise<void> {
     throw this.unimplemented('setDeviceIsSecure() is web only')
