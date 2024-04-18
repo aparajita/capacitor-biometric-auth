@@ -55,20 +55,16 @@ export class BiometricAuthNative extends BiometricAuthBase {
   override async setBiometryType(
     type: BiometryType | string | Array<BiometryType | string> | undefined,
   ): Promise<void> {
-    throw this.unimplemented('setBiometryType() is web only')
+    console.warn('setBiometryType() is web only')
   }
 
   // Web only, used for simulating biometry enrollment.
-  override async setBiometryIsEnrolled(
-    enrolled: boolean,
-  ): Promise<void> {
-    throw this.unimplemented('setBiometryEnrolled() is web only')
+  override async setBiometryIsEnrolled(enrolled: boolean): Promise<void> {
+    console.warn('setBiometryEnrolled() is web only')
   }
 
   // Web only, used for simulating device security.
-  override async setDeviceIsSecure(
-    isSecure: boolean,
-  ): Promise<void> {
-    throw this.unimplemented('setDeviceIsSecure() is web only')
+  override async setDeviceIsSecure(isSecure: boolean): Promise<void> {
+    console.warn('setDeviceIsSecure() is web only')
   }
 }
