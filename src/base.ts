@@ -50,9 +50,9 @@ export abstract class BiometricAuthBase
     options?: AuthenticateOptions,
   ): Promise<void>
 
-  addResumeListener(
+  async addResumeListener(
     listener: ResumeListener,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
+  ): Promise<PluginListenerHandle> {
     return App.addListener('appStateChange', ({ isActive }): void => {
       if (isActive) {
         this.checkBiometry()

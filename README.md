@@ -2,12 +2,17 @@
 
 # capacitor-biometric-auth&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth.svg)](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth)
 
-This plugin for [Capacitor 5](https://capacitorjs.com) provides access to native biometry and device credentials on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry and device credentials are simulated on the web so you can test your logic without making any changes to your code.
+This plugin for [Capacitor 6](https://capacitorjs.com) provides access to native biometry and device credentials on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry and device credentials are simulated on the web so you can test your logic without making any changes to your code.
 
 🛑 **BREAKING CHANGES:**
 
 - If you are upgrading from a version prior to 6.0.0, please note that [`authenticate()`](#authenticate) now throws an instance of `BiometryError`, and `BiometryError.code` is now typed as [`BiometryErrorType`](#biometryerrortype).
+
 - If you are upgrading from a version prior to 7.0.0, please note that [`authenticate()`](#authenticate) will _immediately_ present a prompt for device credentials if `deviceIsSecure` is true, `allowDeviceCredentials` is true, and no biometry of the requested strength is available.
+
+- If you are upgrading from a version prior to 8.0.0, please note that this plugin now requires Capacitor 6+.
+
+- If you are upgrading from a version prior to 8.0.0, please note that [`addResumeListener`](#addresumelistener) now always returns a Promise and must be awaited.
 
 ## Installation
 

@@ -270,7 +270,7 @@ public class BiometricAuthNative extends Plugin {
     );
     intent.putExtra(BIOMETRIC_STRENGTH, getAuthenticatorFromCall(call));
 
-    if (call.hasOption(CONFIRMATION_REQUIRED)) {
+    if (call.getBoolean(CONFIRMATION_REQUIRED, true) != null) {
       intent.putExtra(
         CONFIRMATION_REQUIRED,
         call.getBoolean(CONFIRMATION_REQUIRED, true)
