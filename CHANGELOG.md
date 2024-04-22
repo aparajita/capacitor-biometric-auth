@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [8.0.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v7.2.0...v8.0.0) (2024-04-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to Capacitor 6
+* don’t throw when using web-only methods
+
+### Features
+
+* don’t throw when using web-only methods ([c4c6092](https://github.com/aparajita/capacitor-biometric-auth/commit/c4c60928d4f0db234be9bf5d17642d5ade8534c1))
+* upgrade to Capacitor 6 ([7223f24](https://github.com/aparajita/capacitor-biometric-auth/commit/7223f24afb359543c6ce3e5e3ab4dfac5c20ca99))
+
+
+### Maintenance
+
+* clean up eslint rules ([dffed95](https://github.com/aparajita/capacitor-biometric-auth/commit/dffed957e19da4ad08a7f03953023938d7042634))
+* skip type assertion rule ([35d3a61](https://github.com/aparajita/capacitor-biometric-auth/commit/35d3a61d0e1273376fd1db9d48b8009540afcc78))
+
 ## [7.2.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v7.1.1...v7.2.0) (2024-04-04)
 
 
