@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [8.0.2](https://github.com/aparajita/capacitor-biometric-auth/compare/v8.0.1...v8.0.2) (2024-07-17)
+
+
+### Bug Fixes
+
+* work around deprecation warning ([fd2cf27](https://github.com/aparajita/capacitor-biometric-auth/commit/fd2cf2790fc3ea5bd00c575dd9c82f6ed2f90c2f))
+
+
+### Maintenance
+
+* remove unused android dependencies ([5683338](https://github.com/aparajita/capacitor-biometric-auth/commit/56833384cb037e16ee6cc6df0cb77235b704100c))
+
 ## [8.0.1](https://github.com/aparajita/capacitor-biometric-auth/compare/v8.0.0...v8.0.1) (2024-07-16)
 
 
