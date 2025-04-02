@@ -101,12 +101,13 @@
     "rollup": "^4.18.1",
     "simple-git-hooks": "^2.11.1",
     "swiftlint": "^1.0.2",
-    "typescript": "~5.5.3"
-  },
-  "dependencies": {
+    "typescript": "~5.5.3",
     "@capacitor/android": "^6.1.0",
     "@capacitor/app": "^6.0.0",
     "@capacitor/core": "^6.1.0",
     "@capacitor/ios": "^6.1.0"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=6.1.0"
   }
 }
