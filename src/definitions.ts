@@ -178,14 +178,31 @@ export enum BiometryErrorType {
   noDeviceCredential = 'noDeviceCredential',
 }
 
+export function isBiometryErrorType(
+  value: unknown,
+): value is BiometryErrorType {
+  return (
+    typeof value === 'string' &&
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+    Object.values(BiometryErrorType).includes(value as BiometryErrorType)
+  )
+}
+
 /**
  * `authenticate()` throws instances of this class.
  */
-export class BiometryError {
+export class BiometryError extends Error {
   constructor(
-    public message: string,
+    message: string,
     public code: BiometryErrorType,
-  ) {}
+  ) {
+    super(message)
+    this.name = 'BiometryError'
+
+    // Set the prototype explicitly to ensure instanceof works correctly.
+    // This is recommended for custom error classes in TypeScript.
+    Object.setPrototypeOf(this, BiometryError.prototype)
+  }
 }
 
 export interface CheckBiometryResult {

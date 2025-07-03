@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm builder:*)",
+      "Bash(rm:*)",
+      "Bash(pnpm exec:*)",
+      "WebFetch(domain:capacitorjs.com)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}

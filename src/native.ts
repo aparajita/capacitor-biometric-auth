@@ -6,9 +6,8 @@ import type {
 } from './definitions'
 import { BiometryErrorType, BiometryType } from './definitions'
 
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/class-methods-use-this */
 
-// eslint-disable-next-line import/prefer-default-export
 export class BiometricAuthNative extends BiometricAuthBase {
   constructor(capProxy: BiometricAuthPlugin) {
     super()
@@ -21,6 +20,7 @@ export class BiometricAuthNative extends BiometricAuthBase {
       capProxy is a proxy of an instance of this class, so it is safe
       to cast it to this class.
     */
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
     const proxy = capProxy as BiometricAuthNative
 
     /* eslint-disable @typescript-eslint/unbound-method */
@@ -32,7 +32,7 @@ export class BiometricAuthNative extends BiometricAuthBase {
   // @native
   override async checkBiometry(): Promise<CheckBiometryResult> {
     // Never used, but we have to satisfy the compiler.
-    return Promise.resolve({
+    return {
       isAvailable: false,
       strongBiometryIsAvailable: false,
       biometryType: BiometryType.none,
@@ -42,14 +42,16 @@ export class BiometricAuthNative extends BiometricAuthBase {
       code: BiometryErrorType.none,
       strongReason: '',
       strongCode: BiometryErrorType.none,
-    })
+    }
   }
 
   // @native
   // On native platforms, this will present the native authentication UI.
   override async internalAuthenticate(
     options?: AuthenticateOptions,
-  ): Promise<void> {}
+  ): Promise<void> {
+    // This method is implemented natively
+  }
 
   // Web only, used for simulating biometric authentication.
   override async setBiometryType(
@@ -68,3 +70,5 @@ export class BiometricAuthNative extends BiometricAuthBase {
     console.warn('setDeviceIsSecure() is web only')
   }
 }
+
+/* eslint-enable @typescript-eslint/class-methods-use-this */

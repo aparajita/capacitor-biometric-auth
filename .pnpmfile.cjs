@@ -3,7 +3,7 @@ function readPackage(pkg, context) {
     // Replace tough-cookie v4 with v5
     pkg.dependencies = {
       ...pkg.dependencies,
-      'tough-cookie': '^5.0.0-rc.3'
+      'tough-cookie': '^5.0.0-rc.3',
     }
     context.log('tough-cookie@4 => tough-cookie@5 in dependencies of jsdom')
   }
@@ -13,6 +13,6 @@ function readPackage(pkg, context) {
 
 module.exports = {
   hooks: {
-    readPackage
-  }
+    readPackage,
+  },
 }

@@ -12,7 +12,7 @@ const kBiometryTypeNameMap = {
 /**
  * Return a human-readable name for a BiometryType.
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export function getBiometryName(type: BiometryType): string {
   return kBiometryTypeNameMap[type] || ''
 }
