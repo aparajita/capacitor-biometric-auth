@@ -163,7 +163,7 @@ Update in package.json:
 
 #### 3.4 Update package.json scripts
 
-- Remove "verify*" scripts
+- Remove "verify\*" scripts
 
 #### 3.5 Test Phase 3
 
