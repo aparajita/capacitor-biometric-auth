@@ -10,7 +10,7 @@ This plugin for [Capacitor 7](https://capacitorjs.com) provides access to native
 
 - If you are upgrading from a version prior to 7.0.0, please note that [`authenticate()`](#authenticate) will _immediately_ present a prompt for device credentials if `deviceIsSecure` is true, `allowDeviceCredentials` is true, and no biometry of the requested strength is available.
 
-- If you are upgrading from a version prior to 8.0.0, please note that this plugin now requires Capacitor 6+.
+- If you are upgrading from a version prior to 8.0.0, please note that this plugin now requires Capacitor 7+.
 
 - If you are upgrading from a version prior to 8.0.0, please note that [`addResumeListener`](#addresumelistener) now always returns a Promise and must be awaited.
 
