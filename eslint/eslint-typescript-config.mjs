@@ -7,7 +7,8 @@ import namingConventions from './eslint-naming-conventions.mjs'
  * the options from and disabling the base rule.
  */
 function fromBaseRule(rule, options) {
-  const { rules } = baseConfigs[0]
+  const { rules } =
+    baseConfigs.find((config) => config.name === 'eslint/override') || {}
   const newRule = {
     [rule]: 'off',
   }
@@ -26,7 +27,7 @@ function fromBaseRule(rule, options) {
 // of the neostandard recommended config.
 // See https://typescript-eslint.io/rules/ for info on each rule
 const config = {
-  name: 'override/ts',
+  name: '@typescript-eslint/override',
   files: ['**/*.{ts,vue}'],
   rules: {
     '@typescript-eslint/await-thenable': 'error',
@@ -98,6 +99,7 @@ const config = {
     '@typescript-eslint/no-mixed-enums': 'error',
     '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
     '@typescript-eslint/no-redundant-type-constituents': 'error',
+    '@typescript-eslint/no-require-imports': 'off', // oxlint handles this
     ...fromBaseRule('no-restricted-imports'),
     ...fromBaseRule('no-shadow', ['error', { ignoreTypeValueShadow: true }]),
     '@typescript-eslint/no-this-alias': 'error',

@@ -17,8 +17,9 @@ const blankLineBetweenStatements = [
 // This config only includes rules that are either undefined or different from
 // the base neostandard config.
 const config = {
-  name: 'override/style',
+  name: '@stylistic/override',
   rules: {
+    '@stylistic/comma-dangle': ['error', 'only-multiline'],
     '@stylistic/implicit-arrow-linebreak': 'off',
     '@stylistic/line-comment-position': 'off',
     '@stylistic/lines-around-comment': [

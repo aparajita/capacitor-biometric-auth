@@ -1,21 +1,16 @@
-import importPlugin from 'eslint-plugin-import'
-
 // This config only defines the rules for the import plugin that are either
 // not defined or are different from the base neostandard config.
 const config = {
-  name: 'override/import',
+  name: 'import-x/override',
   files: ['**/*.{mjs,ts,vue}'],
-  plugins: {
-    import: importPlugin,
-  },
   settings: {
     // Tell eslint-plugin-import to treat @ws/ as an internal package
     // for grouping
-    'import/internal-regex': '^@ws/',
+    'import-x/internal-regex': '^@ws/',
 
     // Use the node resolver imports (importing a directory
     // imports index.{js,ts,etc})
-    'import/resolver': {
+    'import-x/resolver': {
       node: ['.mjs', '.js', '.cjs'],
       typescript: ['.ts', '.d.ts', '.vue'],
     },
@@ -27,9 +22,9 @@ const config = {
     },
   },
   rules: {
-    'import/export': 'error',
-    'import/exports-last': 'off',
-    'import/extensions': [
+    'import-x/export': 'error',
+    'import-x/exports-last': 'off',
+    'import-x/extensions': [
       'error',
       {
         js: 'never',
@@ -41,10 +36,10 @@ const config = {
         css: 'always',
       },
     ],
-    'import/group-exports': 'off',
-    'import/max-dependencies': 'off',
-    'import/named': 'off',
-    'import/newline-after-import': [
+    'import-x/group-exports': 'off',
+    'import-x/max-dependencies': 'off',
+    'import-x/named': 'off',
+    'import-x/newline-after-import': [
       'error',
       {
         count: 1,
@@ -52,31 +47,31 @@ const config = {
         considerComments: true,
       },
     ],
-    'import/no-anonymous-default-export': 'error',
-    'import/no-default-export': 'off',
-    'import/no-deprecated': 'error',
-    'import/no-dynamic-require': 'off',
-    'import/no-extraneous-dependencies': 'off',
-    'import/no-import-module-exports': 'error',
-    'import/no-internal-modules': 'off',
-    'import/no-named-default': 'off',
-    'import/no-named-export': 'off',
-    'import/no-namespace': ['off', { ignore: ['package.json'] }],
-    'import/no-nodejs-modules': 'off',
-    'import/no-require': 'off',
-    'import/no-relative-packages': 'error',
-    'import/no-relative-parent-imports': 'off',
-    'import/no-restricted-paths': 'off',
-    'import/no-unresolved': 'error',
-    'import/no-unused-modules': 'off',
-    'import/no-useless-path-segments': [
+    'import-x/no-anonymous-default-export': 'error',
+    'import-x/no-default-export': 'off',
+    'import-x/no-deprecated': 'error',
+    'import-x/no-dynamic-require': 'off',
+    'import-x/no-extraneous-dependencies': 'off',
+    'import-x/no-import-module-exports': 'error',
+    'import-x/no-internal-modules': 'off',
+    'import-x/no-named-default': 'off',
+    'import-x/no-named-export': 'off',
+    'import-x/no-namespace': ['off', { ignore: ['package.json'] }],
+    'import-x/no-nodejs-modules': 'off',
+    'import-x/no-require': 'off',
+    'import-x/no-relative-packages': 'error',
+    'import-x/no-relative-parent-imports': 'off',
+    'import-x/no-restricted-paths': 'off',
+    'import-x/no-unresolved': 'error',
+    'import-x/no-unused-modules': 'off',
+    'import-x/no-useless-path-segments': [
       'off',
       {
         noUselessIndex: false,
         commonjs: false,
       },
     ],
-    'import/order': [
+    'import-x/order': [
       'error',
       {
         groups: [
@@ -103,16 +98,8 @@ const config = {
         warnOnUnassignedImports: true,
       },
     ],
-    'import/prefer-default-export': 'off',
-    'import/unambiguous': 'off',
-
-    // Turn off import-x rules that neostandard enables
-    'import-x/no-absolute-path': 'off',
-    'import-x/export': 'off',
-    'import-x/first': 'off',
-    'import-x/no-duplicates': 'off',
-    'import-x/no-named-default': 'off',
-    'import-x/no-webpack-loader-syntax': 'off',
+    'import-x/prefer-default-export': 'off',
+    'import-x/unambiguous': 'off',
   },
 }
 

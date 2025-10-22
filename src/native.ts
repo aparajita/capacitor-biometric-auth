@@ -6,7 +6,7 @@ import type {
 } from './definitions'
 import { BiometryErrorType, BiometryType } from './definitions'
 
-/* eslint-disable @typescript-eslint/class-methods-use-this */
+/* eslint-disable @typescript-eslint/class-methods-use-this, @typescript-eslint/require-await */
 
 export class BiometricAuthNative extends BiometricAuthBase {
   constructor(capProxy: BiometricAuthPlugin) {
@@ -48,27 +48,26 @@ export class BiometricAuthNative extends BiometricAuthBase {
   // @native
   // On native platforms, this will present the native authentication UI.
   override async internalAuthenticate(
-    options?: AuthenticateOptions,
+    _options?: AuthenticateOptions,
   ): Promise<void> {
     // This method is implemented natively
   }
 
   // Web only, used for simulating biometric authentication.
   override async setBiometryType(
-    type: BiometryType | string | Array<BiometryType | string> | undefined,
+    _type: BiometryType | string | Array<BiometryType | string> | undefined,
   ): Promise<void> {
     console.warn('setBiometryType() is web only')
   }
 
   // Web only, used for simulating biometry enrollment.
-  override async setBiometryIsEnrolled(enrolled: boolean): Promise<void> {
+  override async setBiometryIsEnrolled(_enrolled: boolean): Promise<void> {
     console.warn('setBiometryEnrolled() is web only')
   }
 
   // Web only, used for simulating device security.
-  override async setDeviceIsSecure(isSecure: boolean): Promise<void> {
+  override async setDeviceIsSecure(_isSecure: boolean): Promise<void> {
     console.warn('setDeviceIsSecure() is web only')
   }
 }
-
-/* eslint-enable @typescript-eslint/class-methods-use-this */
+/* eslint-enable @typescript-eslint/class-methods-use-this, @typescript-eslint/require-await */

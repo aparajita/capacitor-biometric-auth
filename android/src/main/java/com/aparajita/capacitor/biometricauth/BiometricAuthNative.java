@@ -158,8 +158,10 @@ public class BiometricAuthNative extends Plugin {
 
     result.put("biometryTypes", returnTypes);
 
-    KeyguardManager keyguardManager = (KeyguardManager) this.getContext()
-      .getSystemService(Context.KEYGUARD_SERVICE);
+    KeyguardManager keyguardManager =
+      (KeyguardManager) this.getContext().getSystemService(
+        Context.KEYGUARD_SERVICE
+      );
 
     if (keyguardManager != null) {
       result.put("deviceIsSecure", keyguardManager.isKeyguardSecure());

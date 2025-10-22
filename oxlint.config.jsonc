@@ -2,7 +2,7 @@
 // Only non-default rules are configured here.
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "ignorePatterns": ["**/*.d.ts", ".claude/**", "demo/**"],
+  "ignorePatterns": ["**/*.d.ts", ".claude/**"],
   "plugins": [
     "eslint",
     "import",
@@ -19,7 +19,9 @@
   },
   "rules": {
     // Correctness
+    "eslint/no-constant-binary-expression": "error",
     "eslint/no-eval": "error",
+    "eslint/no-unused-vars": "error",
 
     "import/default": "error",
     "import/namespace": "error",
@@ -220,6 +222,10 @@
     "eslint/default-param-last": "error",
     "eslint/func-names": ["error", "as-needed"],
     "eslint/guard-for-in": "error",
+    "eslint/id-length": [
+      "error",
+      { "min": 2, "exceptions": ["a", "b", "i", "j", "k", "T", "U"] },
+    ],
     "eslint/new-cap": "error",
     "eslint/no-continue": "off", // Sometimes this is clearer
     "eslint/no-duplicate-imports": "off", // Handled by import/no-duplicates
@@ -296,7 +302,7 @@
     "unicorn/require-array-join-separator": "error",
 
     // Does not support "avoid" option currently
-    "unicorn/switch-case-braces": ["error", "avoid"],
+    "unicorn/switch-case-braces": "off",
     "unicorn/text-encoding-identifier-case": "error",
     "unicorn/throw-new-error": "error",
 

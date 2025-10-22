@@ -6,7 +6,14 @@ private let kReason = "reason"
 private let kMissingFaceIDUsageEntry = "The device supports Face ID, but NSFaceIDUsageDescription is not in Info.plist."
 
 @objc(BiometricAuthNative)
-public class BiometricAuthNative: CAPPlugin {
+public class BiometricAuthNative: CAPPlugin, CAPBridgedPlugin {
+  public let identifier = "BiometricAuthNative"
+  public let jsName = "BiometricAuthNative"
+  public let pluginMethods: [CAPPluginMethod] = [
+    .init(#selector(checkBiometry)),
+    .init(#selector(internalAuthenticate))
+  ]
+
   let biometryErrorCodeMap: [Int: String] = [
     0: "",
     LAError.appCancel.rawValue: "appCancel",

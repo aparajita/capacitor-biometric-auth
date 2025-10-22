@@ -7,7 +7,18 @@
 
 const configs = [
   {
-    name: 'override/base',
+    name: 'eslint/extra/ignores',
+    ignores: [
+      '.claude/**',
+      '**/dist/**',
+      '**/ios/**',
+      '**/android/**',
+      '**/**.d.ts',
+      '.idea/**',
+    ],
+  },
+  {
+    name: 'eslint/override',
     rules: {
       'arrow-body-style': ['error', 'as-needed'],
       'block-scoped-var': 'error',
@@ -25,10 +36,6 @@ const configs = [
       'consistent-this': ['error', 'self'],
       'func-name-matching': 'error',
       'grouped-accessor-pairs': 'error',
-      'id-length': [
-        'error',
-        { min: 2, exceptions: ['a', 'b', 'i', 'j', 'k', 'x', 'y', 'z', '_'] },
-      ],
       'max-statements': ['error', 31],
       'n/handle-callback-err': 'off',
       'no-implicit-coercion': 'error',

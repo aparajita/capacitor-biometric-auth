@@ -3,6 +3,8 @@ import type { AuthenticateOptions, CheckBiometryResult } from './definitions'
 import { BiometryError, BiometryErrorType, BiometryType } from './definitions'
 import { getBiometryName } from './web-utils'
 
+/* eslint-disable @typescript-eslint/require-await */
+
 export class BiometricAuthWeb extends BiometricAuthBase {
   private biometryType = BiometryType.none
   private biometryTypes: BiometryType[] = []
@@ -157,5 +159,7 @@ function isBiometryType(value: string | BiometryType): value is BiometryType {
 function isBiometryTypes(
   value: (string | BiometryType)[],
 ): value is BiometryType[] {
-  return value.every((v) => isBiometryType(v))
+  return value.every((type) => isBiometryType(type))
 }
+
+/* eslint-enable @typescript-eslint/require-await */
