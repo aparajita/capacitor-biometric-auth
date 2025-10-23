@@ -45,7 +45,7 @@ Although not strictly necessary, before giving the user the option to use biomet
 - `isAvailable` may be `false` but `biometryType` may indicate the presence of biometry on the device. This occurs if:
   - The current user is not enrolled in biometry.
   - Biometry has been disabled for the current app.
-  - On Android, biometric hardware is present but can only be used for _device_ unlock, _not_ by apps. see the [Android note](#-android-note) below for more information.
+  - On Android, biometric hardware is present but can only be used for _device_ unlock, _not_ by apps. see the [Android note](#android-note) below for more information.
 
   In such cases the `reason` and `code` will tell you why.
 
