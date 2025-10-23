@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Biometry</string>
+    <string name="title_activity_main">Biometry</string>
+    <string name="package_name">com.aparajita.capacitor.biometricauth</string>
+    <string name="custom_url_scheme">com.aparajita.capacitor.biometricauth</string>
+</resources>

@@ -1,0 +1,38 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+
+    // Required in Vite
+    "isolatedModules": true,
+
+    // Required in Vue projects
+    "jsx": "preserve",
+
+    "module": "esnext",
+    "moduleResolution": "node",
+
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "useDefineForClassFields": true,
+    "types": ["node"],
+    "lib": ["es2017", "dom", "dom.iterable", "scripthost"],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["**/*.js", "*.ts", "**/*.ts", "**/*.vue"],
+  "exclude": ["node_modules"],
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    }
+  ]
+}
