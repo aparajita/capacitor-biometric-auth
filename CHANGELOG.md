@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [9.1.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v9.0.0...v9.1.0) (2025-10-23)
+
+
+### Features
+
+* modernize ([5b0d682](https://github.com/aparajita/capacitor-biometric-auth/commit/5b0d682a5207e9d19459537e76051357c4997bae))
+
+
+### Bug Fixes
+
+* don’t include gradle directory ([711f139](https://github.com/aparajita/capacitor-biometric-auth/commit/711f1396c07f1f7421a8a4f68c9a1d49668a2e72))
+
 ## [9.0.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v8.0.2...v9.0.0) (2025-04-24)
 
 
