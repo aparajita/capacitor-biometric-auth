@@ -1,16 +1,10 @@
 <div class="markdown-body">
 
-# capacitor-biometric-auth-demo&nbsp;&nbsp;[![GitHub version](https://badge.fury.io/gh/aparajita%2Fcapacitor-biometric-auth-demo.svg)](https://badge.fury.io/gh/aparajita%2Fcapacitor-biometric-auth-demo)
+# capacitor-biometric-auth demo&nbsp;&nbsp;[![GitHub version](https://badge.fury.io/gh/aparajita%2Fcapacitor-biometric-auth.svg)](https://badge.fury.io/gh/aparajita%2Fcapacitor-biometric-auth-demo)
 
 This [Ionic 8](https://ionicframework.com) application provides a demo of all of the capabilities of the [capacitor-biometric-auth](https://github.com/aparajita/capacitor-biometric-auth) Capacitor plugin.
 
-It’s also a good example of:
-
-- How to use [Vite](https://vitejs.dev) as the code packager and dev server, with live reload even when running on native platforms. Big thanks to [Aaron Saunders](https://www.youtube.com/c/AaronSaundersCI) for figuring that out.
-- How to integrate [Tailwind CSS](https://tailwindcss.com) with Ionic.
-- How to use Tailwind to set specific component CSS variables right where they are in the html — look at the `IonSelect` classes in [`BiometryView.vue`](src/components/biometry-view.vue).
-
-Here is this app running on both iOS and Android.
+Here is this app running on both iOS and Android (note the Authenticate button is now at the top of the screen).
 
 | iOS                                                                                                                            | Android                                                                                                                        |
 | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -19,20 +13,19 @@ Here is this app running on both iOS and Android.
 ## Installation
 
 ```shell
-git clone https://github.com/aparajita/capacitor-biometric-auth-demo.git
-cd capacitor-biometric-auth-demo
+git clone https://github.com/aparajita/capacitor-biometric-auth.git
+cd capacitor-biometric-auth
 pnpm install  # npm install
-pnpm build  # npm run build
 ```
 
 ## Usage
 
 ### Web
 
-To launch the demo in a browser:
+To launch the demo in a browser, simulating biometric authentication:
 
 ```shell
-pnpm dev  # npm run dev
+pnpm demo.dev  # npm run demo.dev
 ```
 
 Once the demo is open, select a biometry type from the menu and click `Authenticate`. A browser confirm will appear with a prompt set to the `Reason` field. Clicking OK simulates successful authentication, clicking Cancel simulates user cancellation.
@@ -42,8 +35,13 @@ Once the demo is open, select a biometry type from the menu and click `Authentic
 To launch the demo in Xcode or Android Studio:
 
 ```shell
-pnpm ios.dev  # npm run ios.dev
-pnpm android.dev  # npm run ios.dev
+# With live reload:
+pnpm demo.ios.dev  # npm run demo.ios.dev
+pnpm demo.android.dev  # npm run demo.ios.dev
+
+# Without live reload:
+pnpm demo.ios  # npm run demo.ios
+pnpm demo.android  # npm run demo.android
 ```
 
 Once Xcode/Android Studio opens, select the device or simulator you wish to run the demo on. When the demo app opens, the supported biometry type and status is displayed at the top.
