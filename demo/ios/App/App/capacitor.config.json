@@ -9,6 +9,11 @@
 	"plugins": {
 		"SplashScreen": {
 			"launchAutoHide": false
+		},
+		"StatusBar": {
+			"backgroundColor": "#ffffff",
+			"style": "DARK",
+			"overlaysWebView": false
 		}
 	},
 	"packageClassList": [
