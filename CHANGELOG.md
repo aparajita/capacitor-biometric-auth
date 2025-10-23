@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [9.1.1](https://github.com/aparajita/capacitor-biometric-auth/compare/v9.1.0...v9.1.1) (2025-10-23)
+
+
+### Bug Fixes
+
+* add missing StatusBar config ([74fa45b](https://github.com/aparajita/capacitor-biometric-auth/commit/74fa45b7ff8e10faf094fa8405d2ba3eb63fcd83))
+
 ## [9.1.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v9.0.0...v9.1.0) (2025-10-23)
 
 

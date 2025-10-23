@@ -1,6 +1,6 @@
 {
   "name": "@aparajita/capacitor-biometric-auth-demo",
-  "version": "9.1.0",
+  "version": "9.1.1",
   "description": "An Ionic/Vue demo of the @aparajita/capacitor-biometric-auth plugin",
   "private": true,
   "author": "Aparajita Fishman",
