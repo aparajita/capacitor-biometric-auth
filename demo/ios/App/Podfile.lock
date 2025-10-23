@@ -1,5 +1,5 @@
 PODS:
-  - AparajitaCapacitorBiometricAuth (9.0.0):
+  - AparajitaCapacitorBiometricAuth (9.1.0):
     - Capacitor
   - Capacitor (7.4.4):
     - CapacitorCordova
@@ -44,7 +44,7 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/.pnpm/@capacitor+status-bar@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/status-bar"
 
 SPEC CHECKSUMS:
-  AparajitaCapacitorBiometricAuth: 037b2a1444b45c83ed69adb53db3240aa08e4906
+  AparajitaCapacitorBiometricAuth: df3f1632268992b5877b9cc1937eda93e1005f73
   Capacitor: 358dd1c3fdd71d969547b17e159fd8a7736cb45f
   CapacitorApp: 26587c2ce485d88ddb39adb21cac64f8e481afe3
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
