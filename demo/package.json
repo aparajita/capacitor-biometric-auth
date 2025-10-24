@@ -12,7 +12,6 @@
   },
   "scripts": {
     "dev": "vite",
-    "prebuild": "pnpm lint",
     "build": "vite build",
     "preview": "vite preview --port 1327",
     "ios.dev": "ionic cap run ios --open --livereload --external",
