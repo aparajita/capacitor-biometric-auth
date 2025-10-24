@@ -8,17 +8,13 @@ const config = {
     // for grouping
     'import-x/internal-regex': '^@ws/',
 
-    // Use the node resolver imports (importing a directory
-    // imports index.{js,ts,etc})
+    // Use the TypeScript resolver to understand tsconfig path mappings
     'import-x/resolver': {
-      node: ['.mjs', '.js', '.cjs'],
-      typescript: ['.ts', '.d.ts', '.vue'],
-    },
-    'eslint-import-resolver-custom-alias': {
-      alias: {
-        '@': './src',
+      typescript: {
+        alwaysTryTypes: true,
+        project: ['tsconfig.json', 'demo/tsconfig.json'],
       },
-      extensions: ['.css', '.js', '.svg', '.ts', '.vue'],
+      node: true,
     },
   },
   rules: {
