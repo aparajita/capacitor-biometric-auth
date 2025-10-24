@@ -1,6 +1,7 @@
 // / <reference types="@capacitor/splash-screen" />
 
 import type { CapacitorConfig } from '@capacitor/cli'
+import { KeyboardResize } from '@capacitor/keyboard'
 
 const config: CapacitorConfig = {
   appId: 'com.aparajita.capacitor.biometricauthdemo',
@@ -11,13 +12,11 @@ const config: CapacitorConfig = {
   },
   webDir: 'dist',
   plugins: {
+    Keyboard: {
+      resize: KeyboardResize.None,
+    },
     SplashScreen: {
       launchAutoHide: false,
-    },
-    StatusBar: {
-      backgroundColor: '#ffffff', // or your app's primary color
-      style: 'DARK', // or 'LIGHT' depending on your app theme
-      overlaysWebView: false, // ensures content doesn't go under status bar
     },
   },
 }

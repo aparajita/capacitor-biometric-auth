@@ -1,5 +1,5 @@
 PODS:
-  - AparajitaCapacitorBiometricAuth (9.1.0):
+  - AparajitaCapacitorBiometricAuth (9.1.1):
     - Capacitor
   - Capacitor (7.4.4):
     - CapacitorCordova
@@ -12,8 +12,6 @@ PODS:
     - Capacitor
   - CapacitorSplashScreen (7.0.3):
     - Capacitor
-  - CapacitorStatusBar (7.0.3):
-    - Capacitor
 
 DEPENDENCIES:
   - AparajitaCapacitorBiometricAuth (from `../../..`)
@@ -23,7 +21,6 @@ DEPENDENCIES:
   - "CapacitorHaptics (from `../../../node_modules/.pnpm/@capacitor+haptics@7.0.2_@capacitor+core@7.4.4/node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../../node_modules/.pnpm/@capacitor+keyboard@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/keyboard`)"
   - "CapacitorSplashScreen (from `../../../node_modules/.pnpm/@capacitor+splash-screen@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/splash-screen`)"
-  - "CapacitorStatusBar (from `../../../node_modules/.pnpm/@capacitor+status-bar@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/status-bar`)"
 
 EXTERNAL SOURCES:
   AparajitaCapacitorBiometricAuth:
@@ -40,19 +37,16 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/.pnpm/@capacitor+keyboard@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/keyboard"
   CapacitorSplashScreen:
     :path: "../../../node_modules/.pnpm/@capacitor+splash-screen@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/splash-screen"
-  CapacitorStatusBar:
-    :path: "../../../node_modules/.pnpm/@capacitor+status-bar@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/status-bar"
 
 SPEC CHECKSUMS:
-  AparajitaCapacitorBiometricAuth: df3f1632268992b5877b9cc1937eda93e1005f73
+  AparajitaCapacitorBiometricAuth: 48031c52fce3edf9b5f4a3d78cc75f2b5aff2efa
   Capacitor: 358dd1c3fdd71d969547b17e159fd8a7736cb45f
   CapacitorApp: 26587c2ce485d88ddb39adb21cac64f8e481afe3
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
   CapacitorHaptics: b3fb2869e72c4466e18ce9ccbeb60a3d8723b3d4
   CapacitorKeyboard: 62f36104f26d53d8b3a2a43f2a69fe714f1777d5
   CapacitorSplashScreen: e388b8e0ed0e982a9d3a40417f478e7a018a8763
-  CapacitorStatusBar: 0659ddc7b1713764a05831463d215b177a15d054
 
-PODFILE CHECKSUM: 359492b6f51ed1caac2894abaf54d50ad90b2552
+PODFILE CHECKSUM: efa9e56a8bcda64aed3feebe25ba3285b81db38c
 
 COCOAPODS: 1.16.2

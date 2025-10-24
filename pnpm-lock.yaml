@@ -131,9 +131,6 @@ importers:
       '@capacitor/splash-screen':
         specifier: ^7.0.3
         version: 7.0.3(@capacitor/core@7.4.4)
-      '@capacitor/status-bar':
-        specifier: ^7.0.3
-        version: 7.0.3(@capacitor/core@7.4.4)
       '@ionic/core':
         specifier: ^8.7.7
         version: 8.7.7
@@ -193,7 +190,7 @@ importers:
         specifier: ~5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.1.11
+        specifier: ^7.1.12
         version: 7.1.12(@types/node@24.9.1)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1)
 
 packages:
@@ -280,11 +277,6 @@ packages:
 
   '@capacitor/splash-screen@7.0.3':
     resolution: {integrity: sha512-coAw2de3rRX0EfneK0/D9IZaDAUOtsPaE9ZNbSdCs2UtmXp0hdcr5Tsil01Kve707nQfLsd03pmvaesJYD60EA==}
-    peerDependencies:
-      '@capacitor/core': '>=7.0.0'
-
-  '@capacitor/status-bar@7.0.3':
-    resolution: {integrity: sha512-JyRpVnKwHij9hgPWolF6PK+HT3e2HSPjN11/h2OmKxq8GAdPGARFLv+97eZl0pvuvm0Kka/LpiLb5whXISBg7Q==}
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
 
@@ -4221,10 +4213,6 @@ snapshots:
       '@capacitor/core': 7.4.4
 
   '@capacitor/splash-screen@7.0.3(@capacitor/core@7.4.4)':
-    dependencies:
-      '@capacitor/core': 7.4.4
-
-  '@capacitor/status-bar@7.0.3(@capacitor/core@7.4.4)':
     dependencies:
       '@capacitor/core': 7.4.4
 

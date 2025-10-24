@@ -7,13 +7,11 @@
 	},
 	"webDir": "dist",
 	"plugins": {
+		"Keyboard": {
+			"resize": "none"
+		},
 		"SplashScreen": {
 			"launchAutoHide": false
-		},
-		"StatusBar": {
-			"backgroundColor": "#ffffff",
-			"style": "DARK",
-			"overlaysWebView": false
 		}
 	}
 }

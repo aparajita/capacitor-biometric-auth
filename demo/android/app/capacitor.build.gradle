@@ -14,7 +14,6 @@ dependencies {
     implementation project(':capacitor-haptics')
     implementation project(':capacitor-keyboard')
     implementation project(':capacitor-splash-screen')
-    implementation project(':capacitor-status-bar')
 
 }
 
