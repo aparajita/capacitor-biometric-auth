@@ -11,8 +11,10 @@ function readPackage(pkg, context) {
   return pkg
 }
 
-module.exports = {
+const exports = {
   hooks: {
     readPackage,
   },
 }
+
+export default exports
