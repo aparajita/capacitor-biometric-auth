@@ -1,13 +1,20 @@
 import { registerPlugin } from '@capacitor/core'
+
 import type { BiometricAuthPlugin } from './definitions'
 
 const proxy = registerPlugin<BiometricAuthPlugin>('BiometricAuthNative', {
-  web: async () =>
-    import('./web').then((module) => new module.BiometricAuthWeb()),
-  ios: async () =>
-    import('./native').then((module) => new module.BiometricAuthNative(proxy)),
-  android: async () =>
-    import('./native').then((module) => new module.BiometricAuthNative(proxy)),
+  web: async () => {
+    const module = await import('./web')
+    return new module.BiometricAuthWeb()
+  },
+  ios: async () => {
+    const module = await import('./native')
+    return new module.BiometricAuthNative(proxy)
+  },
+  android: async () => {
+    const module = await import('./native')
+    return new module.BiometricAuthNative(proxy)
+  },
 })
 
 export * from './definitions'

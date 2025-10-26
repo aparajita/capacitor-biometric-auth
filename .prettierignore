@@ -1,6 +1,9 @@
-dist
-ios
-android/*
-!android/src
+.github/
 CHANGELOG.md
 pnpm-lock.yaml
+ios/
+android/
+dist/
+.claude/
+CLAUDE.md
+manifest.json

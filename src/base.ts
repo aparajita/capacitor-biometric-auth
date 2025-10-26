@@ -1,15 +1,15 @@
 import { App } from '@capacitor/app'
-import { CapacitorException, WebPlugin } from '@capacitor/core'
 import type { PluginListenerHandle } from '@capacitor/core'
+import { CapacitorException, WebPlugin } from '@capacitor/core'
+
 import type {
   AuthenticateOptions,
   BiometricAuthPlugin,
+  BiometryType,
   CheckBiometryResult,
   ResumeListener,
-  BiometryType,
-  BiometryErrorType,
 } from './definitions'
-import { BiometryError } from './definitions'
+import { BiometryError, isBiometryErrorType } from './definitions'
 
 export abstract class BiometricAuthBase
   extends WebPlugin
@@ -17,7 +17,6 @@ export abstract class BiometricAuthBase
 {
   // Web only, used for simulating biometric authentication.
   abstract setBiometryType(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     type: BiometryType | string | Array<BiometryType | string> | undefined,
   ): Promise<void>
 
@@ -35,14 +34,10 @@ export abstract class BiometricAuthBase
     } catch (error) {
       // error will be an instance of CapacitorException on native platforms,
       // an instance of BiometryError on the web.
-      if (error instanceof CapacitorException) {
-        throw new BiometryError(
-          error.message,
-          error.code as unknown as BiometryErrorType,
-        )
-      } else {
-        throw error
-      }
+      throw error instanceof CapacitorException &&
+        isBiometryErrorType(error.code)
+        ? new BiometryError(error.message, error.code)
+        : error
     }
   }
 
@@ -55,11 +50,14 @@ export abstract class BiometricAuthBase
   ): Promise<PluginListenerHandle> {
     return App.addListener('appStateChange', ({ isActive }): void => {
       if (isActive) {
-        this.checkBiometry()
-          .then((info: CheckBiometryResult) => {
+        ;(async (): Promise<void> => {
+          try {
+            const info = await this.checkBiometry()
             listener(info)
-          })
-          .catch(console.error)
+          } catch (error: unknown) {
+            console.error(error)
+          }
+        })()
       }
     })
   }

@@ -1,0 +1,7 @@
+onlyBuiltDependencies:
+  - simple-git-hooks
+  - swiftlint
+  - unrs-resolver
+
+packages:
+  - demo

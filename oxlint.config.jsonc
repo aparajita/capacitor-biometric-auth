@@ -1,0 +1,329 @@
+// See https://oxc.rs/docs/guide/usage/linter/rules.html
+// Only non-default rules are configured here.
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "ignorePatterns": ["**/*.d.ts", ".claude/**"],
+  "plugins": [
+    "eslint",
+    "import",
+    "node",
+    "oxc",
+    "promise",
+    "typescript",
+    "unicorn",
+  ],
+  "env": {
+    "builtin": true,
+    "node": true,
+    "es2022": true,
+  },
+  "rules": {
+    // Correctness
+    "eslint/no-constant-binary-expression": "error",
+    "eslint/no-eval": "error",
+    "eslint/no-unused-vars": "error",
+
+    "import/default": "error",
+    "import/namespace": "error",
+
+    "promise/no-callback-in-promise": "error",
+    "promise/no-new-statics": "error",
+    "promise/valid-params": "error",
+
+    // Perf
+    "eslint/no-await-in-loop": "off", // We often need to await in a loop
+    "eslint/no-useless-call": "error",
+
+    "oxc/no-accumulating-spread": "error",
+    "unicorn/prefer-array-find": "error",
+    "unicorn/prefer-set-has": "off",
+
+    // Restriction
+    "eslint/default-case": "error",
+    "eslint/no-alert": "error",
+    "eslint/no-bitwise": "error",
+    "eslint/no-console": "off",
+    "eslint/no-div-regex": "error",
+    "eslint/no-empty": "error",
+    "eslint/no-empty-function": "error",
+    "eslint/no-eq-null": "error",
+    "eslint/no-iterator": "error",
+    "eslint/no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "eslint/no-proto": "error",
+    "eslint/no-regex-spaces": "error",
+    "eslint/no-restricted-globals": "off",
+    "eslint/no-undefined": "off", // We prefer === undefined
+    "eslint/no-unused-expressions": "error",
+    "eslint/no-var": "error",
+    // Sometimes we need void to indicate we don't care about awaiting a promise
+    "eslint/no-void": "off",
+    "eslint/unicode-bom": "error",
+
+    "import/no-amd": "error",
+    "import/no-commonjs": "off",
+    "import/no-cycle": "error",
+    "import/no-default-export": "off", // We like default exports
+    "import/no-dynamic-require": "error",
+    "import/no-webpack-loader-syntax": "error",
+    "import/unambiguous": "off", // Too many false positives
+
+    "node/no-new-require": "error",
+
+    "oxc/bad-bitwise-operator": "error",
+    "oxc/no-barrel-file": "off",
+    "oxc/no-const-enum": "error",
+
+    "promise/catch-or-return": "error",
+    "promise/spec-only": "error",
+
+    "@typescript-eslint/explicit-function-return-type": "error",
+    "@typescript-eslint/no-dynamic-delete": "error",
+    "@typescript-eslint/no-empty-object-type": "error",
+    "@typescript-eslint/no-explicit-any": "off", // Sometimes we need any
+    "@typescript-eslint/no-import-type-side-effects": "error",
+    "@typescript-eslint/no-namespace": "error",
+    "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "error",
+    "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/no-require-imports": "error",
+    "@typescript-eslint/no-var-requires": "error",
+    "@typescript-eslint/prefer-literal-enum-member": "error",
+
+    // Unicorn
+    "unicorn/no-abusive-eslint-disable": "error",
+    "unicorn/no-anonymous-default-export": "off", // We like default exports
+    "unicorn/no-array-for-each": "error",
+    "unicorn/no-array-reduce": "error",
+    "unicorn/no-magic-array-flat-depth": "error",
+    "unicorn/no-nested-ternary": "error",
+    "unicorn/no-process-exit": "off", // No need to warn about this,
+    "unicorn/no-unnecessary-slice-end": "error",
+    "unicorn/prefer-modern-math-apis": "error",
+    "unicorn/prefer-node-protocol": "error",
+    "unicorn/prefer-number-properties": "error",
+
+    // Suspicious
+    "eslint/no-extend-native": "error",
+    "eslint/no-new": "error",
+    "eslint/no-unexpected-multiline": "error",
+    "eslint/no-useless-concat": "error",
+    "eslint/no-useless-constructor": "error",
+
+    "import/no-absolute-path": "error",
+    "import/no-unassigned-import": "error",
+    "import/no-duplicates": "error",
+    "import/no-named-as-default": "error",
+    "import/no-named-as-default-member": "error",
+    "import/no-self-import": "error",
+
+    "oxc/no-approximate-constants": "error",
+    "oxc/no-misrefactored-assign-op": "error",
+    "oxc/no-async-endpoint-handlers": "error",
+
+    "promise/no-promise-in-callback": "error",
+
+    "@typescript-eslint/no-confusing-non-null-assertion": "error",
+    "@typescript-eslint/no-extraneous-class": "error",
+    "@typescript-eslint/no-unnecessary-type-constraint": "error",
+
+    "unicorn/consistent-function-scoping": "error",
+    "unicorn/no-instanceof-builtins": "error",
+    "unicorn/prefer-add-event-listener": "error",
+
+    // Pedantic
+    "eslint/array-callback-return": "error",
+    "eslint/eqeqeq": "error",
+    "eslint/max-classes-per-file": "error",
+    "eslint/max-depth": ["error", { "max": 4 }],
+    "eslint/max-nested-callbacks": ["error", { "max": 3 }],
+    "eslint/no-array-constructor": "error",
+    "eslint/no-case-declarations": "error",
+    "eslint/no-constructor-return": "error",
+    "eslint/no-else-return": "error",
+    "eslint/no-fallthrough": "error",
+    "eslint/no-inner-declarations": "error",
+    "eslint/no-negated-condition": "off", // Sometimes this is clearer
+    "eslint/no-new-wrappers": "error",
+    "eslint/no-object-constructor": "error",
+    "eslint/no-prototype-builtins": "error",
+    "eslint/no-redeclare": "error",
+    "eslint/no-self-compare": "error",
+    "eslint/no-throw-literal": "error",
+    "eslint/radix": "error",
+
+    // We choose to declare functions that return a Promise async,
+    // even if they don't use await. Because oxlint doesn't use
+    // TypeScript's type inference, it can't tell if a function
+    // returns a Promise, so it can't properly enforce this rule
+    // the way typescript-eslint does.
+    "eslint/require-await": "off",
+    "eslint/sort-vars": "error",
+    "eslint/symbol-description": "error",
+
+    "import/max-dependencies": "off", // We heavily factor our code
+
+    "@typescript-eslint/ban-ts-comment": [
+      "error",
+      {
+        "ts-expect-error": "allow-with-description",
+        "ts-ignore": "allow-with-description",
+        "ts-nocheck": false,
+        "ts-check": false,
+        "minimumDescriptionLength": 7,
+      },
+    ],
+    "@typescript-eslint/ban-types": "off", // no-wrapper-object-types does this better
+    "@typescript-eslint/no-unsafe-function-type": "error",
+
+    // We're fine with enums that don't have initializers
+    "@typescript-eslint/prefer-enum-initializers": "off",
+    "@typescript-eslint/prefer-ts-expect-error": "error",
+
+    "unicorn/consistent-empty-array-spread": "error",
+    "unicorn/escape-case": "error",
+    "unicorn/explicit-length-check": "error",
+    "unicorn/new-for-builtins": "error",
+    "unicorn/no-hex-escape": "error",
+    "unicorn/no-instanceof-array": "error",
+    "unicorn/no-lonely-if": "error",
+    "unicorn/no-negation-in-equality-check": "error",
+    "unicorn/no-new-buffer": "error",
+    "unicorn/no-object-as-default-parameter": "error",
+    "unicorn/no-static-only-class": "error",
+    "unicorn/no-this-assignment": "error",
+    "unicorn/no-typeof-undefined": "error",
+    "unicorn/no-unnecessary-array-flat-depth": "error",
+    "unicorn/no-unreadable-iife": "error",
+    "unicorn/no-useless-promise-resolve-reject": "error",
+    "unicorn/no-useless-switch-case": "error",
+    "unicorn/no-useless-undefined": "error",
+    "unicorn/prefer-array-flat": "error",
+    "unicorn/prefer-array-some": "error",
+    "unicorn/prefer-blob-reading-methods": "error",
+    "unicorn/prefer-code-point": "error",
+    "unicorn/prefer-date-now": "error",
+    "unicorn/prefer-dom-node-append": "error",
+    "unicorn/prefer-dom-node-dataset": "error",
+    "unicorn/prefer-dom-node-remove": "error",
+    "unicorn/prefer-event-target": "error",
+    "unicorn/prefer-math-min-max": "error",
+    "unicorn/prefer-math-trunc": "error",
+    "unicorn/prefer-native-coercion-functions": "error",
+    "unicorn/prefer-prototype-methods": "error",
+    "unicorn/prefer-query-selector": "error",
+    "unicorn/prefer-regexp-test": "error",
+    "unicorn/prefer-string-replace-all": "error",
+    "unicorn/prefer-string-slice": "error",
+    "unicorn/prefer-type-error": "error",
+    "unicorn/require-number-to-fixed-digits-argument": "error",
+
+    // Style
+    "eslint/curly": "error",
+    "eslint/default-case-last": "error",
+    "eslint/default-param-last": "error",
+    "eslint/func-names": ["error", "as-needed"],
+    "eslint/guard-for-in": "error",
+    "eslint/id-length": [
+      "error",
+      { "min": 2, "exceptions": ["a", "b", "i", "j", "k", "T", "U"] },
+    ],
+    "eslint/new-cap": "error",
+    "eslint/no-continue": "off", // Sometimes this is clearer
+    "eslint/no-duplicate-imports": "off", // Handled by import/no-duplicates
+    "eslint/no-extra-label": "error",
+    "eslint/no-label-var": "error",
+    "eslint/no-labels": "error",
+    "eslint/no-lone-blocks": "error",
+    "eslint/no-magic-numbers": "off", // Too many false positives
+    "eslint/no-multi-assign": "error",
+    "eslint/no-multi-str": "error",
+    "eslint/no-new-func": "error",
+    "eslint/no-return-assign": "error",
+    "eslint/no-script-url": "error",
+    "eslint/no-template-curly-in-string": "error",
+    "eslint/no-ternary": "off", // Sometimes this is clearer
+    "eslint/operator-assignment": "error",
+    "eslint/prefer-exponentiation-operator": "error",
+    "eslint/prefer-numeric-literals": "error",
+    "eslint/prefer-object-has-own": "error",
+    "eslint/prefer-object-spread": "error",
+    "eslint/prefer-rest-params": "error",
+    "eslint/prefer-spread": "error",
+    "eslint/sort-imports": "off", // Handled by import/order
+    "eslint/sort-keys": "off", // Sometimes we want to group keys
+    "eslint/yoda": "error",
+
+    "import/consistent-type-specifier-style": [
+      "error",
+      { "prefer-top-level": true },
+    ],
+    "import/first": "error",
+    "import/no-mutable-exports": "error",
+
+    "promise/avoid-new": "off", // Sometimes we need new Promise
+    "promise/no-nesting": "error",
+    "promise/no-return-wrap": "error",
+    "promise/param-names": "error",
+    "promise/prefer-await-to-callbacks": "off", // False positives
+    "promise/prefer-await-to-then": "error",
+
+    "@typescript-eslint/adjacent-overload-signatures": "error",
+    "@typescript-eslint/array-type": ["error", { "default": "array" }],
+    "@typescript-eslint/ban-tslint-comment": "error",
+    "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+    "@typescript-eslint/no-empty-interface": "error",
+
+    "unicorn/consistent-date-clone": "error",
+    "unicorn/consistent-existence-index-check": "error",
+    "unicorn/empty-brace-spaces": "error",
+    "unicorn/error-message": "error",
+    "unicorn/filename-case": "error",
+    "unicorn/no-array-method-this-argument": "error",
+    "unicorn/no-await-expression-member": "error",
+    "unicorn/no-console-spaces": "error",
+    "unicorn/no-for-loop": "off", // No longer recommended
+    "unicorn/no-unreadable-array-destructuring": "error",
+    "unicorn/no-zero-fractions": "error",
+    "unicorn/number-literal-case": "error",
+    "unicorn/numberic-separators-style": "error",
+    "unicorn/prefer-array-flat-map": "error",
+    "unicorn/prefer-array-index-of": "error",
+    "unicorn/prefer-dom-node-text-content": "error",
+    "unicorn/prefer-global-this": "off",
+    "unicorn/prefer-includes": "error",
+    "unicorn/prefer-logical-operator-over-ternary": "error",
+    "unicorn/prefer-modern-dom-apis": "error",
+    "unicorn/prefer-negative-index": "error",
+    "unicorn/prefer-object-from-entries": "error",
+    "unicorn/prefer-optional-catch-binding": "error",
+    "unicorn/prefer-reflect-apply": "error",
+    "unicorn/prefer-string-raw": "error",
+    "unicorn/prefer-string-trim-start-end": "error",
+    "unicorn/prefer-structured-clone": "error",
+    "unicorn/require-array-join-separator": "error",
+
+    // Does not support "avoid" option currently
+    "unicorn/switch-case-braces": "off",
+    "unicorn/text-encoding-identifier-case": "error",
+    "unicorn/throw-new-error": "error",
+
+    // Nursery
+    "typescript/no-unnecessary-parameter-property-assignment": "error",
+  },
+
+  "overrides": [
+    {
+      // Disable some TypeScript rules for non-.ts files
+      "files": ["**/*.{cjs,js}"],
+      "rules": {
+        "no-require-imports": "off",
+      },
+    },
+    {
+      // Non-TypeScript files currently are always node.js files
+      "files": ["**/*.{cjs,js,mjs}"],
+      "env": {
+        "node": true,
+      },
+    },
+  ],
+}

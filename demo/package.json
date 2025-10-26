@@ -1,0 +1,56 @@
+{
+  "name": "@aparajita/capacitor-biometric-auth-demo",
+  "version": "9.1.2",
+  "description": "An Ionic/Vue demo of the @aparajita/capacitor-biometric-auth plugin",
+  "private": true,
+  "author": "Aparajita Fishman",
+  "homepage": "https://github.com/aparajita/capacitor-biometric-auth/tree/main/demo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aparajita/capacitor-biometric-auth.git",
+    "directory": "demo"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 1327",
+    "ios.dev": "ionic cap run ios --open --livereload --external",
+    "ios": "ionic cap run ios --open",
+    "android.dev": "ionic cap run android --open --livereload --external",
+    "android": "ionic cap run android --open",
+    "ionic:build": "vite build",
+    "ionic:serve": "vite"
+  },
+  "dependencies": {
+    "@aparajita/capacitor-biometric-auth": "workspace:*",
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/app": "^7.1.0",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/haptics": "^7.0.2",
+    "@capacitor/ios": "^7.4.4",
+    "@capacitor/keyboard": "^7.0.3",
+    "@capacitor/splash-screen": "^7.0.3",
+    "@ionic/core": "^8.7.7",
+    "@ionic/vue": "^8.7.7",
+    "@ionic/vue-router": "^8.7.7",
+    "ionicons": "^8.0.13",
+    "vue": "^3.5.22",
+    "vue-router": "^4.6.3"
+  },
+  "devDependencies": {
+    "@aparajita/tailwind-ionic": "^2.3.0",
+    "@capacitor/cli": "^7.4.4",
+    "@ionic/cli": "^7.2.1",
+    "@types/node": "^24.9.1",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/compiler-sfc": "^3.5.22",
+    "@vue/tsconfig": "^0.8.1",
+    "autoprefixer": "^10.4.21",
+    "commit-and-tag-version": "^12.6.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "<4.0.0",
+    "terser": "^5.44.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.1.12"
+  }
+}

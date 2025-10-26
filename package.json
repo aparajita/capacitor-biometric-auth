@@ -1,15 +1,25 @@
 {
   "name": "@aparajita/capacitor-biometric-auth",
-  "version": "8.0.2",
-  "description": "Provides access to the native biometric auth & device security APIs for Capacitor apps",
+  "version": "9.1.2",
+  "description": "Provides access to the native biometric auth & device security APIs for Capacitor 7+ apps",
   "author": "Aparajita Fishman",
   "license": "MIT",
-  "main": "dist/plugin.cjs.js",
+  "type": "module",
+  "main": "dist/plugin.cjs",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
-  "unpkg": "dist/plugin.js",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/plugin.cjs",
+      "default": "./dist/esm/index.js"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*"
+  },
   "engines": {
-    "node": ">=18"
+    "node": ">=20.0.0"
   },
   "files": [
     "android/src/main/",
@@ -21,29 +31,43 @@
   ],
   "scripts": {
     "clean": "rimraf dist",
-    "lint.eslint": "eslint --fix --cache --ext .js,.cjs,.mjs,.ts --max-warnings 0",
-    "lint.prettier": "prettier --write --cache --list-different",
-    "lint.tsc": "tsc --noEmit",
-    "lint": "pnpm lint.eslint . && pnpm lint.prettier '**/*.{js,mjs,ts,json,md,java}' && pnpm lint.tsc && swiftly ios",
+    "format": "prettier --write --cache --log-level error \"**/*.{js,cjs,mjs,ts,vue,md,json,css}\"",
+    "lint.oxlint": "oxlint --config=oxlint.config.jsonc --deny-warnings --fix",
+    "lint.eslint": "eslint --cache --fix \"**/*.{js,cjs,mjs,ts,vue}\"",
+    "lint.tsc": "vue-tsc --noEmit --skipLibCheck",
+    "lint.swift": "swiftly ios/Plugin/**/*.swift && swiftly demo/ios/App/App/**/*.swift",
+    "lint": "pnpm format && pnpm lint.oxlint && pnpm lint.eslint && pnpm lint.tsc && pnpm lint.swift",
     "prebuilder": "pnpm clean",
-    "builder": "tsc ${SOURCE_MAP:-} && rollup -c rollup.config.mjs",
+    "builder": "vue-tsc ${SOURCE_MAP:-} && rollup -c rollup.config.mjs",
     "prebuild": "pnpm lint",
     "build": "pnpm builder",
     "build.dev": "SOURCE_MAP=--sourceMap pnpm build",
     "watch": "nodemon --exec 'pnpm build.dev'",
-    "docgen": "docgen --api BiometricAuthPlugin --output-readme README.md && docgen-format && pnpm lint.prettier README.md",
     "open.ios": "open ios/Plugin.xcworkspace",
     "open.android": "open -b com.google.android.studio android",
-    "verify.ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin -quiet && cd ..",
-    "verify.android": "cd android && ./gradlew clean build test && cd ..",
-    "verify": "pnpm verify.ios && pnpm verify.android",
-    "prerelease": "scripts/ensure-clean.sh && pnpm build && pnpm docgen && git add README.md",
-    "release": "commit-and-tag-version --commit-all && git push --follow-tags && pnpm publish"
+    "demo.dev": "pnpm --filter @aparajita/capacitor-biometric-auth-demo dev",
+    "demo.build": "pnpm --filter @aparajita/capacitor-biometric-auth-demo build",
+    "demo.ios": "pnpm build && pnpm --filter @aparajita/capacitor-biometric-auth-demo ios",
+    "demo.ios.dev": "pnpm --filter @aparajita/capacitor-biometric-auth-demo ios.dev",
+    "demo.android": "pnpm build && pnpm --filter @aparajita/capacitor-biometric-auth-demo android",
+    "demo.android.dev": "pnpm --filter @aparajita/capacitor-biometric-auth-demo android.dev",
+    "prerelease": "pnpm build",
+    "tag": "commit-and-tag-version",
+    "tag.preview": "pnpm tag --dry-run",
+    "release": "./scripts/release.sh"
   },
   "commit-and-tag-version": {
     "scripts": {
       "postbump": "pnpm builder"
-    }
+    },
+    "bumpFiles": [
+      "package.json",
+      "demo/package.json",
+      {
+        "filename": "android/build.gradle",
+        "updater": "scripts/gradle-updater.mjs"
+      }
+    ]
   },
   "keywords": [
     "capacitor",
@@ -65,6 +89,7 @@
     }
   },
   "swiftlint": "@ionic/swiftlint-config",
+  "prettier": "@aparajita/prettier-config",
   "repository": {
     "type": "git",
     "url": "https://github.com/aparajita/capacitor-biometric-auth.git"
@@ -73,40 +98,46 @@
     "url": "https://github.com/aparajita/capacitor-biometric-auth/issues"
   },
   "devDependencies": {
-    "@aparajita/capacitor-docgen": "github:aparajita/capacitor-docgen",
-    "@aparajita/capacitor-docgen-format": "github:aparajita/capacitor-docgen-format",
-    "@aparajita/eslint-config-base": "^1.1.6",
     "@aparajita/prettier-config": "^2.0.0",
-    "@aparajita/swiftly": "^1.0.4",
-    "@capacitor/cli": "^6.1.0",
-    "@commitlint/cli": "^19.3.0",
-    "@commitlint/config-conventional": "^19.2.2",
-    "@ionic/swiftlint-config": "^1.1.2",
-    "@rollup/plugin-json": "^6.1.0",
-    "@types/node": "^20.14.10",
-    "@typescript-eslint/eslint-plugin": "^7.16.1",
-    "@typescript-eslint/parser": "^7.16.1",
-    "commit-and-tag-version": "^12.4.1",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-import-resolver-typescript": "^3.6.1",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-n": "^16.6.2",
-    "eslint-plugin-promise": "^6.4.0",
-    "nodemon": "^3.1.4",
-    "prettier": "^3.3.3",
-    "prettier-plugin-java": "^2.6.4",
+    "@aparajita/swiftly": "^2.0.0",
+    "@capacitor/cli": "^7.4.4",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
+    "@eslint/js": "^9.38.0",
+    "@ionic/swiftlint-config": "^2.0.0",
+    "@types/node": "^24.9.1",
+    "@vue/eslint-config-typescript": "^14.6.0",
+    "commit-and-tag-version": "^12.6.0",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-oxlint": "^1.24.0",
+    "eslint-plugin-unicorn": "^61.0.2",
+    "eslint-plugin-vue": "^10.5.1",
+    "globals": "^16.4.0",
+    "neostandard": "^0.12.2",
+    "nodemon": "^3.1.10",
+    "oxlint": "^1.24.0",
+    "prettier": "^3.6.2",
     "rimraf": "^6.0.1",
-    "rollup": "^4.18.1",
-    "simple-git-hooks": "^2.11.1",
-    "swiftlint": "^1.0.2",
-    "typescript": "~5.5.3"
+    "rollup": "^4.52.5",
+    "simple-git-hooks": "^2.13.1",
+    "swiftlint": "^2.0.0",
+    "typescript": "~5.9.3",
+    "vue-tsc": "~3.1.1"
   },
   "dependencies": {
-    "@capacitor/android": "^6.1.0",
-    "@capacitor/app": "^6.0.0",
-    "@capacitor/core": "^6.1.0",
-    "@capacitor/ios": "^6.1.0"
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/app": "^7.1.0",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/ios": "^7.4.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "simple-git-hooks",
+      "swiftlint",
+      "unrs-resolver"
+    ]
   }
 }

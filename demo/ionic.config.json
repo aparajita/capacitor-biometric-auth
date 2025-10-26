@@ -1,0 +1,7 @@
+{
+  "name": "capacitor-biometric-auth-demo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

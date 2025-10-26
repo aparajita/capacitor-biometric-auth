@@ -26,7 +26,7 @@ public class AuthActivity extends AppCompatActivity {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
       executor = this.getMainExecutor();
     } else {
-      executor = command -> new Handler(this.getMainLooper()).post(command);
+      executor = (command) -> new Handler(this.getMainLooper()).post(command);
     }
 
     BiometricPrompt.PromptInfo.Builder builder =

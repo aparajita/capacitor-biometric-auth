@@ -1,0 +1,34 @@
+/* @tailwind base conflicts with Ionic styles */
+@tailwind components;
+@tailwind utilities;
+
+html {
+  /*
+    Make sure we set the rem value to the base size,
+    since Tailwind units are rem-based.
+   */
+  font-size: 17px;
+}
+
+ion-button {
+  /* Standard Ionic tracking on buttons is too tight for my taste */
+  @apply tracking-wide;
+}
+
+/* ion-item has a hardcoded font-size, use the base size */
+ion-item {
+  font-size: 1rem;
+}
+
+/*
+  On some Android devices, the native checkbox is displayed instead
+  of the svg checkbox, and it has no right margin. So we have to add
+  some margin between it and a label.
+*/
+ion-checkbox.md + ion-label {
+  @apply ml-1;
+}
+
+#app {
+  @apply w-full h-full;
+}
