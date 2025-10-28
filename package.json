@@ -35,7 +35,7 @@
     "lint.oxlint": "oxlint --config=oxlint.config.jsonc --deny-warnings --fix",
     "lint.eslint": "eslint --cache --fix \"**/*.{js,cjs,mjs,ts,vue}\"",
     "lint.tsc": "vue-tsc --noEmit --skipLibCheck",
-    "lint.swift": "swiftly ios/Plugin/**/*.swift && swiftly demo/ios/App/App/**/*.swift",
+    "lint.swift": "swiftly --fix ios/Plugin/**/*.swift && swiftly --fix demo/ios/App/App/**/*.swift",
     "lint": "pnpm format && pnpm lint.oxlint && pnpm lint.eslint && pnpm lint.tsc && pnpm lint.swift",
     "prebuilder": "pnpm clean",
     "builder": "vue-tsc ${SOURCE_MAP:-} && rollup -c rollup.config.mjs",
