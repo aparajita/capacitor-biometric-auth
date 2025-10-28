@@ -168,8 +168,10 @@ onBeforeMount(async () => {
   }
 })
 
-onMounted(async () => {
-  await SplashScreen.hide()
+onMounted(() => {
+  window.setTimeout(() => {
+    void SplashScreen.hide()
+  }, 400)
 })
 
 onBeforeUnmount(async () => {
