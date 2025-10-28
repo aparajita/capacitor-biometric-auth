@@ -8,7 +8,8 @@
       "Bash(rm:*)",
       "Bash(pnpm exec:*)",
       "WebFetch(domain:capacitorjs.com)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(lsof:*)"
     ],
     "deny": []
   }

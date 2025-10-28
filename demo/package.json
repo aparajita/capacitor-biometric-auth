@@ -18,7 +18,7 @@
     "ios": "ionic cap run ios --open",
     "android.dev": "ionic cap run android --open --livereload --external",
     "android": "ionic cap run android --open",
-    "ionic:build": "vite build",
+    "ionic:build": "pnpm build",
     "ionic:serve": "vite"
   },
   "dependencies": {

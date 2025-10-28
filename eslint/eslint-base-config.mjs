@@ -47,6 +47,7 @@ const configs = [
       'no-undefined': 'off', // We have no problem using undefined
       'no-use-before-define': 'off',
       'no-useless-assignment': 'error',
+      'no-void': 'off', // We use void to ignore Promise results
       'object-shorthand': 'error',
       'prefer-arrow-callback': 'error',
       'prefer-destructuring': 'off', // Too many false positives
