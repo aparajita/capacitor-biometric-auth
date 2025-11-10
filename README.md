@@ -36,7 +36,9 @@ Not using [pnpm](https://pnpm.js.org/)? You owe it to yourself to give it a try.
 
 ## Usage
 
-The API is extensively documented in the [TypeScript definitions file](src/definitions.ts). There is also (somewhat incomplete auto-generated) documentation [below](#api). For a complete example of how to use this plugin in practice, see the [demo app](https://github.com/aparajita/capacitor-biometric-auth/blob/main/demo/README.md).
+The API is extensively documented in the [TypeScript definitions file](src/definitions.ts). There is also (somewhat incomplete auto-generated) documentation [below](#api). For a complete example of how to use this plugin in practice, see the 
+ - [Vue demo app](https://github.com/aparajita/capacitor-biometric-auth-demo).
+ - [Angular demo app](https://github.com/siddhant-dev/capacitor-biometric-auth-angular-demo).
 
 ### Checking availability
 
