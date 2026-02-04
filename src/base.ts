@@ -2,14 +2,14 @@ import { App } from '@capacitor/app'
 import type { PluginListenerHandle } from '@capacitor/core'
 import { CapacitorException, WebPlugin } from '@capacitor/core'
 
+import { BiometryError, isBiometryErrorType } from './definitions.js'
 import type {
   AuthenticateOptions,
   BiometricAuthPlugin,
   BiometryType,
   CheckBiometryResult,
   ResumeListener,
-} from './definitions'
-import { BiometryError, isBiometryErrorType } from './definitions'
+} from './definitions.js'
 
 export abstract class BiometricAuthBase
   extends WebPlugin

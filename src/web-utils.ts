@@ -1,4 +1,4 @@
-import { BiometryType } from './definitions'
+import { BiometryType } from './definitions.js'
 
 const kBiometryTypeNameMap = {
   [BiometryType.none]: '',

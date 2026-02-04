@@ -155,18 +155,7 @@
     "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
     "import/default": "error",
     "import/export": "error",
-    "import/extensions": [
-      "error",
-      {
-        "js": "never",
-        "cjs": "always",
-        "mjs": "ignorePackages",
-        "json": "always",
-        "vue": "always",
-        "svg": "always",
-        "css": "always",
-      },
-    ],
+    "import/extensions": "off", // Currently broken
     "import/first": "error",
     "import/max-dependencies": "off", // We heavily factor our code
     "import/namespace": "error",

@@ -66,6 +66,9 @@ importers:
       eslint-plugin-oxlint:
         specifier: ^1.24.0
         version: 1.24.0
+      eslint-plugin-require-js-extension:
+        specifier: ^0.0.5
+        version: 0.0.5(eslint@9.38.0(jiti@2.6.1))
       eslint-plugin-unicorn:
         specifier: ^61.0.2
         version: 61.0.2(eslint@9.38.0(jiti@2.6.1))
@@ -2006,6 +2009,12 @@ packages:
     engines: {node: '>=4'}
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
+
+  eslint-plugin-require-js-extension@0.0.5:
+    resolution: {integrity: sha512-8UOTtlctoEo/jUTbIRH/I3UkWINAbwfExybwdnNtc0xMakurs4j8461pqxPlrUORulp6cvgSCRstr2JfdELJ8g==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      eslint: '*'
 
   eslint-plugin-unicorn@61.0.2:
     resolution: {integrity: sha512-zLihukvneYT7f74GNbVJXfWIiNQmkc/a9vYBTE4qPkQZswolWNdu+Wsp9sIXno1JOzdn6OUwLPd19ekXVkahRA==}
@@ -6127,6 +6136,10 @@ snapshots:
       semver: 6.3.1
       string.prototype.matchall: 4.0.12
       string.prototype.repeat: 1.0.0
+
+  eslint-plugin-require-js-extension@0.0.5(eslint@9.38.0(jiti@2.6.1)):
+    dependencies:
+      eslint: 9.38.0(jiti@2.6.1)
 
   eslint-plugin-unicorn@61.0.2(eslint@9.38.0(jiti@2.6.1)):
     dependencies:
