@@ -1,7 +1,7 @@
-import { BiometricAuthBase } from './base'
-import type { AuthenticateOptions, CheckBiometryResult } from './definitions'
-import { BiometryError, BiometryErrorType, BiometryType } from './definitions'
-import { getBiometryName } from './web-utils'
+import { BiometricAuthBase } from './base.js'
+import type { AuthenticateOptions, CheckBiometryResult } from './definitions.js'
+import { BiometryError, BiometryErrorType, BiometryType } from './definitions.js'
+import { getBiometryName } from './web-utils.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 

@@ -1,10 +1,10 @@
-import { BiometricAuthBase } from './base'
+import { BiometricAuthBase } from './base.js'
 import type {
   AuthenticateOptions,
   BiometricAuthPlugin,
   CheckBiometryResult,
-} from './definitions'
-import { BiometryErrorType, BiometryType } from './definitions'
+} from './definitions.js'
+import { BiometryErrorType, BiometryType } from './definitions.js'
 
 /* eslint-disable @typescript-eslint/class-methods-use-this, @typescript-eslint/require-await */
 

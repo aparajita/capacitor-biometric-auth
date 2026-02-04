@@ -8,8 +8,8 @@ import type {
   BiometryType,
   CheckBiometryResult,
   ResumeListener,
-} from './definitions'
-import { BiometryError, isBiometryErrorType } from './definitions'
+} from './definitions.js'
+import { BiometryError, isBiometryErrorType } from './definitions.js'
 
 export abstract class BiometricAuthBase
   extends WebPlugin
