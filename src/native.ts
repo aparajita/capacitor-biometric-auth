@@ -6,8 +6,8 @@ import type {
 } from './definitions'
 import { BiometryErrorType, BiometryType } from './definitions'
 
-/* eslint-disable @typescript-eslint/class-methods-use-this, @typescript-eslint/require-await */
-
+/* eslint-disable @typescript-eslint/require-await */
+// oxlint-disable eslint/class-methods-use-this -- Protected methods don't use `this` but need to be overridden
 export class BiometricAuthNative extends BiometricAuthBase {
   constructor(capProxy: BiometricAuthPlugin) {
     super()
@@ -70,4 +70,4 @@ export class BiometricAuthNative extends BiometricAuthBase {
     console.warn('setDeviceIsSecure() is web only')
   }
 }
-/* eslint-enable @typescript-eslint/class-methods-use-this, @typescript-eslint/require-await */
+/* eslint-enable @typescript-eslint/require-await */

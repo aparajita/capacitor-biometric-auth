@@ -104,6 +104,7 @@
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
+    "@eslint/compat": "^2.0.2",
     "@eslint/js": "^9.38.0",
     "@ionic/swiftlint-config": "^2.0.0",
     "@types/node": "^24.9.1",

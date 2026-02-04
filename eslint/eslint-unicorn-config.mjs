@@ -54,8 +54,6 @@ const config = {
         ],
       },
     ],
-    // We prefer to use switch-case without braces unless necessary
-    'unicorn/switch-case-braces': ['error', 'avoid'],
   },
 }
 

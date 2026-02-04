@@ -1,5 +1,6 @@
 import path from 'node:path'
 
+import { includeIgnoreFile } from '@eslint/compat'
 import js from '@eslint/js'
 import eslintComments from '@eslint-community/eslint-plugin-eslint-comments/configs'
 import {
@@ -22,6 +23,7 @@ import unicornConfig from './eslint-unicorn-config.mjs'
 import vueConfig from './eslint-vue-config.mjs'
 
 const defaultExport = defineConfigWithVueTs(
+  includeIgnoreFile(path.resolve(import.meta.dirname, '../.gitignore')),
   {
     name: 'eslint/recommended',
     ...js.configs.recommended,

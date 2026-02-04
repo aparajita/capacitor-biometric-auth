@@ -18,20 +18,7 @@ const config = {
     },
   },
   rules: {
-    'import-x/export': 'error',
     'import-x/exports-last': 'off',
-    'import-x/extensions': [
-      'error',
-      {
-        js: 'never',
-        cjs: 'always',
-        mjs: 'ignorePackages',
-        json: 'always',
-        vue: 'always',
-        svg: 'always',
-        css: 'always',
-      },
-    ],
     'import-x/group-exports': 'off',
     'import-x/max-dependencies': 'off',
     'import-x/named': 'off',
@@ -43,7 +30,6 @@ const config = {
         considerComments: true,
       },
     ],
-    'import-x/no-anonymous-default-export': 'error',
     'import-x/no-default-export': 'off',
     'import-x/no-deprecated': 'error',
     'import-x/no-dynamic-require': 'off',
