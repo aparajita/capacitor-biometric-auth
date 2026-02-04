@@ -11,7 +11,6 @@ export default defineConfig({
       globals: {
         '@capacitor/core': 'capacitorExports',
         '@capacitor/app': 'app',
-        tslib: 'tslib',
       },
       sourcemap: Boolean(process.env.SOURCE_MAP),
       inlineDynamicImports: true,
@@ -23,5 +22,5 @@ export default defineConfig({
       inlineDynamicImports: true,
     },
   ],
-  external: ['@capacitor/app', '@capacitor/core', 'tslib'],
+  external: ['@capacitor/app', '@capacitor/core'],
 })
