@@ -14,7 +14,9 @@
       "Bash(xcodebuild:*)",
       "Bash(echo:*)",
       "Bash(java:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(pnpm dlx oxlint:*)",
+      "Bash(tee:*)"
     ],
     "deny": []
   }
