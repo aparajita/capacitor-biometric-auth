@@ -9,7 +9,12 @@
       "Bash(pnpm exec:*)",
       "WebFetch(domain:capacitorjs.com)",
       "Bash(git add:*)",
-      "Bash(lsof:*)"
+      "Bash(lsof:*)",
+      "WebSearch",
+      "Bash(xcodebuild:*)",
+      "Bash(echo:*)",
+      "Bash(java:*)",
+      "Bash(chmod:*)"
     ],
     "deny": []
   }
