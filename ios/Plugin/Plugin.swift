@@ -119,14 +119,16 @@ public class BiometricAuthNative: CAPPlugin, CAPBridgedPlugin {
     }
 
     context.evaluatePolicy(policy, localizedReason: reason) { success, error in
-      if success {
-        call.resolve()
-      } else {
-        if let policyError = error as? LAError {
-          let code = self.biometryErrorCodeMap[policyError.code.rawValue]
-          call.reject(policyError.localizedDescription, code)
+      DispatchQueue.main.async {
+        if success {
+          call.resolve()
         } else {
-          call.reject("An unknown error occurred.", self.biometryErrorCodeMap[LAError.authenticationFailed.rawValue])
+          if let policyError = error as? LAError {
+            let code = self.biometryErrorCodeMap[policyError.code.rawValue]
+            call.reject(policyError.localizedDescription, code)
+          } else {
+            call.reject("An unknown error occurred.", self.biometryErrorCodeMap[LAError.authenticationFailed.rawValue])
+          }
         }
       }
     }
