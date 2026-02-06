@@ -344,7 +344,13 @@ public class BiometricAuthNative extends Plugin {
           errorMessage = "Cancel button was pressed";
         }
 
-        call.reject(errorMessage, biometryErrorCodeMap.get(errorCode));
+        String mappedCode = biometryErrorCodeMap.get(errorCode);
+
+        if (mappedCode == null) {
+          mappedCode = "systemCancel";
+        }
+
+        call.reject(errorMessage, mappedCode);
       }
     }
   }
