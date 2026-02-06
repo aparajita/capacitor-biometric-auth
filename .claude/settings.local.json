@@ -16,7 +16,12 @@
       "Bash(java:*)",
       "Bash(chmod:*)",
       "Bash(pnpm dlx oxlint:*)",
-      "Bash(tee:*)"
+      "Bash(tee:*)",
+      "Bash(wc:*)",
+      "Bash(cat:*)",
+      "Bash(xargs cat:*)",
+      "Bash(git restore:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }
