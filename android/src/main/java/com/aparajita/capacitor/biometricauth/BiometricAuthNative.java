@@ -35,8 +35,6 @@ public class BiometricAuthNative extends Plugin {
   public static final String DEVICE_CREDENTIAL = "allowDeviceCredential";
   public static final String CONFIRMATION_REQUIRED =
     "androidConfirmationRequired";
-  public static final String MAX_ATTEMPTS = "androidMaxAttempts";
-  public static final int DEFAULT_MAX_ATTEMPTS = 3;
   // Error code when biometry is not recognized
   public static final String BIOMETRIC_FAILURE = "authenticationFailed";
   // Maps biometry error numbers to string error codes
@@ -278,14 +276,6 @@ public class BiometricAuthNative extends Plugin {
         call.getBoolean(CONFIRMATION_REQUIRED, true)
       );
     }
-
-    // Just in case the developer does something dumb like using a number < 1...
-    Integer maxAttemptsConfig = call.getInt(MAX_ATTEMPTS, DEFAULT_MAX_ATTEMPTS);
-    int maxAttempts = Math.max(
-      maxAttemptsConfig == null ? 0 : maxAttemptsConfig,
-      1
-    );
-    intent.putExtra(MAX_ATTEMPTS, maxAttempts);
 
     startActivityForResult(call, intent, "authenticateResult");
   }
