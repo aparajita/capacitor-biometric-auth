@@ -1,6 +1,6 @@
-require_relative '../../../node_modules/.pnpm/@capacitor+ios@7.4.4_@capacitor+core@7.4.4/node_modules/@capacitor/ios/scripts/pods_helpers'
+require_relative '../../../node_modules/.pnpm/@capacitor+ios@8.0.2_@capacitor+core@8.0.2/node_modules/@capacitor/ios/scripts/pods_helpers'
 
-platform :ios, '14.0'
+platform :ios, '15.0'
 use_frameworks!
 
 # workaround to avoid Xcode caching of Pods that requires
@@ -9,13 +9,13 @@ use_frameworks!
 install! 'cocoapods', :disable_input_output_paths => true
 
 def capacitor_pods
-  pod 'Capacitor', :path => '../../../node_modules/.pnpm/@capacitor+ios@7.4.4_@capacitor+core@7.4.4/node_modules/@capacitor/ios'
-  pod 'CapacitorCordova', :path => '../../../node_modules/.pnpm/@capacitor+ios@7.4.4_@capacitor+core@7.4.4/node_modules/@capacitor/ios'
+  pod 'Capacitor', :path => '../../../node_modules/.pnpm/@capacitor+ios@8.0.2_@capacitor+core@8.0.2/node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../../node_modules/.pnpm/@capacitor+ios@8.0.2_@capacitor+core@8.0.2/node_modules/@capacitor/ios'
   pod 'AparajitaCapacitorBiometricAuth', :path => '../../..'
-  pod 'CapacitorApp', :path => '../../../node_modules/.pnpm/@capacitor+app@7.1.0_@capacitor+core@7.4.4/node_modules/@capacitor/app'
-  pod 'CapacitorHaptics', :path => '../../../node_modules/.pnpm/@capacitor+haptics@7.0.2_@capacitor+core@7.4.4/node_modules/@capacitor/haptics'
-  pod 'CapacitorKeyboard', :path => '../../../node_modules/.pnpm/@capacitor+keyboard@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/keyboard'
-  pod 'CapacitorSplashScreen', :path => '../../../node_modules/.pnpm/@capacitor+splash-screen@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/splash-screen'
+  pod 'CapacitorApp', :path => '../../../node_modules/.pnpm/@capacitor+app@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/app'
+  pod 'CapacitorHaptics', :path => '../../../node_modules/.pnpm/@capacitor+haptics@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/haptics'
+  pod 'CapacitorKeyboard', :path => '../../../node_modules/.pnpm/@capacitor+keyboard@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/keyboard'
+  pod 'CapacitorSplashScreen', :path => '../../../node_modules/.pnpm/@capacitor+splash-screen@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/splash-screen'
 end
 
 target 'App' do
