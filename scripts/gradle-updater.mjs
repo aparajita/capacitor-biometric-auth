@@ -17,5 +17,9 @@ export function readVersion(contents) {
 export function writeVersion(contents, version) {
   return contents
     .replace(versionNameRegex, `versionName = "${version}"`)
-    .replace(versionCodeRegex, (match, versionCode) => `versionCode = ${Number.parseInt(versionCode, 10) + 1}`)
+    .replace(
+      versionCodeRegex,
+      (match, versionCode) =>
+        `versionCode = ${Number.parseInt(versionCode, 10) + 1}`,
+    )
 }
