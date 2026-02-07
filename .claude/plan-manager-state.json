@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "plansDirectory": ".claude/plans",
+  "activeMaster": ".claude/plans/context-layer-reorganize/context-layer-reorganize.md",
+  "masterPlans": [
+    {
+      "path": ".claude/plans/context-layer-reorganize/context-layer-reorganize.md",
+      "description": "Reorganize CLAUDE.md documentation using progressive disclosure with distributed platform-specific context files",
+      "subdirectory": "context-layer-reorganize",
+      "subPlans": [],
+      "branches": []
+    }
+  ]
+}

@@ -1,99 +1,64 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Platform-Specific Context
+
+For platform-specific patterns and gotchas, see:
+- [src/CLAUDE.md](src/CLAUDE.md) — TypeScript core patterns
+- [ios/CLAUDE.md](ios/CLAUDE.md) — iOS native implementation
+- [android/CLAUDE.md](android/CLAUDE.md) — Android native implementation
+
+## Package Manager
+
+Always use `pnpm` (not `npm`) and `pnpm dlx` (not `npx`).
 
 ## Development Commands
 
 **Build the plugin:**
 
-- `pnpm build` - Full production build with linting
-- `pnpm build.dev` - Development build with source maps
-- `pnpm watch` - Watch mode for continuous development builds
+- `pnpm build` — Full production build with linting
 
-**Linting and Type Checking:**
+**Linting:**
 
-- `pnpm lint` - Run all linters (ESLint, Prettier, TypeScript, SwiftLint)
-- `pnpm lint.eslint .` - ESLint only
-- `pnpm lint.prettier '**/*.{js,mjs,ts,json,md,java}'` - Prettier only
-- `pnpm lint.tsc` - TypeScript type checking only
+- `pnpm lint` — Run all linters (TypeScript + Swift)
+- `pnpm lint.ts` — Run TypeScript linters only (use after editing TypeScript)
+- `pnpm lint.swift` — Run Swift linter only (use after editing Swift)
 
 **Platform Verification:**
 
-- `pnpm verify` - Verify both iOS and Android builds
-- `pnpm verify.ios` - Verify iOS build only
-- `pnpm verify.android` - Verify Android build only
+- `pnpm verify` — Verify both iOS and Android builds
+- `pnpm verify.ios` — Verify iOS build only
+- `pnpm verify.android` — Verify Android build only
 
-**Platform Development:**
+**Plugin Platform Development:**
 
-- `pnpm open.ios` - Open iOS project in Xcode
-- `pnpm open.android` - Open Android project in Android Studio
-
-**Documentation:**
-
-- `pnpm docgen` - Generate API documentation from JSDoc comments
+- `pnpm open.ios` — Open iOS project in Xcode
+- `pnpm open.android` — Open Android project in Android Studio
 
 **Release:**
 
-- `pnpm prerelease` - Prepare for release (builds, generates docs, ensures clean git)
-- `pnpm release` - Create release with commit-and-tag-version
+- `pnpm release` — Create release (version bump, tag, update iOS and Android versions, changelog). Never manually update version numbers.
+
+**Demo App:**
+
+The demo app lives in `demo/` (pnpm workspace). Scripts are prefixed with `demo.` (e.g., `pnpm demo.dev`, `pnpm demo.ios`).
 
 ## Project Architecture
 
-This is a **Capacitor plugin** that provides biometric authentication capabilities across web, iOS, and Android platforms.
-
-### Core Architecture Pattern
-
-The plugin uses a **proxy-based architecture** with platform-specific implementations:
-
-1. **Plugin Registration** (`src/index.ts`): Uses Capacitor's `registerPlugin()` to create a proxy that dynamically loads platform-specific implementations
-2. **Base Class** (`src/base.ts`): Abstract `BiometricAuthBase` class that extends `WebPlugin` and provides common functionality
-3. **Native Implementation** (`src/native.ts`): `BiometricAuthNative` class for iOS/Android with method binding to native code
-4. **Web Implementation** (`src/web.ts`): Web-specific implementation for browser testing/simulation
-5. **Type Definitions** (`src/definitions.ts`): Comprehensive TypeScript interfaces and enums
-
-### Key Components
-
-- **BiometricAuthPlugin Interface**: Main plugin contract defining all available methods
-- **CheckBiometryResult**: Comprehensive biometry capability detection results
-- **AuthenticateOptions**: Cross-platform authentication configuration
-- **BiometryError**: Standardized error handling with platform-consistent error codes
-- **Platform Bridge**: Native methods marked with `@native` comments are bound to platform implementations
+This is a **Capacitor plugin** providing biometric authentication across web, iOS, and Android.
 
 ### Native Platform Structure
 
-- **iOS**: `ios/Plugin/` contains Swift/Objective-C implementation
-- **Android**: `android/src/main/java/com/aparajita/capacitor/biometricauth/` contains Java implementation
-- **Native Methods**: `checkBiometry()` and `internalAuthenticate()` are the core native methods
+- **iOS**: `ios/Plugin/` — Swift implementation using LocalAuthentication
+- **Android**: `android/src/main/java/com/aparajita/capacitor/biometricauth/` — Java implementation using BiometricPrompt
+- **Core native methods**: `checkBiometry()` and `internalAuthenticate()`
 
-### Build System
+## Cross-Platform Error Consistency
 
-- **TypeScript Compilation**: `tsc` compiles to `dist/esm/`
-- **Rollup Bundling**: Creates multiple output formats (IIFE, CJS) in `dist/`
-- **Platform Files**: iOS `.podspec` and Android `build.gradle` for native dependencies
+Error codes must match exactly across all three platforms (TypeScript, Swift, Java). The canonical list is in `src/definitions.ts` (`BiometryErrorType` enum). When adding or modifying error codes, update all three platforms.
 
-### Development Workflow
+## Testing Strategy
 
-1. TypeScript source in `src/` → compiled to `dist/esm/`
-2. Rollup bundles ESM output → `dist/plugin.js` (IIFE) and `dist/plugin.cjs.js` (CommonJS)
-3. Native platforms consume the plugin via Capacitor's bridge
-4. Web platform uses simulation capabilities for testing
-
-### Testing Strategy
-
-- **Web Simulation**: Use `setBiometryType()`, `setBiometryIsEnrolled()`, `setDeviceIsSecure()` for web testing
-- **Platform Verification**: `verify.ios` and `verify.android` commands test native builds
-- **No Unit Tests**: This project relies on platform verification rather than traditional unit tests
-
-### Error Handling
-
-All authentication failures throw `BiometryError` instances with:
-
-- `message`: Human-readable error description
-- `code`: Platform-consistent `BiometryErrorType` enum value
-
-### Development Notes
-
-- Always run `pnpm lint` before committing - it includes TypeScript, ESLint, Prettier, and SwiftLint
-- Use `pnpm watch` for continuous development
-- Platform-specific code is handled by the native implementations, not the TypeScript layer
-- The plugin supports comprehensive biometry detection across all major biometric types
+- **No unit tests** — This project relies on platform verification rather than traditional unit tests
+- **Platform verification**: `pnpm verify.ios` and `pnpm verify.android` test native builds
+- **Web simulation**: `setBiometryType()`, `setBiometryIsEnrolled()`, `setDeviceIsSecure()` for testing without hardware
+- **Real device testing**: Use the demo app for end-to-end testing
