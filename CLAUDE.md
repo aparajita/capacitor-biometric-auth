@@ -40,7 +40,7 @@ Always use `pnpm` (not `npm`) and `pnpm dlx` (not `npx`).
 
 **Demo App:**
 
-The demo app lives in `demo/` (pnpm workspace). Scripts are prefixed with `demo.` (e.g., `pnpm demo.dev`, `pnpm demo.ios`).
+The demo app lives in `demo-pods/` (pnpm workspace, CocoaPods variant). Scripts are prefixed with `demo.` (e.g., `pnpm demo.dev`, `pnpm demo.ios`).
 
 ## Project Architecture
 

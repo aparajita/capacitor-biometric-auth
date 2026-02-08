@@ -1,6 +1,15 @@
 {
   "version": "1.0.0",
-  "plansDirectory": ".claude/plans",
-  "activeMaster": null,
-  "masterPlans": []
+  "plansDirectory": "plans",
+  "activeMaster": "plans/spm-migration/spm-migration.md",
+  "masterPlans": [
+    {
+      "path": "plans/spm-migration/spm-migration.md",
+      "subdirectory": "spm-migration",
+      "active": true,
+      "created": "2026-02-06",
+      "description": "Add SPM support to the plugin while preserving CocoaPods compatibility"
+    }
+  ],
+  "subPlans": []
 }

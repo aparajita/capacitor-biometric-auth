@@ -1,2 +1,3 @@
 packages:
-  - demo
+  - demo-pods
+  - demo-shared

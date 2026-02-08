@@ -6,6 +6,8 @@ import { defineConfig } from 'vite'
 export default defineConfig(() => ({
   build: {
     chunkSizeWarningLimit: 1000,
+    outDir: fileURLToPath(new URL('dist', import.meta.url)),
+    emptyOutDir: true,
     sourcemap: process.env.NODE_ENV !== 'production',
     minify: process.env.NODE_ENV === 'production',
     target: 'es2017',

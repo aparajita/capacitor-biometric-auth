@@ -1,0 +1,16 @@
+{
+  "extends": "../demo-shared/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["**/*.js", "*.ts", "**/*.ts", "**/*.vue"],
+  "exclude": ["node_modules"],
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    }
+  ]
+}

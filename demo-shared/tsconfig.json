@@ -22,17 +22,6 @@
     "target": "es2017",
     "useDefineForClassFields": true,
     "types": ["node"],
-    "lib": ["es2017", "dom", "dom.iterable", "scripthost"],
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  },
-  "include": ["**/*.js", "*.ts", "**/*.ts", "**/*.vue"],
-  "exclude": ["node_modules"],
-  "references": [
-    {
-      "path": "./tsconfig.config.json"
-    }
-  ]
+    "lib": ["es2017", "dom", "dom.iterable", "scripthost"]
+  }
 }

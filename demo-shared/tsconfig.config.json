@@ -1,6 +1,5 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
-  "include": ["*.mjs", "*.ts"],
   "compilerOptions": {
     "composite": true,
     "moduleResolution": "node",
