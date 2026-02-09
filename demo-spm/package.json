@@ -1,6 +1,6 @@
 {
   "name": "demo-spm",
-  "version": "9.1.2",
+  "version": "10.0.0",
   "description": "An Ionic/Vue demo of the @aparajita/capacitor-biometric-auth plugin (SPM variant)",
   "private": true,
   "author": "Aparajita Fishman",

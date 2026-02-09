@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [10.0.0](https://github.com/aparajita/capacitor-biometric-auth/compare/v9.1.2...v10.0.0) (2026-02-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* update to Capacitor 8, update other deps
+
+### Features
+
+* add SPM support ([79b472c](https://github.com/aparajita/capacitor-biometric-auth/commit/79b472c8bbd4a80b032a094c4eb1508939285a4a))
+* update to Capacitor 8, update other deps ([6c71539](https://github.com/aparajita/capacitor-biometric-auth/commit/6c71539eb9dd54bb39202c37fee5ba72e0f352f6))
+
+
+### Bug Fixes
+
+* don’t lint before build ([f851f50](https://github.com/aparajita/capacitor-biometric-auth/commit/f851f50830cc19f65c750d1c64219881b3153345))
+* ensure response is on the main thread ([a729e00](https://github.com/aparajita/capacitor-biometric-auth/commit/a729e0068af846b71487abb866fe0e149b9092ca))
+* guard against NPE ([3f6a956](https://github.com/aparajita/capacitor-biometric-auth/commit/3f6a956c31b72b4be1386da29b8c8677a3aeb4ab))
+* namespace was somehow changed in previous commit ([cdb8399](https://github.com/aparajita/capacitor-biometric-auth/commit/cdb83996602e973ef436f8dedb36d7c818d04b5c))
+* update xcode project so it can build ([99ced6d](https://github.com/aparajita/capacitor-biometric-auth/commit/99ced6de54e309360880bd00317935ad46879080))
+* use .js extension in imports ([10292e8](https://github.com/aparajita/capacitor-biometric-auth/commit/10292e8e9686ca0b59170043c7287c470a6c7ef5))
+
 ## [9.1.2](https://github.com/aparajita/capacitor-biometric-auth/compare/v9.1.1...v9.1.2) (2025-10-24)
 
 ## [9.1.1](https://github.com/aparajita/capacitor-biometric-auth/compare/v9.1.0...v9.1.1) (2025-10-23)
