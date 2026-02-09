@@ -10,6 +10,7 @@ node_modules/
 Pods
 Build
 xcuserdata
+.build
 
 # macOS files
 .DS_Store

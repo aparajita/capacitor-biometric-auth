@@ -193,15 +193,29 @@ Keep `ios/Plugin.xcodeproj` / `Plugin.xcworkspace` working for local dev.
 
 ## Phase 6: Add `demo-spm` workspace package
 
-**Goal**: A minimal Capacitor demo app that uses the plugin via SPM instead of CocoaPods, reusing the existing demo's web build output.
+**Goal**: A minimal Capacitor demo app that uses the plugin via SPM instead of CocoaPods, following the same shared-demo pattern as `demo-pods`.
+
+The demo apps share web source code via `demo-shared/`. Each demo variant (`demo-pods`, `demo-spm`) has symlinks to `demo-shared/` for web files and its own `capacitor.config.ts` that extends the base config and sets `webDir: '../demo-shared/dist'`. Native files are synced between variants using `scripts/sync-demos.sh`.
 
 ### 6a. Structure
 
 ```
 demo-spm/
-├── package.json
-├── capacitor.config.ts
-├── ionic.config.json
+├── .browserslistrc          → ../demo-shared/.browserslistrc (symlink)
+├── .npmrc                   → ../demo-shared/.npmrc (symlink)
+├── .prettierignore          → ../demo-shared/.prettierignore (symlink)
+├── index.html               → ../demo-shared/index.html (symlink)
+├── public                   → ../demo-shared/public (symlink)
+├── src                      → ../demo-shared/src (symlink)
+├── package.json             (real — variant-specific)
+├── capacitor.config.ts      (real — extends demo-shared base config)
+├── ionic.config.json        (real — variant-specific)
+├── postcss.config.mjs       (real — variant-specific)
+├── prettier.config.js       (real — variant-specific)
+├── tailwind.config.mjs      (real — variant-specific)
+├── tsconfig.json            (real — variant-specific)
+├── tsconfig.config.json     (real — variant-specific)
+├── vite.config.mjs          (real — variant-specific)
 └── ios/
     └── App/
         ├── App/
@@ -210,26 +224,32 @@ demo-spm/
         │   ├── Assets.xcassets/
         │   └── ... (standard Capacitor app files)
         ├── App.xcodeproj/
-        └── App.xcworkspace/  (no Podfile)
+        └── App.xcworkspace/  (no Podfile — SPM only)
 ```
 
 ### 6b. `demo-spm/package.json`
 
-Minimal — just enough for Capacitor CLI:
+Mirrors `demo-pods/package.json` but iOS-only (no Android deps) and named `demo-spm`:
 
 ```jsonc
 {
-  "name": "@aparajita/capacitor-biometric-auth-demo-spm",
+  "name": "demo-spm",
   "version": "9.1.2",
+  "description": "An Ionic/Vue demo of the @aparajita/capacitor-biometric-auth plugin (SPM variant)",
   "private": true,
+  "author": "Aparajita Fishman",
   "scripts": {
-    "build.web": "pnpm --filter @aparajita/capacitor-biometric-auth-demo build",
-    "sync": "pnpm build.web && cap sync ios",
-    "ios": "ionic cap run ios --open",
+    "dev": "pnpm --filter demo-shared dev",
+    "build": "pnpm --filter demo-shared build",
+    "preview": "pnpm --filter demo-shared preview",
     "ios.dev": "ionic cap run ios --open --livereload --external",
+    "ios": "ionic cap run ios --open",
+    "ionic:build": "pnpm build",
+    "ionic:serve": "pnpm --filter demo-shared dev",
   },
   "dependencies": {
     "@aparajita/capacitor-biometric-auth": "workspace:*",
+    "demo-shared": "workspace:*",
     "@capacitor/app": "^8.0.0",
     "@capacitor/core": "^8.0.2",
     "@capacitor/haptics": "^8.0.0",
@@ -246,42 +266,94 @@ Minimal — just enough for Capacitor CLI:
 
 ### 6c. `demo-spm/capacitor.config.ts`
 
-Same as `demo/capacitor.config.ts` but with `webDir: '../demo/dist'`.
+Extends the base config from `demo-shared`, same pattern as `demo-pods`:
 
-### 6d. Xcode project setup
+```ts
+import baseConfig from 'demo-shared/capacitor.config'
 
-The `demo-spm/ios/App` Xcode project must:
+const config = {
+  ...baseConfig,
+  appId: 'com.aparajita.capacitor.biometricauthdemo',
+  appName: 'Biometry',
+  webDir: '../demo-shared/dist',
+}
 
-1. **Not** have a Podfile — no CocoaPods.
-2. Add the plugin as a local Swift package dependency pointing to `../../../ios` (the plugin's `Package.swift`).
-3. Add Capacitor and other dependencies via SPM (from `capacitor-swift-pm`).
-4. Link the `BiometricAuthNative` library product to the App target.
+export default config
+```
 
-This Xcode project will be created via `cap add ios` and then manually converted from CocoaPods to SPM.
+### 6d. Symlinks
 
-### 6e. Workspace updates
+Create the same symlinks as `demo-pods`:
+
+```bash
+cd demo-spm
+ln -s ../demo-shared/.browserslistrc .browserslistrc
+ln -s ../demo-shared/.npmrc .npmrc
+ln -s ../demo-shared/.prettierignore .prettierignore
+ln -s ../demo-shared/index.html index.html
+ln -s ../demo-shared/public public
+ln -s ../demo-shared/src src
+```
+
+### 6e. Xcode project setup
+
+Create the iOS project with SPM from the start:
+
+```bash
+cd demo-spm
+cap add ios --packagemanager SPM
+```
+
+Then in the Xcode project:
+
+1. Add the plugin as a local Swift package dependency pointing to `../../../ios` (the plugin's `Package.swift`).
+2. Link the `BiometricAuthNative` library product to the App target.
+
+### 6f. Native file sync
+
+Native iOS files (AppDelegate, Info.plist, Assets, etc.) are synced from `demo-pods` using `scripts/sync-demos.sh`. The script already includes `demo-spm` in its `VARIANTS` array, so no changes to the script are needed.
+
+### 6g. Workspace updates
 
 `pnpm-workspace.yaml`:
 
 ```yaml
 packages:
-  - demo
+  - demo-pods
+  - demo-shared
   - demo-spm
 ```
 
-### 6f. Root script additions in `package.json`
+### 6h. Root script additions in `package.json`
+
+Following the existing `demo.pods.*` naming convention:
 
 ```jsonc
-"demo.ios.spm": "pnpm build && pnpm --filter @aparajita/capacitor-biometric-auth-demo-spm ios",
-"demo.open.ios.spm": "pnpm --filter @aparajita/capacitor-biometric-auth-demo-spm ios",
-"demo.ios.spm.dev": "pnpm --filter @aparajita/capacitor-biometric-auth-demo-spm ios.dev"
+"demo.spm.dev": "pnpm --filter demo-spm dev",
+"demo.spm.build": "pnpm --filter demo-spm build",
+"demo.spm.ios": "pnpm --filter demo-spm ios",
+"demo.spm.ios.dev": "pnpm --filter demo-spm ios.dev",
+"demo.spm.open.ios": "pnpm --filter demo-spm open.ios"
+```
+
+### 6i. Version bump config
+
+Add `demo-spm/package.json` to the `commit-and-tag-version.bumpFiles` array in the root `package.json`:
+
+```jsonc
+"bumpFiles": [
+  "package.json",
+  "demo-pods/package.json",
+  "demo-spm/package.json",
+  // ...existing gradle entry
+]
 ```
 
 ### Files affected
 
-- `demo-spm/` (new directory)
+- `demo-spm/` (new directory with symlinks and real files)
 - `pnpm-workspace.yaml`
-- `package.json` (root scripts)
+- `package.json` (root scripts and bumpFiles)
 
 ---
 
@@ -291,10 +363,10 @@ The `lint.swift` script also lints demo Swift files. Add the SPM demo path:
 
 ```jsonc
 // Before:
-"lint.swift": "swiftly --fix ios/Plugin/**/*.swift && swiftly --fix demo/ios/App/App/**/*.swift"
+"lint.swift": "swiftly --fix ios/Sources/**/*.swift && swiftly --fix demo-pods/ios/App/App/**/*.swift"
 
 // After:
-"lint.swift": "swiftly --fix ios/Sources/**/*.swift && swiftly --fix demo/ios/App/App/**/*.swift && swiftly --fix demo-spm/ios/App/App/**/*.swift"
+"lint.swift": "swiftly --fix ios/Sources/**/*.swift && swiftly --fix demo-pods/ios/App/App/**/*.swift && swiftly --fix demo-spm/ios/App/App/**/*.swift"
 ```
 
 ### Files affected
@@ -308,12 +380,12 @@ The `lint.swift` script also lints demo Swift files. Add the SPM demo path:
 ### CocoaPods path (existing)
 
 1. `pnpm verify.ios` — plugin builds via CocoaPods workspace
-2. `pnpm demo.ios` — demo app runs on device/simulator via Pods
+2. `pnpm demo.pods.ios` — demo app runs on device/simulator via Pods
 
 ### SPM path (new)
 
 1. Open `ios/` as a Swift package in Xcode — confirm it resolves dependencies and builds
-2. `pnpm demo.ios.spm` — SPM demo app runs on device/simulator
+2. `pnpm demo.spm.ios` — SPM demo app runs on device/simulator
 3. Confirm runtime behavior parity: `checkBiometry()` and `internalAuthenticate()` work identically in both demos
 
 ### npm package
