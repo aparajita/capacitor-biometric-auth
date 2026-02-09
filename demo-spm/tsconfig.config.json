@@ -1,0 +1,4 @@
+{
+  "extends": "../demo-shared/tsconfig.config.json",
+  "include": ["*.mjs", "*.ts"]
+}

@@ -2,17 +2,17 @@
 
 # capacitor-biometric-auth&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth.svg)](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth)
 
-This plugin for [Capacitor 7](https://capacitorjs.com) provides access to native biometry and device credentials on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry and device credentials are simulated on the web so you can test your logic without making any changes to your code.
+This plugin for [Capacitor 8](https://capacitorjs.com) provides access to native biometry and device credentials on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry and device credentials are simulated on the web so you can test your logic without making any changes to your code.
 
 🛑 **BREAKING CHANGES:**
 
-- If you are upgrading from a version prior to 6.0.0, please note that [`authenticate()`](#authenticate) now throws an instance of `BiometryError`, and `BiometryError.code` is now typed as [`BiometryErrorType`](#biometryerrortype).
+- If you are upgrading from a version prior to 9.0.0, please note that this plugin now requires Capacitor 8+.
+
+- If you are upgrading from a version prior to 8.0.0, please note that [`addResumeListener`](#addresumelistener) now always returns a Promise and must be awaited.
 
 - If you are upgrading from a version prior to 7.0.0, please note that [`authenticate()`](#authenticate) will _immediately_ present a prompt for device credentials if `deviceIsSecure` is true, `allowDeviceCredentials` is true, and no biometry of the requested strength is available.
 
-- If you are upgrading from a version prior to 8.0.0, please note that this plugin now requires Capacitor 7+.
-
-- If you are upgrading from a version prior to 8.0.0, please note that [`addResumeListener`](#addresumelistener) now always returns a Promise and must be awaited.
+- If you are upgrading from a version prior to 6.0.0, please note that [`authenticate()`](#authenticate) now throws an instance of `BiometryError`, and `BiometryError.code` is now typed as [`BiometryErrorType`](#biometryerrortype).
 
 ## Installation
 
@@ -26,7 +26,12 @@ Not using [pnpm](https://pnpm.js.org/)? You owe it to yourself to give it a try.
 
 ### iOS
 
-👉 **IMPORTANT!!** In order to use Face ID, you must add the `NSFaceIDUsageDescription` key to your `Info.plist` file. This is a string that describes why your app needs access to Face ID. If you don’t add this key, the system won’t allow your app to use Face ID.
+This plugin can be installed via Swift Package Manager (SPM) or CocoaPods:
+
+- **Swift Package Manager (recommended):** No additional steps required. Capacitor 7+ automatically uses SPM.
+- **CocoaPods (legacy):** Still fully supported. The plugin will work with existing CocoaPods-based projects.
+
+👉 **IMPORTANT!!** In order to use Face ID, you must add the `NSFaceIDUsageDescription` key to your `Info.plist` file. This is a string that describes why your app needs access to Face ID. If you don't add this key, the system won't allow your app to use Face ID.
 
 1. In Xcode, open your app’s `Info.plist` file.
 2. Hover your mouse over one of the existing keys, and click the `+` button that appears.
@@ -36,7 +41,7 @@ Not using [pnpm](https://pnpm.js.org/)? You owe it to yourself to give it a try.
 
 ## Usage
 
-The API is extensively documented in the [TypeScript definitions file](src/definitions.ts). There is also (somewhat incomplete auto-generated) documentation [below](#api). For a complete example of how to use this plugin in practice, see the [demo app](https://github.com/aparajita/capacitor-biometric-auth/blob/main/demo-pods/README.md).
+The API is extensively documented in the [TypeScript definitions file](src/definitions.ts). There is also (somewhat incomplete auto-generated) documentation [below](#api). For a complete example of how to use this plugin in practice, see the demo apps: [CocoaPods variant](https://github.com/aparajita/capacitor-biometric-auth/blob/main/demo-pods/README.md) or [SPM variant](https://github.com/aparajita/capacitor-biometric-auth/blob/main/demo-spm/README.md).
 
 ### Checking availability
 

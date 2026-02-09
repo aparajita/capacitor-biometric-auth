@@ -1,14 +1,8 @@
 <div class="markdown-body">
 
-# capacitor-biometric-auth demo&nbsp;&nbsp;[![GitHub version](https://badge.fury.io/gh/aparajita%2Fcapacitor-biometric-auth.svg)](https://badge.fury.io/gh/aparajita%2Fcapacitor-biometric-auth-demo)
+# capacitor-biometric-auth demo (CocoaPods)&nbsp;&nbsp;[![GitHub version](https://badge.fury.io/gh/aparajita%2Fcapacitor-biometric-auth.svg)](https://badge.fury.io/gh/aparajita%2Fcapacitor-biometric-auth-demo)
 
-This [Ionic 8](https://ionicframework.com) application provides a demo of all of the capabilities of the [capacitor-biometric-auth](https://github.com/aparajita/capacitor-biometric-auth) Capacitor plugin.
-
-Here is this app running on both iOS and Android (note the Authenticate button is now at the top of the screen).
-
-| iOS                                                                                                                            | Android                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| <video src="https://user-images.githubusercontent.com/22218/177023147-1f9abce4-2dc3-4157-8bf1-d8d9fdba3977.mp4" width="352" /> | <video src="https://user-images.githubusercontent.com/22218/177023168-d7c18a4b-a2f9-49f9-ae39-40884219c128.mp4" width="365" /> |
+This [Ionic 8](https://ionicframework.com) application provides a demo of all of the capabilities of the [capacitor-biometric-auth](https://github.com/aparajita/capacitor-biometric-auth) Capacitor plugin. This is the **CocoaPods variant** of the demo app. There is also an [SPM variant](../demo-spm/README.md) available.
 
 ## Installation
 

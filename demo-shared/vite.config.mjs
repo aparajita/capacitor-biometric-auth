@@ -3,7 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 
-export default defineConfig(() => ({
+export default defineConfig({
   build: {
     chunkSizeWarningLimit: 1000,
     outDir: fileURLToPath(new URL('dist', import.meta.url)),
@@ -29,4 +29,4 @@ export default defineConfig(() => ({
       ],
     },
   },
-}))
+})

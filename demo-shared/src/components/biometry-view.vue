@@ -11,6 +11,7 @@ import type {
   BiometryError,
   CheckBiometryResult,
 } from '@aparajita/capacitor-biometric-auth'
+import { version } from '@aparajita/capacitor-biometric-auth/package.json'
 import { Capacitor } from '@capacitor/core'
 import type { PluginListenerHandle } from '@capacitor/core'
 import { SplashScreen } from '@capacitor/splash-screen'
@@ -114,6 +115,7 @@ let appListener: PluginListenerHandle
 const isNative = Capacitor.isNativePlatform()
 const isIOS = Capacitor.getPlatform() === 'ios'
 const isAndroid = Capacitor.getPlatform() === 'android'
+const buildVariant = BUILD_VARIANT
 
 /*
  * computed
@@ -405,6 +407,11 @@ async function onSetDeviceIsSecure(): Promise<void> {
           />
         </ion-item>
       </ion-list>
+
+      <div class="py-4 text-sm text-center">
+        Version {{ version
+        }}<template v-if="isIOS"> ({{ buildVariant }})</template>
+      </div>
     </ion-content>
   </ion-page>
 </template>

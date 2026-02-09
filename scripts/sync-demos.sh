@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Syncs shared native files between demo variants (demo-pods, demo-spm).
 # One variant is the source of truth; its files are copied to the other(s).
@@ -13,11 +13,16 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-cd "$SCRIPT_DIR"
+cd "$SCRIPT_DIR/.."
 
 # -- Configuration --
 
 VARIANTS=(demo-pods demo-spm)
+
+# Platform support for each variant
+declare -A VARIANT_PLATFORMS
+VARIANT_PLATFORMS[demo-pods]="ios android"
+VARIANT_PLATFORMS[demo-spm]="ios android"
 
 # Files to sync, relative to the demo variant root.
 # Directories are synced recursively.
@@ -40,9 +45,27 @@ ANDROID_SYNC=(
 
 SYNC_PATHS=("${IOS_SYNC[@]}" "${ANDROID_SYNC[@]}")
 
+# Check if a path should be synced to a target based on platform support
+should_sync_path() {
+  local target="$1"
+  local path="$2"
+  local platforms="${VARIANT_PLATFORMS[$target]}"
+
+  # Check if path is iOS or Android
+  if [[ "$path" == ios/* ]]; then
+    [[ "$platforms" == *"ios"* ]]
+  elif [[ "$path" == android/* ]]; then
+    [[ "$platforms" == *"android"* ]]
+  else
+    # Unknown platform, sync by default
+    true
+  fi
+}
+
 # -- Parse arguments --
 
 DRY_RUN=false
+YES=false
 SOURCE="demo-pods"
 
 while [[ $# -gt 0 ]]; do
@@ -51,13 +74,17 @@ while [[ $# -gt 0 ]]; do
       DRY_RUN=true
       shift
       ;;
+    --yes|-y)
+      YES=true
+      shift
+      ;;
     --from)
       SOURCE="$2"
       shift 2
       ;;
     *)
       echo "Unknown option: $1" >&2
-      echo "Usage: $0 [--dry-run] [--from <variant>]" >&2
+      echo "Usage: $0 [--dry-run] [--yes] [--from <variant>]" >&2
       exit 1
       ;;
   esac
@@ -104,6 +131,11 @@ for target in "${TARGETS[@]}"; do
       continue
     fi
 
+    # Skip if target doesn't support this platform
+    if ! should_sync_path "$target" "$path"; then
+      continue
+    fi
+
     if [[ -d "$src" ]]; then
       # For directories, show rsync dry-run diff
       diff_output=$(rsync -a --delete --dry-run --itemize-changes "$src/" "$dst/" 2>/dev/null || true)
@@ -139,11 +171,13 @@ fi
 
 # -- Confirm --
 
-echo -n "Proceed with sync? [y/N] "
-read -r response
-if [[ ! "$response" =~ ^[Yy]$ ]]; then
-  echo "Aborted."
-  exit 0
+if [[ "$YES" != true ]]; then
+  echo -n "Proceed with sync? [y/N] "
+  read -r response
+  if [[ ! "$response" =~ ^[Yy]$ ]]; then
+    echo "Aborted."
+    exit 0
+  fi
 fi
 
 # -- Sync --
@@ -159,6 +193,11 @@ for target in "${TARGETS[@]}"; do
       continue
     fi
 
+    # Skip if target doesn't support this platform
+    if ! should_sync_path "$target" "$path"; then
+      continue
+    fi
+
     # Ensure parent directory exists
     mkdir -p "$(dirname "$dst")"
 
@@ -167,7 +206,7 @@ for target in "${TARGETS[@]}"; do
     else
       cp "$src" "$dst"
     fi
-    ((SYNCED++))
+    SYNCED=$((SYNCED + 1))
   done
 done
 

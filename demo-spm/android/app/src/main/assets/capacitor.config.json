@@ -1,0 +1,17 @@
+{
+	"appId": "com.aparajita.capacitor.biometricauthdemo",
+	"appName": "Biometry",
+	"loggingBehavior": "debug",
+	"server": {
+		"androidScheme": "http"
+	},
+	"webDir": "../demo-shared/dist",
+	"plugins": {
+		"Keyboard": {
+			"resize": "none"
+		},
+		"SplashScreen": {
+			"launchAutoHide": false
+		}
+	}
+}

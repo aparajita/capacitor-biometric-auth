@@ -3,13 +3,6 @@
   "version": "9.1.2",
   "description": "Shared web app for the biometric auth demo apps",
   "private": true,
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview --port 1327",
-    "ionic:build": "pnpm build",
-    "ionic:serve": "vite"
-  },
   "dependencies": {
     "@aparajita/capacitor-biometric-auth": "workspace:*",
     "@capacitor/app": "^8.0.0",
@@ -22,7 +15,7 @@
     "@ionic/vue-router": "^8.7.17",
     "ionicons": "^8.0.13",
     "vue": "^3.5.27",
-    "vue-router": "^5.0.2"
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@aparajita/tailwind-ionic": "^2.3.0",

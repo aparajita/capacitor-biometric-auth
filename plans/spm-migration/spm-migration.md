@@ -12,21 +12,22 @@ The plugin's Swift code already conforms to `CAPBridgedPlugin` (with `identifier
 
 ## Status Dashboard
 
-| Phase | Description                                                                                               | Status     | Sub-plan |
-| ----- | --------------------------------------------------------------------------------------------------------- | ---------- | -------- |
-| 1     | [Relocate iOS source to SPM-conventional layout](#phase-1-relocate-ios-source-to-spm-conventional-layout) | ⏳ Pending | —        |
-| 2     | [Add `Package.swift`](#phase-2-add-packageswift)                                                          | ⏳ Pending | —        |
-| 3     | [Update podspec](#phase-3-update-podspec)                                                                 | ⏳ Pending | —        |
-| 4     | [Update `package.json`](#phase-4-update-packagejson)                                                      | ⏳ Pending | —        |
-| 5     | [Update local Xcode project](#phase-5-update-local-xcode-project)                                         | ⏳ Pending | —        |
-| 6     | [Add `demo-spm` workspace package](#phase-6-add-demo-spm-workspace-package)                               | ⏳ Pending | —        |
-| 7     | [Update Swift lint paths](#phase-7-update-swift-lint-paths)                                               | ⏳ Pending | —        |
+| Phase | Description                                                                                                | Status  | Sub-plan |
+| ----- | ---------------------------------------------------------------------------------------------------------- | ------- | -------- |
+| 1     | [Relocate iOS source to SPM-conventional layout](#phase-1--relocate-ios-source-to-spm-conventional-layout) | ✅ Done | —        |
+| 2     | [Add `Package.swift`](#phase-2--add-packageswift)                                                          | ✅ Done | —        |
+| 3     | [Update podspec](#phase-3--update-podspec)                                                                 | ✅ Done | —        |
+| 4     | [Update `package.json`](#phase-4--update-packagejson)                                                      | ✅ Done | —        |
+| 5     | [Update local Xcode project](#phase-5--update-local-xcode-project)                                         | ✅ Done | —        |
+| 6     | [Add `demo-spm` workspace package](#phase-6--add-demo-spm-workspace-package)                               | ✅ Done | —        |
+| 7     | [Update Swift lint paths](#phase-7--update-swift-lint-paths)                                               | ✅ Done | —        |
+| 8     | [Add SPM verify script](#phase-8--add-spm-verify-script)                                                   | ✅ Done | —        |
 
 ---
 
-## Phase 1: ⏳ Relocate iOS source to SPM-conventional layout
+## Phase 1: ✅ Relocate iOS source to SPM-conventional layout
 
-**Status:** Pending <br>
+**Status:** Done <br>
 **BlockedBy:** — <br>
 **Testing:** Manual verification via `pnpm verify.ios` <br>
 **Priority:** High <br>
@@ -49,9 +50,9 @@ Move source from `ios/Plugin/` to `ios/Sources/BiometricAuthNative/`. Target nam
 
 ---
 
-## Phase 2: ⏳ Add `Package.swift`
+## Phase 2: ✅ Add `Package.swift`
 
-**Status:** Pending <br>
+**Status:** Done <br>
 **BlockedBy:** 1 <br>
 **Testing:** Manual verification via Xcode <br>
 **Priority:** High <br>
@@ -98,9 +99,9 @@ let package = Package(
 
 ---
 
-## Phase 3: ⏳ Update podspec
+## Phase 3: ✅ Update podspec
 
-**Status:** Pending <br>
+**Status:** Done <br>
 **BlockedBy:** 1 <br>
 **Testing:** `pnpm verify.ios` <br>
 **Priority:** High <br>
@@ -130,9 +131,9 @@ Everything else in the podspec stays the same.
 
 ---
 
-## Phase 4: ⏳ Update `package.json`
+## Phase 4: ✅ Update `package.json`
 
-**Status:** Pending <br>
+**Status:** Done <br>
 **BlockedBy:** 1, 2 <br>
 **Testing:** `pnpm pack --dry-run` <br>
 **Priority:** High <br>
@@ -169,9 +170,9 @@ Keep `*.podspec` (already included).
 
 ---
 
-## Phase 5: ⏳ Update local Xcode project
+## Phase 5: ✅ Update local Xcode project
 
-**Status:** Pending <br>
+**Status:** Done <br>
 **BlockedBy:** 1 <br>
 **Testing:** `pnpm verify.ios` <br>
 **Priority:** High <br>
@@ -191,7 +192,9 @@ Keep `ios/Plugin.xcodeproj` / `Plugin.xcworkspace` working for local dev.
 
 ---
 
-## Phase 6: Add `demo-spm` workspace package
+## Phase 6: ✅ Add `demo-spm` workspace package
+
+**Status:** Done <br>
 
 **Goal**: A minimal Capacitor demo app that uses the plugin via SPM instead of CocoaPods, following the same shared-demo pattern as `demo-pods`.
 
@@ -357,7 +360,9 @@ Add `demo-spm/package.json` to the `commit-and-tag-version.bumpFiles` array in t
 
 ---
 
-## Phase 7: Update Swift lint paths
+## Phase 7: ✅ Update Swift lint paths
+
+**Status:** Done <br>
 
 The `lint.swift` script also lints demo Swift files. Add the SPM demo path:
 
@@ -375,16 +380,58 @@ The `lint.swift` script also lints demo Swift files. Add the SPM demo path:
 
 ---
 
+## Phase 8: ✅ Add SPM verify script
+
+**Status:** Done <br>
+**BlockedBy:** 2, 6 <br>
+**Testing:** `pnpm verify.ios` <br>
+**Priority:** High <br>
+**Estimated Lines:** ~5
+
+Add a separate SPM build verification script alongside the existing CocoaPods one, then unify them under `verify.ios`.
+
+### Tasks
+
+1. Add `verify.spm.ios` script that builds the plugin via SPM (using `xcodebuild` with the SPM project)
+2. Rename `verify.ios` to `verify.pods.ios`
+3. Add new `verify.ios` that runs both: `pnpm verify.pods.ios && pnpm verify.spm.ios`
+
+### Changes in `package.json`
+
+```jsonc
+// Before:
+"verify": "pnpm verify.ios && pnpm verify.android",
+"verify.ios": "./scripts/verify-build.sh iOS bash -c 'cd ios && pod install && cd .. && xcodebuild -quiet -workspace ios/Plugin.xcworkspace -scheme Plugin -destination generic/platform=iOS build'",
+
+// After:
+"verify": "pnpm verify.ios && pnpm verify.android",
+"verify.pods.ios": "./scripts/verify-build.sh iOS-CocoaPods bash -c 'cd ios && pod install && cd .. && xcodebuild -quiet -workspace ios/Plugin.xcworkspace -scheme Plugin -destination generic/platform=iOS build'",
+"verify.spm.ios": "./scripts/verify-build.sh iOS-SPM bash -c 'cd demo-spm/ios/App && xcodebuild -quiet -scheme App -destination generic/platform=iOS build'",
+"verify.ios": "pnpm verify.pods.ios && pnpm verify.spm.ios",
+```
+
+### Files affected
+
+- `package.json`
+
+---
+
 ## Verification
 
-### CocoaPods path (existing)
+### Automated verification
 
-1. `pnpm verify.ios` — plugin builds via CocoaPods workspace
+1. `pnpm verify.ios` — builds plugin via both CocoaPods and SPM
+2. `pnpm verify.android` — builds Android plugin
+3. `pnpm verify` — runs both iOS and Android verification
+
+### CocoaPods path (manual)
+
+1. `pnpm verify.pods.ios` — plugin builds via CocoaPods workspace
 2. `pnpm demo.pods.ios` — demo app runs on device/simulator via Pods
 
-### SPM path (new)
+### SPM path (manual)
 
-1. Open `ios/` as a Swift package in Xcode — confirm it resolves dependencies and builds
+1. `pnpm verify.spm.ios` — plugin builds via SPM demo app
 2. `pnpm demo.spm.ios` — SPM demo app runs on device/simulator
 3. Confirm runtime behavior parity: `checkBiometry()` and `internalAuthenticate()` work identically in both demos
 

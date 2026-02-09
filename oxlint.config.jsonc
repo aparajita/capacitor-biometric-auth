@@ -2,7 +2,15 @@
 // Only non-default rules are configured here.
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "ignorePatterns": ["**/*.d.ts", ".claude/**", "**/.build/**"],
+  "ignorePatterns": [
+    "**/*.d.ts",
+    ".claude/**",
+    "**/.build/**",
+    "demo-pods/android/**",
+    "demo-pods/ios/**",
+    "demo-spm/android/**",
+    "demo-spm/ios/**"
+  ],
   "plugins": [
     "eslint",
     "import",
