@@ -15,8 +15,6 @@ xcuserdata
 # macOS files
 .DS_Store
 
-
-
 # Based on Android gitignore template: https://github.com/github/gitignore/blob/master/Android.gitignore
 
 # Built application files
@@ -67,3 +65,6 @@ captures/
 
 .eslintcache
 /.claude/settings.local.json
+
+# Demo files
+**/assets/
