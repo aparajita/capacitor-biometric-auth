@@ -1,0 +1,8 @@
+{
+  "name": "capacitor-biometric-auth-demo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom",
+  "npmClient": "pnpm"
+}
