@@ -1,5 +1,3 @@
-<div class="markdown-body">
-
 # capacitor-biometric-auth&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth.svg)](https://badge.fury.io/js/@aparajita%2Fcapacitor-biometric-auth)
 
 This plugin for [Capacitor 8](https://capacitorjs.com) provides access to native biometry and device credentials on iOS and Android. It supports every type of biometry and every configuration option on both platforms. In addition, biometry and device credentials are simulated on the web so you can test your logic without making any changes to your code.
@@ -22,7 +20,7 @@ npm install @aparajita/capacitor-biometric-auth
 yarn add @aparajita/capacitor-biometric-auth
 ```
 
-Not using [pnpm](https://pnpm.js.org/)? You owe it to yourself to give it a try. It’s faster, better with monorepos, and uses _way, way_ less disk space than the alternatives.
+Not using [pnpm](https://pnpm.ios)? You owe it to yourself to give it a try. It’s faster, better with monorepos, and uses _way, way_ less disk space than the alternatives.
 
 ### iOS
 
@@ -41,7 +39,7 @@ This plugin can be installed via Swift Package Manager (SPM) or CocoaPods:
 
 ## Usage
 
-The API is extensively documented in the [TypeScript definitions file](src/definitions.ts). There is also (somewhat incomplete auto-generated) documentation [below](#api). For a complete example of how to use this plugin in practice, see the demo apps: [CocoaPods variant](https://github.com/aparajita/capacitor-biometric-auth/blob/main/demo-pods/README.md) or [SPM variant](https://github.com/aparajita/capacitor-biometric-auth/blob/main/demo-spm/README.md).
+The API is extensively documented in the [TypeScript definitions file](src/definitions.ts). There is also (somewhat incomplete auto-generated) documentation [below](#api). For a complete example of how to use this plugin in practice, see the [demo section](#demo).
 
 ### Checking availability
 
@@ -158,6 +156,93 @@ On iOS, Touch ID and Face ID are supported.
 On Android, fingerprint, face, and iris authentication are supported. Note that if a device supports more than one type of biometry, the plugin will initially present the primary (most secure) available type, which is determined by the system and cannot be determined programmatically.
 
 ❗ As discussed above, Android may support multiple types of biometry, but not all of them may be available for use by apps. For example, a device may support both fingerprint and face authentication, but only fingerprint authentication may be available for use by apps. In such cases, if the user has enrolled in face authentication only, `checkBiometry()` will indicate that biometry is not available.
+
+## Demo
+
+The Ionic/Vue demo app demonstrates all of the features of this plugin. There are two variants of the demo, one which uses CocoaPods (demo-pods) and one which uses Swift Package Manager (demo-spm). Of course, CocoaPods and Swift Package Manager only apply to iOS. In both demos, the Android version is identical.
+
+### Installation
+
+[pnpm](https://pnpm.io) is required to run the demo.
+
+```shell
+# Clone the github repo and install dependencies
+git clone https://github.com/aparajita/capacitor-secure-storage.git
+cd capacitor-secure-storage
+pnpm install -r
+```
+
+### Running
+
+Before running either of the demos, you must build the plugin first, as the demos reference a local build of the plugin.
+
+```shell
+pnpm build
+```
+
+From the root directory, you can run the demos using:
+
+iOS:
+
+```shell
+pnpm demo.pods.ios
+pnpm demo.spm.ios
+```
+
+Android:
+
+```shell
+pnpm demo.pods.android
+pnpm demo.spm.android
+```
+
+Web:
+
+```shell
+pnpm demo.pods.browser
+pnpm demo.spm.browser
+```
+
+You can also run commands from within the demo directory:
+
+```shell
+cd demo-pods # or cd demo-spm
+pnpm ios
+pnpm android
+pnpm dev
+```
+
+### Usage
+
+#### Web
+
+On the web, biometry is simulated, allowing you to easily test your app's use of the plugin. Once the web demo is open, select a biometry type from the "Options" section, check "Enrolled", then click "Authenticate".
+
+#### Native
+
+Once Xcode/Android Studio opens, select the device or simulator you wish to run the demo on. When the demo app opens, the supported biometry type and status is displayed at the top.
+
+On iOS, if biometry is supported but not available in a simulator, you have to manually enroll in biometry:
+
+- Select via the Features > Touch/Face ID > Enrolled.
+- Suspend and resume the demo app. You should see that biometry is now available.
+
+On Android, if you have not yet enrolled fingerprints in a simulator, you have to set that up in the system settings. You can simulate fingerprints from the command line using `adb`. If you have not yet installed the Android platform tools, first do that. On macOS, use `brew`:
+
+```shell
+brew install android-platform-tools
+```
+
+Once `adb` is installed, when you are prompted for a fingerprint in the simulator, open a terminal and enter:
+
+```shell
+# <n> is the number (1, 2, etc.) of the finger
+# you enrolled in the system settings. Or use
+# a non-enrolled number to simulate failure.
+adb -e emu finger touch <n>
+```
+
+You may set all of the available [`AuthenticateOptions`](#authenticateoptions) for the current platform via the on screen inputs. I recommend reading the documentation for each option to understand what it does on each platform.
 
 ## API
 
@@ -345,4 +430,3 @@ The signature of the callback passed to `addResumeListener()`.
 | strong  | `authenticate()` will only present strong biometry.   |
 
 </docgen-api>
-</div>
