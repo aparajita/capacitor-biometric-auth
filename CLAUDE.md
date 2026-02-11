@@ -38,19 +38,17 @@ Always use `pnpm` (not `npm`) and `pnpm dlx` (not `npx`).
 
 - `pnpm release` — Create release (version bump, tag, update iOS and Android versions, changelog). Never manually update version numbers.
 
-**Demo App:**
+**Demo Apps:**
 
-The demo app lives in `demo-pods/` (pnpm workspace, CocoaPods variant). Scripts are prefixed with `demo.` (e.g., `pnpm demo.dev`, `pnpm demo.ios`).
+- `demo-pods/` — CocoaPods variant (primary)
+- `demo-spm/` — SPM variant
+- `demo-shared/` — Shared demo code
+
+Demo scripts are prefixed with `demo.` (e.g., `pnpm demo.dev`, `pnpm demo.ios`).
 
 ## Project Architecture
 
-This is a **Capacitor plugin** providing biometric authentication across web, iOS, and Android.
-
-### Native Platform Structure
-
-- **iOS**: `ios/Plugin/` — Swift implementation using LocalAuthentication
-- **Android**: `android/src/main/java/com/aparajita/capacitor/biometricauth/` — Java implementation using BiometricPrompt
-- **Core native methods**: `checkBiometry()` and `internalAuthenticate()`
+This is a **Capacitor plugin** providing biometric authentication across web (simulated), iOS, and Android.
 
 ## Cross-Platform Error Consistency
 
@@ -58,7 +56,5 @@ Error codes must match exactly across all three platforms (TypeScript, Swift, Ja
 
 ## Testing Strategy
 
-- **No unit tests** — This project relies on platform verification rather than traditional unit tests
-- **Platform verification**: `pnpm verify.ios` and `pnpm verify.android` test native builds
+- **No unit tests** — This project relies on platform verification (`pnpm verify`) and real device testing via the demo apps
 - **Web simulation**: `setBiometryType()`, `setBiometryIsEnrolled()`, `setDeviceIsSecure()` for testing without hardware
-- **Real device testing**: Use the demo app for end-to-end testing
