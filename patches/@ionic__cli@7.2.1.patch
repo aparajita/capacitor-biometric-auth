@@ -1,0 +1,13 @@
+diff --git a/lib/utils/npm.js b/lib/utils/npm.js
+index 640e88d400afdeef85b3859e02eaad97f5c29b9f..2ffa99aa9897f4832ca849dd4530d6c634402c66 100644
+--- a/lib/utils/npm.js
++++ b/lib/utils/npm.js
+@@ -113,7 +113,7 @@ async function pkgManagerArgs(npmClient, options) {
+         }
+     }
+     if (cmd === 'run' && options.script && options.scriptArgs && options.scriptArgs.length > 0) {
+-        if (npmClient === 'npm' || npmClient === 'pnpm') {
++        if (npmClient === 'npm' /*|| npmClient === 'pnpm'*/) {
+             installerArgs.push('--');
+         }
+         for (const arg of options.scriptArgs) {
