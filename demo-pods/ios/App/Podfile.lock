@@ -1,11 +1,11 @@
 PODS:
   - AparajitaCapacitorBiometricAuth (10.0.0):
     - Capacitor
-  - Capacitor (8.0.2):
+  - Capacitor (8.1.0):
     - CapacitorCordova
   - CapacitorApp (8.0.0):
     - Capacitor
-  - CapacitorCordova (8.0.2)
+  - CapacitorCordova (8.1.0)
   - CapacitorHaptics (8.0.0):
     - Capacitor
   - CapacitorKeyboard (8.0.0):
@@ -15,38 +15,38 @@ PODS:
 
 DEPENDENCIES:
   - AparajitaCapacitorBiometricAuth (from `../../..`)
-  - "Capacitor (from `../../../node_modules/.pnpm/@capacitor+ios@8.0.2_@capacitor+core@8.0.2/node_modules/@capacitor/ios`)"
-  - "CapacitorApp (from `../../../node_modules/.pnpm/@capacitor+app@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/app`)"
-  - "CapacitorCordova (from `../../../node_modules/.pnpm/@capacitor+ios@8.0.2_@capacitor+core@8.0.2/node_modules/@capacitor/ios`)"
-  - "CapacitorHaptics (from `../../../node_modules/.pnpm/@capacitor+haptics@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/haptics`)"
-  - "CapacitorKeyboard (from `../../../node_modules/.pnpm/@capacitor+keyboard@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/keyboard`)"
-  - "CapacitorSplashScreen (from `../../../node_modules/.pnpm/@capacitor+splash-screen@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/splash-screen`)"
+  - "Capacitor (from `../../../node_modules/.pnpm/@capacitor+ios@8.1.0_@capacitor+core@8.1.0/node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../../node_modules/.pnpm/@capacitor+app@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/app`)"
+  - "CapacitorCordova (from `../../../node_modules/.pnpm/@capacitor+ios@8.1.0_@capacitor+core@8.1.0/node_modules/@capacitor/ios`)"
+  - "CapacitorHaptics (from `../../../node_modules/.pnpm/@capacitor+haptics@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/haptics`)"
+  - "CapacitorKeyboard (from `../../../node_modules/.pnpm/@capacitor+keyboard@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/keyboard`)"
+  - "CapacitorSplashScreen (from `../../../node_modules/.pnpm/@capacitor+splash-screen@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/splash-screen`)"
 
 EXTERNAL SOURCES:
   AparajitaCapacitorBiometricAuth:
     :path: "../../.."
   Capacitor:
-    :path: "../../../node_modules/.pnpm/@capacitor+ios@8.0.2_@capacitor+core@8.0.2/node_modules/@capacitor/ios"
+    :path: "../../../node_modules/.pnpm/@capacitor+ios@8.1.0_@capacitor+core@8.1.0/node_modules/@capacitor/ios"
   CapacitorApp:
-    :path: "../../../node_modules/.pnpm/@capacitor+app@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/app"
+    :path: "../../../node_modules/.pnpm/@capacitor+app@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/app"
   CapacitorCordova:
-    :path: "../../../node_modules/.pnpm/@capacitor+ios@8.0.2_@capacitor+core@8.0.2/node_modules/@capacitor/ios"
+    :path: "../../../node_modules/.pnpm/@capacitor+ios@8.1.0_@capacitor+core@8.1.0/node_modules/@capacitor/ios"
   CapacitorHaptics:
-    :path: "../../../node_modules/.pnpm/@capacitor+haptics@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/haptics"
+    :path: "../../../node_modules/.pnpm/@capacitor+haptics@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/haptics"
   CapacitorKeyboard:
-    :path: "../../../node_modules/.pnpm/@capacitor+keyboard@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/keyboard"
+    :path: "../../../node_modules/.pnpm/@capacitor+keyboard@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/keyboard"
   CapacitorSplashScreen:
-    :path: "../../../node_modules/.pnpm/@capacitor+splash-screen@8.0.0_@capacitor+core@8.0.2/node_modules/@capacitor/splash-screen"
+    :path: "../../../node_modules/.pnpm/@capacitor+splash-screen@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/splash-screen"
 
 SPEC CHECKSUMS:
   AparajitaCapacitorBiometricAuth: 1ae24ba90d7977dffb4bc9040f374a807a510c98
-  Capacitor: 2b79172ad27f3be2d103cce88b8eb9803fdcc744
+  Capacitor: 47b825120c6b8b6d6f9f053e9350a8960d436710
   CapacitorApp: 3963a84197280757b84f126afd1520a85ae3b092
-  CapacitorCordova: 921bdb690ebe82421b24fce45552fd3dea2ae43a
+  CapacitorCordova: e8b76fd95fc1e157775abc484c59cc0de464095d
   CapacitorHaptics: 2079d9fa04c5a71e18663b4722323c304c58245c
   CapacitorKeyboard: d7868c079a4d5277a3deca27a10a488fcbbb8b69
   CapacitorSplashScreen: 422880d7117605c30699eb4b21644b62db42e86c
 
-PODFILE CHECKSUM: b99302354f3b901f759f220c1f9a382d5100161f
+PODFILE CHECKSUM: 1da0979fec1cbcb8f400dbcf7d16f64197028695
 
 COCOAPODS: 1.16.2
