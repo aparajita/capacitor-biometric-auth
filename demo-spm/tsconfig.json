@@ -6,8 +6,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["**/*.js", "*.ts", "**/*.ts", "**/*.vue"],
-  "exclude": ["node_modules"],
   "references": [
     {
       "path": "./tsconfig.config.json"

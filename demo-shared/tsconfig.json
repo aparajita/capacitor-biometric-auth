@@ -23,5 +23,7 @@
     "useDefineForClassFields": true,
     "types": ["node"],
     "lib": ["es2017", "dom", "dom.iterable", "scripthost"]
-  }
+  },
+  "include": ["**/*.js", "*.ts", "**/*.ts", "**/*.vue"],
+  "exclude": ["node_modules"]
 }

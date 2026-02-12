@@ -1,9 +1,8 @@
+import type { CapacitorConfig } from '@capacitor/cli'
 import baseConfig from 'demo-shared/capacitor.config'
 
-const config = {
+const config: CapacitorConfig = {
   ...baseConfig,
-  appId: 'com.aparajita.capacitor.biometricauthdemo',
-  appName: 'Biometry',
   webDir: '../demo-shared/dist',
 }
 

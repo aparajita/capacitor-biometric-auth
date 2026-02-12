@@ -4,8 +4,8 @@ import type { CapacitorConfig } from '@capacitor/cli'
 import { KeyboardResize } from '@capacitor/keyboard'
 
 const config: CapacitorConfig = {
-  appId: '',
-  appName: '',
+  appId: 'com.aparajita.capacitor.biometricauthdemo',
+  appName: 'Biometry',
   loggingBehavior: 'debug',
   server: {
     androidScheme: 'http',
