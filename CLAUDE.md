@@ -46,6 +46,14 @@ Always use `pnpm` (not `npm`) and `pnpm dlx` (not `npx`).
 
 Demo scripts are prefixed with `demo.` (e.g., `pnpm demo.dev`, `pnpm demo.ios`).
 
+## Tooling Preferences
+
+- Use Serena's semantic tools for code exploration and symbol lookups:
+    - `jet_brains_find_symbol` - Find symbol definitions
+    - `jet_brains_find_referencing_symbols` - Find references
+    - `jet_brains_get_symbols_overview` - Get symbol overviews
+- Do not use TypeScript LSP for symbol lookups
+
 ## Project Architecture
 
 This is a **Capacitor plugin** providing biometric authentication across web (simulated), iOS, and Android.
